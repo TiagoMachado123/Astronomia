@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Registo de Utilizador</title>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Inicial</a> |
+    <a href="/visualizacao.html">Visualização</a> |
+    <a href="/astronomia.html">Astronomia</a>
+  </nav>
+  <h1>Registo de Utilizador</h1>
+  <form id="registoForm" action="/registo" method="POST" enctype="multipart/form-data" onsubmit="return validarForm()">
+    <label>Nome completo:</label><input type="text" name="nome" required><br>
+    <label>Data de nascimento:</label><input type="date" name="data_nascimento" required><br>
+    <label>Morada:</label><input type="text" name="morada" required><br>
+    <label>Email:</label><input type="email" name="email" required><br>
+    <label>Número de telefone:</label><input type="text" name="telefone" required><br>
+    <label>Género:</label>
+    <select name="genero" required>
+      <option value="Masculino">Masculino</option>
+      <option value="Feminino">Feminino</option>
+      <option value="Outro">Outro</option>
+    </select><br>
+    <label>Fotografia:</label><input type="file" name="fotografia" required><br>
+    <label>Documento de identificação:</label><input type="file" name="documento" required><br>
+    <label>Palavra-passe:</label><input type="password" name="password" required><br>
+    <button type="button" onclick="limparForm()">Limpar campos</button>
+    <button type="submit">Submeter dados</button>
+  </form>
+</body>
+</html>
