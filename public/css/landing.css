@@ -1,0 +1,165 @@
+/* --- landing.css: Específico da Página Inicial --- */
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding-top: 60px; /* Compensar header */
+}
+
+.hero-content {
+  z-index: 2;
+  max-width: 800px;
+  position: relative;
+}
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.hero p {
+  font-size: 1.25rem;
+  color: var(--text-gray);
+  margin-bottom: 30px;
+}
+
+/* Foguete na Hero */
+.rocket-container {
+  width: 180px;
+  margin: 0 auto 30px auto;
+  animation: float 6s ease-in-out infinite alternate;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .rocket-container {
+    width: 220px;
+  }
+  .hero h1 {
+    font-size: 4.5rem;
+  }
+}
+
+/* Funcionalidades (Cards) */
+.section-title {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 40px 25px;
+  border-radius: 15px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.feature-card i {
+  font-size: 3rem;
+  color: var(--accent-pink);
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-family: var(--font-heading);
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+/* --- SECÇÃO DE CONTRASTE (Substitui bg-light) --- */
+.section-contrast {
+  background-color: var(--bg-darker); /* Fundo escuro */
+  padding: 80px 0;
+  margin: 60px 0;
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  position: relative;
+}
+
+/* Efeito subtil de brilho no fundo */
+.section-contrast::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(228, 114, 103, 0.03),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.split-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 50px;
+}
+
+.split-content {
+  flex: 1;
+  min-width: 300px;
+}
+.split-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.split-image img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+}
+
+/* Passos 1-2-3 */
+.steps-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.step-item {
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+}
+.step-number {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--accent-pink);
+  font-family: var(--font-heading);
+  opacity: 0.8;
+  line-height: 1;
+}
+.step-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 10px;
+}

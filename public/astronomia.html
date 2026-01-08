@@ -1,0 +1,136 @@
+<!-- astronomia.html -->
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Curiosidades - Astronomia</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <div id="star-container"></div>
+    <header>
+      <div class="container nav-wrapper">
+        <a href="/" class="logo"
+          ><i class="fa-solid fa-rocket"></i> Astronomia Explorer</a
+        >
+        <div id="dynamic-nav" class="nav-links"></div>
+      </div>
+    </header>
+
+    <div class="container hidden" style="padding-top: 50px">
+      <div class="glass-panel" style="max-width: 900px; margin: 0 auto">
+        <h1
+          style="
+            font-family: var(--font-heading);
+            text-align: center;
+            color: var(--accent-pink);
+          "
+        >
+          Curiosidades Cósmicas
+        </h1>
+
+        <div
+          style="display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap"
+        >
+          <div style="flex: 1">
+            <img
+              alt="img"
+              src="https://images.unsplash.com/photo-1614730341194-75c60740a2d3?auto=format&fit=crop&w=600&q=80"
+              style="width: 100%; border-radius: 10px"
+            />
+          </div>
+          <div style="flex: 1">
+            <h3>Sabias que?</h3>
+            <p style="margin-top: 10px">
+              O universo observável tem cerca de 93 mil milhões de anos-luz de
+              diâmetro. Contudo, o universo inteiro pode ser infinito.
+            </p>
+            <p style="margin-top: 10px">
+              As estrelas de neutrões são tão densas que uma colher de chá da
+              sua matéria pesaria biliões de toneladas na Terra.
+            </p>
+
+            <button id="toggle-fact" class="btn" style="margin-top: 20px">
+              Mostrar Curiosidade Extra
+            </button>
+
+            <div id="fact-box" class="fact-box">
+              <strong>Bónus:</strong> Em Vénus, um dia (rotação) é mais longo
+              que um ano (translação em volta do sol)!
+            </div>
+          </div>
+        </div>
+
+        <h3
+          style="
+            margin-top: 40px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+          "
+        >
+          Dados do Sistema Solar
+        </h3>
+        <div style="overflow-x: auto">
+          <table class="planet-table">
+            <thead>
+              <tr>
+                <th>Planeta</th>
+                <th>Tipo</th>
+                <th>Luas</th>
+                <th>Dia (horas)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mercúrio</td>
+                <td>Rochoso</td>
+                <td>0</td>
+                <td>1408</td>
+              </tr>
+              <tr>
+                <td>Vénus</td>
+                <td>Rochoso</td>
+                <td>0</td>
+                <td>5832</td>
+              </tr>
+              <tr>
+                <td>Terra</td>
+                <td>Rochoso</td>
+                <td>1</td>
+                <td>24</td>
+              </tr>
+              <tr>
+                <td>Marte</td>
+                <td>Rochoso</td>
+                <td>2</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>Júpiter</td>
+                <td>Gasoso</td>
+                <td>79+</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>Saturno</td>
+                <td>Gasoso</td>
+                <td>82+</td>
+                <td>11</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
