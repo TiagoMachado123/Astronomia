@@ -1,4 +1,4 @@
-<!-- landing.html -->
+<!-- /public/landing.html -->
 <!DOCTYPE html>
 <html lang="pt">
   <head>
@@ -18,18 +18,35 @@
   </head>
   <body>
     <div id="star-container"></div>
+
     <header>
       <div class="container nav-wrapper">
-        <a href="/" class="logo"
-          ><i class="fa-solid fa-rocket"></i> Astronomia Explorer</a
-        >
-        <div id="dynamic-nav" class="nav-links"></div>
+        <a href="/" class="logo">
+          <i class="fa-solid fa-rocket"></i> Astronomia Explorer
+        </a>
+        <div id="dynamic-nav" class="nav-links">
+          <a href="#" class="nav-item">Início</a>
+          <a href="#learn-more" class="nav-item">Descobrir</a>
+          <a href="/login.html" class="nav-item btn-sm btn">Login</a>
+        </div>
       </div>
     </header>
 
     <section class="hero">
-      <div>
-        <div class="rocket-container">
+      <div class="container hero-layout">
+        <div class="hero-text">
+          <h1>Explora o <span class="gradient-text">Universo!</span></h1>
+          <p>
+            Descobre curiosidades sobre astronomia, mapeia estrelas e junta-te à
+            maior comunidade de exploradores espaciais.
+          </p>
+          <div class="hero-buttons">
+            <a href="#learn-more" class="btn">Saber Mais</a>
+            <a href="#" class="btn btn-outline">Ver Demo</a>
+          </div>
+        </div>
+
+        <div class="rocket-wrapper">
           <svg
             id="Rocket"
             xmlns="http://www.w3.org/2000/svg"
@@ -49,10 +66,7 @@
                 d="M68.3.4S57.3 14.5 57.3 29.4c0 9.9 4 25 4 25h14s4-15 4-26C79.3 16.3 68.3.4 68.3.4"
               />
             </g>
-            <g
-              id="Flame"
-              style="animation: flame-flicker 0.2s infinite alternate"
-            >
+            <g id="Flame">
               <path
                 fill="#E47267"
                 d="M68.3 95c-5 0-10 10-10 25s8 15 10 30c2-15 10-15 10-30s-5-25-10-25z"
@@ -60,153 +74,82 @@
             </g>
           </svg>
         </div>
-        <h1>Explora o Universo!</h1>
-        <p style="color: var(--text-gray); margin-bottom: 30px">
-          Descobre curiosidades sobre astronomia e junta-te à comunidade.
-        </p>
-        <a href="#learn-more" class="btn">Saber Mais</a>
       </div>
     </section>
 
-    <section
-      id="learn-more"
-      class="container"
-      style="text-align: center; padding: 80px 20px"
-    >
-      <h2
-        style="
-          font-family: var(--font-heading);
-          margin-bottom: 40px;
-          font-size: 2.5rem;
-        "
-      >
-        Porquê Astronomia?
-      </h2>
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 30px;
-        "
-      >
-        <div class="glass-panel" style="margin: 0; padding: 20px">
-          <i
-            class="fa-solid fa-star"
-            style="
-              font-size: 2rem;
-              color: var(--accent-pink);
-              margin-bottom: 15px;
-            "
-          ></i>
+    <section id="learn-more" class="container section-padding text-center">
+      <h2 class="section-heading">Porquê Astronomia?</h2>
+
+      <div class="cards-horizontal">
+        <div class="glass-panel">
+          <i class="fa-solid fa-star icon-feature"></i>
           <h3>Estrelas</h3>
-          <p>O berço da vida.</p>
+          <p>O berço da vida e a luz que guia a nossa curiosidade.</p>
         </div>
-        <div class="glass-panel" style="margin: 0; padding: 20px">
-          <i
-            class="fa-solid fa-globe"
-            style="
-              font-size: 2rem;
-              color: var(--accent-pink);
-              margin-bottom: 15px;
-            "
-          ></i>
+        <div class="glass-panel">
+          <i class="fa-solid fa-globe icon-feature"></i>
           <h3>Planetas</h3>
-          <p>Mundos por descobrir.</p>
+          <p>Mundos novos e exoplanetas à espera de serem descobertos.</p>
         </div>
-        <div class="glass-panel" style="margin: 0; padding: 20px">
-          <i
-            class="fa-solid fa-eye"
-            style="
-              font-size: 2rem;
-              color: var(--accent-pink);
-              margin-bottom: 15px;
-            "
-          ></i>
+        <div class="glass-panel">
+          <i class="fa-solid fa-eye icon-feature"></i>
           <h3>Observação</h3>
-          <p>Olha para cima.</p>
+          <p>Aprende a usar telescópios e olha para cima com clareza.</p>
         </div>
       </div>
     </section>
 
     <div class="bg-contrast">
-      <div
-        class="container"
-        style="
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: center;
-          gap: 40px;
-        "
-      >
-        <div style="flex: 1; min-width: 300px">
+      <div class="container split-layout">
+        <div class="split-image">
           <img
-            alt="img"
-            src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=600&q=80"
-            style="width: 100%; border-radius: 10px"
+            alt="Espaço Sideral"
+            src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80"
           />
         </div>
-        <div style="flex: 1; min-width: 300px">
+        <div class="split-content">
           <h2>O Nosso Sistema</h2>
-          <p style="color: #ccc; margin-top: 15px">
+          <p>
             Utilizamos tecnologia de ponta para mapear as tuas observações e
-            conectar-te com outros entusiastas.
+            conectar-te com outros entusiastas. A nossa base de dados é
+            atualizada em tempo real pela NASA.
           </p>
+          <a href="#" class="btn-text"
+            >Ler Documentação <i class="fa-solid fa-arrow-right"></i
+          ></a>
         </div>
       </div>
     </div>
 
-    <section class="container" style="text-align: center; padding: 80px 0">
-      <h2>Processo Simples</h2>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-          margin-top: 40px;
-          flex-wrap: wrap;
-        "
-      >
-        <div>
-          <div
-            style="
-              font-size: 3rem;
-              font-weight: bold;
-              color: var(--accent-pink);
-            "
-          >
-            1
-          </div>
-          <p>Regista-te</p>
+    <section class="container section-padding text-center">
+      <h2 class="section-heading">Começa em 3 Passos</h2>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Regista-te</h3>
+          <p>Cria a tua conta gratuita em segundos.</p>
         </div>
-        <div>
-          <div
-            style="
-              font-size: 3rem;
-              font-weight: bold;
-              color: var(--accent-pink);
-            "
-          >
-            2
-          </div>
-          <p>Observa</p>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Observa</h3>
+          <p>Aponta para o céu e regista dados.</p>
         </div>
-        <div>
-          <div
-            style="
-              font-size: 3rem;
-              font-weight: bold;
-              color: var(--accent-pink);
-            "
-          >
-            3
-          </div>
-          <p>Partilha</p>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Partilha</h3>
+          <p>Mostra as tuas descobertas à rede.</p>
         </div>
       </div>
-      <br /><br />
-      <a href="/registo.html" class="btn">Começar Aventura</a>
+
+      <div style="margin-top: 50px">
+        <a href="/registo.html" class="btn btn-lg">Começar Aventura</a>
+      </div>
     </section>
+
+    <footer>
+      <p>&copy; 2024 Astronomia Explorer. Todos os direitos reservados.</p>
+    </footer>
 
     <script src="js/script.js"></script>
   </body>

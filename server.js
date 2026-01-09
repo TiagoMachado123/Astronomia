@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
@@ -75,17 +76,36 @@ app.get("/check-session", (req, res) => {
 });
 
 // Registo (POST)
+// Registo (POST) - ATUALIZADO
 app.post(
   "/registo",
   upload.fields([{ name: "fotografia" }, { name: "documento" }]),
   async (req, res) => {
-    const { nome, data_nascimento, morada, email, telefone, genero, password } =
-      req.body;
+    // Adicionei 'cargo' e 'biografia' (podem vir do form ou ser default)
+    const {
+      nome,
+      data_nascimento,
+      morada,
+      email,
+      telefone,
+      genero,
+      password,
+      biografia,
+    } = req.body;
 
-    // Caminhos dos ficheiros
+    // Vamos atribuir um cargo aleatório para ser divertido, ou podes por no form
+    const cargos = [
+      "Cadete",
+      "Engenheiro",
+      "Piloto",
+      "Cientista",
+      "Comandante",
+    ];
+    const cargoAtribuido = cargos[Math.floor(Math.random() * cargos.length)];
+
     const fotoPath = req.files["fotografia"]
       ? req.files["fotografia"][0].path
-      : null;
+      : "uploads/default-avatar.png"; // Fallback image
     const docPath = req.files["documento"]
       ? req.files["documento"][0].path
       : null;
@@ -93,7 +113,8 @@ app.post(
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const query = `INSERT INTO utilizadores (nome, data_nascimento, morada, email, telefone, genero, fotografia, documento, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      // Query Atualizada
+      const query = `INSERT INTO utilizadores (nome, data_nascimento, morada, email, telefone, genero, fotografia, documento, password, cargo, biografia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
       db.query(
         query,
@@ -107,12 +128,14 @@ app.post(
           fotoPath,
           docPath,
           hashedPassword,
+          cargoAtribuido,
+          biografia || "Novo explorador pronto para a missão.",
         ],
         (err, result) => {
           if (err) {
             console.error(err);
             return res.send(
-              '<script>alert("Erro no registo! Email pode já existir."); window.location.href="/registo.html";</script>'
+              '<script>alert("Erro no registo!"); window.location.href="/registo.html";</script>'
             );
           }
           req.session.loggedin = true;

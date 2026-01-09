@@ -1,9 +1,9 @@
-<!-- astronomia.html -->
+<!-- /public/astronomia.html -->
 <!DOCTYPE html>
 <html lang="pt">
   <head>
     <meta charset="UTF-8" />
-    <title>Curiosidades - Astronomia</title>
+    <title>Dados Cósmicos - Astronomia</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -26,105 +26,150 @@
       </div>
     </header>
 
-    <div class="container hidden" style="padding-top: 50px">
-      <div class="glass-panel" style="max-width: 900px; margin: 0 auto">
-        <h1
-          style="
-            font-family: var(--font-heading);
-            text-align: center;
-            color: var(--accent-pink);
-          "
-        >
-          Curiosidades Cósmicas
-        </h1>
+    <div class="container page-container">
+      <div class="page-header">
+        <h2>Base de Conhecimento</h2>
+        <p>
+          Acesso restrito a dados do sistema solar e curiosidades avançadas.
+        </p>
+      </div>
 
+      <div class="glass-panel" style="margin-bottom: 50px">
         <div
-          style="display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap"
+          style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center"
         >
-          <div style="flex: 1">
+          <div style="flex: 1; min-width: 300px">
             <img
-              alt="img"
-              src="https://images.unsplash.com/photo-1614730341194-75c60740a2d3?auto=format&fit=crop&w=600&q=80"
-              style="width: 100%; border-radius: 10px"
+              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+              alt="Espaço"
+              style="
+                width: 100%;
+                border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+              "
             />
           </div>
-          <div style="flex: 1">
-            <h3>Sabias que?</h3>
-            <p style="margin-top: 10px">
-              O universo observável tem cerca de 93 mil milhões de anos-luz de
-              diâmetro. Contudo, o universo inteiro pode ser infinito.
-            </p>
-            <p style="margin-top: 10px">
-              As estrelas de neutrões são tão densas que uma colher de chá da
-              sua matéria pesaria biliões de toneladas na Terra.
+          <div style="flex: 1; min-width: 300px">
+            <h3
+              style="
+                font-family: var(--font-heading);
+                color: var(--accent-pink);
+                font-size: 1.8rem;
+              "
+            >
+              O Universo Observável
+            </h3>
+            <p style="margin-top: 15px; color: #ddd; line-height: 1.8">
+              Sabias que olhar para o céu é olhar para o passado? A luz do Sol
+              demora 8 minutos a chegar à Terra. A luz das estrelas mais
+              distantes que vemos hoje partiu há milhões de anos, quando os
+              dinossauros ainda caminhavam no nosso planeta.
             </p>
 
-            <button id="toggle-fact" class="btn" style="margin-top: 20px">
-              Mostrar Curiosidade Extra
+            <button id="toggle-fact" class="btn" style="margin-top: 25px">
+              <i class="fa-solid fa-lightbulb"></i> Revelar Dados Secretos
             </button>
 
             <div id="fact-box" class="fact-box">
-              <strong>Bónus:</strong> Em Vénus, um dia (rotação) é mais longo
-              que um ano (translação em volta do sol)!
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <strong>Alerta:</strong> Se caísses num buraco negro, sofrerias de
+              "espaguetificação" - serias esticado como um fio de massa devido à
+              gravidade extrema!
             </div>
           </div>
         </div>
+      </div>
 
+      <div class="data-panel">
         <h3
           style="
-            margin-top: 40px;
-            border-bottom: 1px solid #555;
-            padding-bottom: 10px;
+            font-family: var(--font-heading);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
           "
         >
-          Dados do Sistema Solar
+          <i class="fa-solid fa-database"></i> Telemetria Planetária
         </h3>
-        <div style="overflow-x: auto">
-          <table class="planet-table">
+
+        <div class="table-wrapper">
+          <table class="cosmic-table">
             <thead>
               <tr>
                 <th>Planeta</th>
                 <th>Tipo</th>
                 <th>Luas</th>
-                <th>Dia (horas)</th>
+                <th>Dia (Horas)</th>
+                <th>Temperatura Média</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Mercúrio</td>
+                <td>
+                  <span class="planet-icon" style="background: #aaa">M</span>
+                  Mercúrio
+                </td>
                 <td>Rochoso</td>
                 <td>0</td>
-                <td>1408</td>
+                <td>1,408 h</td>
+                <td>167°C</td>
               </tr>
               <tr>
-                <td>Vénus</td>
+                <td>
+                  <span class="planet-icon" style="background: #e3bb76">V</span>
+                  Vénus
+                </td>
                 <td>Rochoso</td>
                 <td>0</td>
-                <td>5832</td>
+                <td>5,832 h</td>
+                <td>464°C</td>
               </tr>
               <tr>
-                <td>Terra</td>
+                <td>
+                  <span class="planet-icon" style="background: #4b70dd">T</span>
+                  Terra
+                </td>
                 <td>Rochoso</td>
                 <td>1</td>
-                <td>24</td>
+                <td>24 h</td>
+                <td>15°C</td>
               </tr>
               <tr>
-                <td>Marte</td>
+                <td>
+                  <span class="planet-icon" style="background: #dd4b4b">M</span>
+                  Marte
+                </td>
                 <td>Rochoso</td>
                 <td>2</td>
-                <td>25</td>
+                <td>25 h</td>
+                <td>-65°C</td>
               </tr>
               <tr>
-                <td>Júpiter</td>
+                <td>
+                  <span
+                    class="planet-icon"
+                    style="background: #d8ca9d; color: #000"
+                    >J</span
+                  >
+                  Júpiter
+                </td>
                 <td>Gasoso</td>
                 <td>79+</td>
-                <td>10</td>
+                <td>10 h</td>
+                <td>-110°C</td>
               </tr>
               <tr>
-                <td>Saturno</td>
+                <td>
+                  <span
+                    class="planet-icon"
+                    style="background: #ead6b8; color: #000"
+                    >S</span
+                  >
+                  Saturno
+                </td>
                 <td>Gasoso</td>
                 <td>82+</td>
-                <td>11</td>
+                <td>11 h</td>
+                <td>-140°C</td>
               </tr>
             </tbody>
           </table>

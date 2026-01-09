@@ -1,42 +1,68 @@
-/* --- auth.css: Login e Registo --- */
+/* --- /public/css/auth.css: Login e Registo --- */
 
-/* Painel de Vidro Centralizado */
+/* Contentor Principal */
 .auth-container {
-  min-height: 80vh; /* Ocupa a altura quase toda */
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
-  padding-top: 100px; /* Espaço para header */
+  padding: 100px 20px 40px 20px; /* Compensar header fixo */
+  position: relative;
+  z-index: 1;
 }
 
+/* Painel de Vidro (Glassmorphism) */
 .glass-panel {
-  background: rgba(43, 45, 56, 0.7); /* Vidro mais escuro para legibilidade */
+  background: rgba(43, 45, 56, 0.75);
   border: 1px solid var(--glass-border);
   padding: 40px;
   border-radius: 20px;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   width: 100%;
-  max-width: 500px; /* Largura máxima do form */
+  max-width: 450px;
+  animation: slideUp 0.8s ease-out forwards;
 }
 
-/* Registo pode ser mais largo */
+/* Variante Larga para o Registo */
 .glass-panel.wide {
-  max-width: 700px;
+  max-width: 800px;
 }
 
-.glass-panel h2 {
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cabeçalhos do Painel */
+.auth-header {
   text-align: center;
-  font-family: var(--font-heading);
-  color: var(--accent-pink);
   margin-bottom: 30px;
-  font-size: 2rem;
 }
 
-/* Inputs e Labels */
+.auth-header h2 {
+  font-family: var(--font-heading);
+  color: var(--text-white);
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.auth-header p {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+}
+
+/* --- ESTILOS DOS INPUTS E FORMULÁRIO --- */
 .form-group {
   margin-bottom: 20px;
+  position: relative; /* Necessário para posicionar o ícone */
 }
 
 .form-group label {
@@ -44,54 +70,121 @@
   margin-bottom: 8px;
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--text-gray);
+  color: var(--accent-beige); /* Cor de destaque suave */
   margin-left: 5px;
+}
+
+/* Wrapper para colocar ícone dentro do input */
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-gray);
+  transition: 0.3s;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 8px;
-  border: 1px solid #555;
-  background: rgba(0, 0, 0, 0.3); /* Fundo escuro transparente */
+  padding: 12px 15px 12px 45px; /* Padding esquerdo maior por causa do ícone */
+  border-radius: 50px; /* Inputs arredondados */
+  border: 2px solid transparent;
+  background: rgba(0, 0, 0, 0.3);
   color: #fff;
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: 1rem;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
+/* Foco no Input */
 .form-group input:focus,
 .form-group select:focus {
   border-color: var(--accent-pink);
   outline: none;
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 10px rgba(228, 114, 103, 0.2);
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px rgba(228, 114, 103, 0.3);
 }
 
-/* Layout lado a lado para campos pequenos */
-.form-row {
-  display: flex;
-  gap: 15px;
-}
-.form-row .form-group {
-  flex: 1;
+.form-group input:focus + i {
+  color: var(--accent-pink); /* Ícone muda de cor ao focar */
 }
 
-/* Input de ficheiro */
+/* Estilo para Select */
+.form-group select {
+  cursor: pointer;
+  appearance: none; /* Remove seta padrão do browser */
+}
+
+/* Estilo para Upload de Ficheiros */
 input[type="file"] {
   padding: 10px;
+  padding-left: 15px; /* Reset do padding */
+  border-radius: 10px; /* Menos arredondado que texto */
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
+  font-size: 0.9rem;
+}
+input[type="file"]::file-selector-button {
+  background: var(--accent-pink);
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+input[type="file"]::file-selector-button:hover {
+  background: #ff857a;
 }
 
+/* --- GRELHA DE REGISTO (Responsive) --- */
+.register-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .register-grid {
+    grid-template-columns: 1fr 1fr; /* 2 Colunas no PC */
+  }
+  .full-width {
+    grid-column: span 2; /* Ocupa a largura toda */
+  }
+}
+
+/* Botões de Ação */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+.btn-block {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+/* Footer do Form */
 .auth-footer {
   text-align: center;
   margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.9rem;
-  color: #aaa;
+  color: var(--text-gray);
 }
 .auth-footer a {
   color: var(--accent-pink);
-  font-weight: 600;
+  font-weight: 700;
+  text-decoration: none;
+}
+.auth-footer a:hover {
+  text-decoration: underline;
 }

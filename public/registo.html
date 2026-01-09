@@ -1,11 +1,12 @@
-<!-- registo.html -->
+<!-- /public/registo.html -->
 <!DOCTYPE html>
 <html lang="pt">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registo - Astronomia</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <link
@@ -13,82 +14,146 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
   </head>
   <body>
     <div id="star-container"></div>
+
     <header>
       <div class="container nav-wrapper">
-        <a href="/" class="logo"
-          ><i class="fa-solid fa-rocket"></i> Astronomia Explorer</a
-        >
+        <a href="/" class="logo">
+          <i class="fa-solid fa-rocket"></i> Astronomia Explorer
+        </a>
         <div id="dynamic-nav" class="nav-links"></div>
       </div>
     </header>
 
-    <div class="container">
-      <div class="glass-panel" style="max-width: 600px">
-        <h2 style="text-align: center; margin-bottom: 20px">
-          Registo de Explorador
-        </h2>
+    <div class="auth-container">
+      <div class="glass-panel wide">
+        <div class="auth-header">
+          <h2>Registo de Explorador</h2>
+          <p>Preenche os dados para obter o teu passaporte galáctico.</p>
+        </div>
+
         <form action="/registo" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-            <label>Nome</label><input type="text" name="nome" required />
-          </div>
-
-          <div style="display: flex; gap: 15px">
-            <div class="form-group" style="flex: 1">
-              <label>Nascimento</label
-              ><input type="date" name="data_nascimento" required />
+          <div class="register-grid">
+            <div class="full-width form-group">
+              <label>Nome Completo</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  name="nome"
+                  placeholder="O teu nome"
+                  required
+                />
+                <i class="fa-solid fa-user"></i>
+              </div>
             </div>
-            <div class="form-group" style="flex: 1">
+
+            <div class="form-group">
+              <label>Data de Nascimento</label>
+              <div class="input-wrapper">
+                <input type="date" name="data_nascimento" required />
+                <i class="fa-solid fa-calendar"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label>Género</label>
-              <select name="genero" required>
-                <option value="">Selecione...</option>
-                <option value="Feminino">Feminino</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Outro">Outro</option>
-              </select>
+              <div class="input-wrapper">
+                <select name="genero" required>
+                  <option value="" disabled selected>Selecionar...</option>
+                  <option value="Feminino">Feminino</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Outro">Outro</option>
+                </select>
+                <i class="fa-solid fa-venus-mars"></i>
+              </div>
+            </div>
+
+            <div class="full-width form-group">
+              <label>Morada</label>
+              <div class="input-wrapper">
+                <input
+                  type="text"
+                  name="morada"
+                  placeholder="Rua das Estrelas, nº 42"
+                  required
+                />
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <div class="input-wrapper">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email@exemplo.com"
+                  required
+                />
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Telefone</label>
+              <div class="input-wrapper">
+                <input
+                  type="tel"
+                  name="telefone"
+                  placeholder="912 345 678"
+                  required
+                />
+                <i class="fa-solid fa-phone"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Fotografia de Perfil</label>
+              <input type="file" name="fotografia" accept="image/*" required />
+            </div>
+
+            <div class="form-group">
+              <label>Documento de Identificação</label>
+              <input type="file" name="documento" required />
+            </div>
+
+            <div class="full-width form-group">
+              <label>Definir Password</label>
+              <div class="input-wrapper">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Mínimo 8 caracteres"
+                  required
+                />
+                <i class="fa-solid fa-lock"></i>
+              </div>
             </div>
           </div>
-
-          <div class="form-group">
-            <label>Morada</label><input type="text" name="morada" required />
-          </div>
-          <div class="form-group">
-            <label>Email</label><input type="email" name="email" required />
-          </div>
-          <div class="form-group">
-            <label>Telefone</label><input type="tel" name="telefone" required />
-          </div>
-
-          <div class="form-group">
-            <label>Fotografia de Perfil</label
-            ><input type="file" name="fotografia" accept="image/*" required />
-          </div>
-          <div class="form-group">
-            <label>Documento de Identificação</label
-            ><input type="file" name="documento" required />
-          </div>
-
-          <div class="form-group">
-            <label>Password</label
-            ><input type="password" name="password" required />
-          </div>
-
-          <div style="text-align: center; margin-top: 20px">
+          <div class="form-actions">
             <button
               type="button"
               id="btn-limpar"
               class="btn btn-outline"
-              style="margin-right: 10px"
+              style="flex: 1"
             >
               Limpar
             </button>
-            <button type="submit" class="btn">Submeter</button>
+            <button type="submit" class="btn" style="flex: 2">
+              <i class="fa-solid fa-rocket"></i> Submeter Registo
+            </button>
           </div>
         </form>
+
+        <div class="auth-footer">
+          <p>Já tens conta? <a href="/login.html">Faz Login</a></p>
+        </div>
       </div>
     </div>
+
     <script src="js/script.js"></script>
   </body>
 </html>

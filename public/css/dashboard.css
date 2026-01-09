@@ -1,116 +1,161 @@
-/* --- dashboard.css: Páginas Internas --- */
+/* --- /public/css/dashboard.css --- */
 
-.page-header {
+/* Ajuste Geral */
+.page-container {
   padding-top: 100px;
-  padding-bottom: 40px;
-  text-align: center;
+  padding-bottom: 60px;
 }
 
+/* Título com linha decorativa */
+.page-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
 .page-header h2 {
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: #fff;
-  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(228, 114, 103, 0.4);
 }
 .page-header p {
   color: var(--text-gray);
+  max-width: 600px;
+  margin: 10px auto;
 }
 
-/* --- GRELHA DE UTILIZADORES (visualizacao.html) --- */
+/* --- GRELHA DE TRIPULAÇÃO (Visualizacao) --- */
 .user-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
-  margin-bottom: 60px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
 }
 
-.user-card {
-  background: var(--bg-darker);
-  padding: 25px;
-  border-radius: 15px;
+.crew-card {
+  background: rgba(30, 32, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px 20px;
   text-align: center;
-  border: 1px solid var(--glass-border);
-  transition: 0.3s;
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
-.user-card:hover {
-  transform: translateY(-5px);
+/* Efeito Hover Holográfico */
+.crew-card:hover {
+  transform: translateY(-10px);
   border-color: var(--accent-pink);
+  box-shadow: 0 10px 40px rgba(228, 114, 103, 0.2);
+}
+.crew-card:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-pink);
+  box-shadow: 0 0 15px var(--accent-pink);
 }
 
-.user-avatar {
+.crew-avatar-container {
+  position: relative;
   width: 100px;
   height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--accent-pink);
-  margin-bottom: 15px;
-  background: #000;
+  margin: 0 auto 20px;
 }
 
-.user-card h3 {
-  font-size: 1.2rem;
+.crew-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.crew-badge {
+  background: var(--accent-pink);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(228, 114, 103, 0.4);
+}
+
+.crew-name {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
   margin-bottom: 5px;
   color: #fff;
 }
-.user-card p {
+.crew-bio {
   font-size: 0.9rem;
-  color: #888;
-  margin-bottom: 5px;
+  color: #aaa;
+  line-height: 1.5;
+  margin-top: 10px;
+  font-style: italic;
 }
 
-/* --- TABELAS E INFO (astronomia.html) --- */
-.info-panel {
-  background: var(--bg-darker);
-  border: 1px solid var(--glass-border);
-  border-radius: 15px;
-  padding: 30px;
-  margin-bottom: 40px;
+/* --- TABELAS DE DADOS (Astronomia) --- */
+.data-panel {
+  background: rgba(20, 20, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 40px;
 }
 
-/* Fact Box (Curiosidade Extra) */
-.fact-box {
-  background: linear-gradient(135deg, var(--accent-pink), #d15f55);
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: none; /* Controlado via JS */
-  box-shadow: 0 5px 15px rgba(228, 114, 103, 0.4);
-  font-weight: 600;
-}
-
-/* Tabelas */
-.table-responsive {
-  overflow-x: auto;
-  border-radius: 10px;
-  border: 1px solid #444;
-}
-
-table.planet-table {
+table.cosmic-table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  color: var(--text-gray);
 }
 
-table.planet-table th,
-table.planet-table td {
-  padding: 15px;
+table.cosmic-table th {
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-table.planet-table th {
-  background: rgba(228, 114, 103, 0.1);
+  padding: 20px;
+  border-bottom: 2px solid var(--accent-pink);
   color: var(--accent-pink);
   font-family: var(--font-heading);
   text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
 }
 
-table.planet-table tr:hover {
-  background: rgba(255, 255, 255, 0.02);
+table.cosmic-table td {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+table.cosmic-table tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: white;
+}
+
+.planet-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #333;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  vertical-align: middle;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+/* Responsividade Tabela */
+.table-wrapper {
+  overflow-x: auto;
 }
