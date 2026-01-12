@@ -18,8 +18,39 @@
     <div class="page-header">
       <h2>Tripulação da Missão</h2>
       <p>
-        Lista oficial de exploradores registados na base de dados
-        intergaláctica.
+        Lista oficial de exploradores registados na base de dados intergaláctica.
+      </p>
+    </div>
+
+    <div class="search-wrapper glass-panel"
+      style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center; padding: 20px;">
+
+      <div class="input-wrapper" style="flex: 2; min-width: 250px;">
+        <input type="text" id="crew-search" placeholder="Pesquisar por nome..."
+          style="width: 100%; padding: 12px 15px 12px 45px; border-radius: 50px; border: none; background: rgba(0,0,0,0.3); color: white;">
+        <i class="fa-solid fa-magnifying-glass"
+          style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
+      </div>
+
+      <div class="input-wrapper" style="flex: 1; min-width: 200px;">
+        <select id="crew-role-filter"
+          style="width: 100%; padding: 12px 15px 12px 45px; border-radius: 50px; border: none; background: rgba(0,0,0,0.3); color: white; cursor: pointer;">
+          <option value="">Todos os Cargos</option>
+          <option value="Comandante">Comandante</option>
+          <option value="Piloto">Piloto</option>
+          <option value="Cientista">Cientista</option>
+          <option value="Engenheiro">Engenheiro</option>
+          <option value="Cadete">Cadete</option>
+        </select>
+        <i class="fa-solid fa-filter"
+          style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
+      </div>
+
+    </div>
+
+    <div id="user-grid-container" class="user-grid">
+      <p style="text-align: center; font-size: 1.2rem; color: #aaa">
+        <i class="fa-solid fa-circle-notch fa-spin"></i> A estabelecer comunicação...
       </p>
     </div>
 

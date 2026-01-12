@@ -4,20 +4,24 @@
 .page-container {
   padding-top: 100px;
   padding-bottom: 60px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* Título com linha decorativa */
 .page-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   position: relative;
 }
+
 .page-header h2 {
   font-family: var(--font-heading);
   font-size: 3rem;
   color: #fff;
   text-shadow: 0 0 20px rgba(228, 114, 103, 0.4);
 }
+
 .page-header p {
   color: var(--text-gray);
   max-width: 600px;
@@ -35,12 +39,18 @@
   background: rgba(30, 32, 40, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 30px 20px;
+  padding: 25px;
   text-align: center;
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 450px;
+  /* Garante altura mínima para alinhamento */
 }
 
 /* Efeito Hover Holográfico */
@@ -49,6 +59,7 @@
   border-color: var(--accent-pink);
   box-shadow: 0 10px 40px rgba(228, 114, 103, 0.2);
 }
+
 .crew-card:hover::after {
   content: "";
   position: absolute;
@@ -64,7 +75,7 @@
   position: relative;
   width: 100px;
   height: 100px;
-  margin: 0 auto 20px;
+  margin: 0 auto 15px;
 }
 
 .crew-avatar {
@@ -72,7 +83,12 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
+}
+
+.crew-card:hover .crew-avatar {
+  border-color: var(--accent-pink);
 }
 
 .crew-badge {
@@ -86,22 +102,26 @@
   letter-spacing: 1px;
   display: inline-block;
   margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(228, 114, 103, 0.4);
+  align-self: center;
 }
 
 .crew-name {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin-bottom: 5px;
   color: #fff;
 }
+
 .crew-bio {
   font-size: 0.9rem;
   color: #aaa;
   line-height: 1.5;
-  margin-top: 10px;
+  margin: 10px 0 20px 0;
   font-style: italic;
+  flex-grow: 1;
 }
+
+
 
 /* --- TABELAS DE DADOS (Astronomia) --- */
 .data-panel {
@@ -158,4 +178,214 @@ table.cosmic-table tr:hover {
 /* Responsividade Tabela */
 .table-wrapper {
   overflow-x: auto;
+}
+
+/* --- FILTROS DA TRIPULAÇÃO --- */
+.search-wrapper {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  border-radius: 15px;
+  background: rgba(30, 32, 40, 0.6);
+}
+
+#crew-search:focus,
+#crew-role-filter:focus {
+  outline: 2px solid var(--accent-pink);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#crew-role-filter option {
+  background-color: var(--bg-darker);
+  color: white;
+}
+
+/* --- GRELHA DE TRIPULAÇÃO (O FIX ESTÁ AQUI) --- */
+.user-grid {
+  display: grid;
+  width: 100%;
+  gap: 30px;
+  /* Por defeito (telemóvel), 1 coluna */
+  grid-template-columns: 1fr;
+}
+
+.crew-card {
+  background: rgba(30, 32, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Empurra o botão para o fundo */
+  height: 100%;
+  /* Garante que todos têm a mesma altura */
+}
+
+/* Efeito Hover Holográfico */
+.crew-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--accent-pink);
+  box-shadow: 0 10px 40px rgba(228, 114, 103, 0.2);
+}
+
+.crew-card:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-pink);
+  box-shadow: 0 0 15px var(--accent-pink);
+}
+
+.crew-avatar-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+}
+
+.crew-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
+}
+
+.crew-card:hover .crew-avatar {
+  border-color: var(--accent-pink);
+}
+
+.crew-badge {
+  background: var(--accent-pink);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 15px;
+  align-self: center;
+  /* Centra a badge */
+}
+
+.crew-name {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.crew-bio {
+  font-size: 0.9rem;
+  color: #aaa;
+  line-height: 1.5;
+  margin: 10px 0 20px 0;
+  font-style: italic;
+  flex-grow: 1;
+  /* Ocupa o espaço disponível para alinhar o botão no fundo */
+}
+
+/* --- ESTILOS DE PREVIEW DENTRO DO CARD (AJUSTADO) --- */
+.crew-card .doc-preview-container {
+  margin-top: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.crew-card .doc-preview-pdf {
+  width: 100%;
+  height: 150px;
+  border: none;
+}
+
+.crew-card .doc-preview-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* --- TABELAS DE DADOS (Astronomia) --- */
+.data-panel {
+  background: rgba(20, 20, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 40px;
+}
+
+table.cosmic-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: var(--text-gray);
+}
+
+table.cosmic-table th {
+  text-align: left;
+  padding: 20px;
+  border-bottom: 2px solid var(--accent-pink);
+  color: var(--accent-pink);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+}
+
+table.cosmic-table td {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+table.cosmic-table tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: white;
+}
+
+.planet-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #333;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  vertical-align: middle;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* TABLET (Maior que 768px): 2 Colunas */
+@media (min-width: 768px) {
+  .user-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* PC / DESKTOP (Maior que 1100px): 3 ou 4 Colunas */
+@media (min-width: 1100px) {
+  .user-grid {
+    grid-template-columns: repeat(3, 1fr);
+    /* Força 3 colunas lado a lado */
+  }
 }

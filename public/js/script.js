@@ -1,5 +1,8 @@
 // public/js/script.js
 
+// --- VARIÁVEL GLOBAL PARA A PESQUISA ---
+let allCrewMembers = [];
+
 document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
@@ -95,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const inputs = regForm.querySelectorAll("input, select");
       let valid = true;
       inputs.forEach((input) => {
-        // Verifica se campos (exceto opcionais se houvesse) estão preenchidos
         if (input.hasAttribute('required') && !input.value) valid = false;
       });
       const email = regForm.querySelector('input[name="email"]').value;
@@ -180,12 +182,48 @@ function setupDropdownLogic() {
   }, 100);
 }
 
-// CARREGAR O MEU PERFIL (Rota Segura /api/me)
+// --- FUNÇÃO DE PREVIEW DE DOCUMENTOS (PDF/IMAGEM) ---
+function generatePreviewHTML(dbPath) {
+  if (!dbPath) return null;
+
+  // Limpar o caminho
+  const cleanPath = "/" + dbPath.replace(/\\/g, "/").replace(/^public\//, "");
+
+  // Descobrir a extensão
+  const extension = cleanPath.split('.').pop().toLowerCase();
+
+  let html = `<div class="doc-preview-container">`;
+
+  if (extension === 'pdf') {
+    html += `<iframe src="${cleanPath}" class="doc-preview-pdf"></iframe>`;
+  }
+  else if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension)) {
+    html += `<img src="${cleanPath}" class="doc-preview-img" alt="Documento">`;
+  }
+  else {
+    html += `<div style="padding: 20px; text-align: center; color: #aaa;">
+                    <i class="fa-solid fa-file-lines" style="font-size: 2rem;"></i>
+                    <p>Pré-visualização indisponível</p>
+                 </div>`;
+  }
+
+  // Botão Download
+  html += `<div style="text-align: center; padding: 5px; background: rgba(0,0,0,0.2);">
+                <a href="${cleanPath}" target="_blank" class="doc-download-btn">
+                    <i class="fa-solid fa-expand"></i> Abrir / Download
+                </a>
+             </div>`;
+
+  html += `</div>`;
+  return html;
+}
+
+// --- CARREGAR O MEU PERFIL ---
 function loadMyProfile() {
   fetch("/api/me")
     .then((res) => {
       if (res.status === 401 || res.status === 403) {
-        window.location.href = "/"; // Se não autorizado, manda para login
+        window.location.href = "/";
         return null;
       }
       return res.json();
@@ -193,29 +231,27 @@ function loadMyProfile() {
     .then((user) => {
       if (!user) return;
 
-      // --- Preencher Visualização (Esquerda) ---
       document.getElementById("display-name").textContent = user.nome;
       document.getElementById("display-email").textContent = user.email;
       document.getElementById("display-role").textContent = user.cargo || "Cadete Espacial";
       document.getElementById("display-bio").textContent = user.biografia || "Sem dados registados.";
 
-      // Imagem
       if (user.fotografia) {
         const cleanPath = "/" + user.fotografia.replace(/\\/g, "/").replace(/^public\//, "");
         document.getElementById("display-avatar").src = cleanPath;
       }
 
-      // Botão Documento
-      const btnDoc = document.getElementById("btn-view-doc");
-      if (user.documento) {
-        const docPath = "/" + user.documento.replace(/\\/g, "/").replace(/^public\//, "");
-        btnDoc.href = docPath;
-        btnDoc.style.display = "inline-block";
-      } else {
-        btnDoc.style.display = "none";
+      // Preview do Documento no Perfil
+      const previewContainer = document.getElementById("document-preview-area");
+      if (previewContainer) {
+        if (user.documento) {
+          previewContainer.innerHTML = generatePreviewHTML(user.documento);
+        } else {
+          previewContainer.innerHTML = '<span style="font-size: 0.8rem; color: #555;">Nenhum documento carregado.</span>';
+        }
       }
 
-      // --- Preencher Formulário de Edição (Direita) ---
+      // Preencher Inputs
       document.getElementById("input-nome").value = user.nome;
       document.getElementById("input-telefone").value = user.telefone;
       document.getElementById("input-morada").value = user.morada;
@@ -224,67 +260,101 @@ function loadMyProfile() {
     .catch(err => console.error("Erro ao carregar perfil:", err));
 }
 
-// CARREGAR TRIPULAÇÃO (Visualização Geral)
+// --- CARREGAR TRIPULAÇÃO (COM FILTROS) ---
 function loadUsers(observer) {
   const grid = document.getElementById("user-grid-container");
+  const searchInput = document.getElementById("crew-search");
+  const roleFilter = document.getElementById("crew-role-filter");
+
   if (!grid) return;
 
   fetch("/getutilizadores")
     .then((res) => res.json())
     .then((users) => {
-      grid.innerHTML = "";
+      allCrewMembers = users; // Guardar na variável global
 
-      if (users.length === 0) {
-        grid.innerHTML = "<p>Nenhum explorador encontrado. A tripulação está vazia.</p>";
-        return;
+      // Renderizar tudo inicialmente
+      renderGrid(allCrewMembers, grid, observer);
+
+      // Ativar lógica de filtros se os inputs existirem
+      if (searchInput && roleFilter) {
+        setupFilters(grid, observer);
       }
-
-      users.forEach((user) => {
-        // Tratamento da Imagem
-        const imgPath = user.fotografia
-          ? "/" + user.fotografia.replaceAll("\\", "/").replace(/^public\//, "")
-          : "img/default.png";
-
-        // Tratamento do Documento (Botão)
-        let docButtonHTML = "";
-        if (user.documento) {
-          const docPath = "/" + user.documento.replaceAll("\\", "/").replace(/^public\//, "");
-          docButtonHTML = `
-                <a href="${docPath}" target="_blank" class="btn-sm btn-outline" style="margin-top: 15px; border-color: var(--accent-pink); color: var(--accent-pink); display:inline-block; font-size: 0.8rem;">
-                    <i class="fa-solid fa-file-contract"></i> Ver Documento
-                </a>
-            `;
-        }
-
-        const cargo = user.cargo || "Cadete Espacial";
-        const bio = user.biografia || "Sem dados biográficos.";
-
-        const card = document.createElement("div");
-        card.className = "crew-card hidden";
-
-        // Layout: Badge -> Avatar -> Nome -> Biografia -> Documento
-        card.innerHTML = `
-          <div class="crew-badge">${cargo}</div>
-          
-          <div class="crew-avatar-container">
-            <img src="${imgPath}" alt="${user.nome}" class="crew-avatar">
-          </div>
-          
-          <h3 class="crew-name">${user.nome}</h3>
-          
-          <div class="crew-bio" style="margin: 15px 0; min-height: 40px;">
-            "${bio}"
-          </div>
-
-          ${docButtonHTML}
-        `;
-
-        grid.appendChild(card);
-        if (observer) observer.observe(card);
-      });
     })
     .catch((err) => {
       console.error(err);
       grid.innerHTML = "<p>Erro ao carregar dados da missão.</p>";
     });
+}
+
+// --- LÓGICA DE FILTRAGEM ---
+function setupFilters(grid, observer) {
+  const searchInput = document.getElementById("crew-search");
+  const roleFilter = document.getElementById("crew-role-filter");
+
+  const filterFunction = () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedRole = roleFilter.value;
+
+    const filteredUsers = allCrewMembers.filter(user => {
+      const nameMatch = user.nome.toLowerCase().includes(searchTerm);
+      // Verifica se o cargo do user contém a seleção 
+      const roleMatch = selectedRole === "" || (user.cargo && user.cargo.includes(selectedRole));
+
+      return nameMatch && roleMatch;
+    });
+
+    renderGrid(filteredUsers, grid, observer);
+  };
+
+  searchInput.addEventListener("input", filterFunction);
+  roleFilter.addEventListener("change", filterFunction);
+}
+
+// --- DESENHAR A GRELHA (RENDER) ---
+function renderGrid(users, grid, observer) {
+  grid.innerHTML = "";
+
+  if (users.length === 0) {
+    grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #aaa;">
+            <i class="fa-solid fa-wind" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>Nenhum tripulante encontrado com esses critérios.</p>
+        </div>`;
+    return;
+  }
+
+  users.forEach((user) => {
+    const imgPath = user.fotografia
+      ? "/" + user.fotografia.replaceAll("\\", "/").replace(/^public\//, "")
+      : "img/default.png";
+
+    const cargo = user.cargo || "Cadete Espacial";
+    const bio = user.biografia || "Sem dados biográficos.";
+
+    // Gerar Preview do Documento
+    let docHTML = "";
+    if (user.documento) {
+      docHTML = generatePreviewHTML(user.documento);
+    }
+
+    const card = document.createElement("div");
+    card.className = "crew-card hidden";
+
+    card.innerHTML = `
+          <div class="crew-badge">${cargo}</div>
+          <div class="crew-avatar-container">
+            <img src="${imgPath}" alt="${user.nome}" class="crew-avatar">
+          </div>
+          <h3 class="crew-name">${user.nome}</h3>
+          
+          <div class="crew-bio" style="margin: 15px 0;">"${bio}"</div>
+
+          <div style="margin-top: 15px; font-size: 0.9rem;">
+            ${docHTML}
+          </div>
+        `;
+
+    grid.appendChild(card);
+    if (observer) observer.observe(card);
+  });
 }
