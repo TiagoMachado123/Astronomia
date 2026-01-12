@@ -11,12 +11,13 @@ const fs = require("node:fs");
 const app = express();
 const port = 3000;
 
-// Configuração da Base de Dados
+// --- CONFIGURAÇÃO DA BASE DE DADOS ---
+// Certifica-te que a password é a correta para o teu MySQL local
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "h4dk3M,^D0%hLy12}]",
-  database: "astronomia_registos",
+  password: "h4dk3M,^D0%hLy12}]", // [cite: 1] Mantive a password do teu ficheiro original
+  database: "astronomia_registos", // [cite: 1]
 });
 
 db.connect((err) => {
@@ -24,23 +25,24 @@ db.connect((err) => {
   console.log("Conectado à Base de Dados MySQL!");
 });
 
-// Middleware
+// --- MIDDLEWARE ---
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Serve ficheiros estáticos da pasta 'public' (CSS, JS, Imagens, HTML)
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
   session({
-    secret: "segredo_cosmico_super_seguro",
+    secret: "segredo_cosmico_super_seguro", // [cite: 1]
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // 'true' apenas se usar HTTPS
+    cookie: { secure: false }, // 'true' apenas se usares HTTPS
   })
 );
 
-// Configuração do Multer (Uploads)
-// Verifica se a pasta existe
+// --- CONFIGURAÇÃO DO MULTER (UPLOADS) ---
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
@@ -55,33 +57,56 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Middleware de Autenticação
+// --- MIDDLEWARE DE AUTENTICAÇÃO ---
 const isAuthenticated = (req, res, next) => {
   if (req.session.loggedin) {
     return next();
   }
-  res.redirect("/login.html");
+  // Se não estiver logado, redireciona para a raiz (Login)
+  res.redirect("/");
 };
 
-// --- ROTAS ---
+// ==========================================
+//                ROTAS
+// ==========================================
 
-// Rota Raiz (Landing Page)
+// 1. ROTA RAIZ (LOGIN) - ALTERADO
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "landing.html"));
+  // Se o utilizador já estiver logado, enviamos para o dashboard
+  if (req.session.loggedin) {
+    return res.redirect("/dashboard.html");
+  }
+  // Caso contrário, mostra o login (que deve ser o teu ficheiro index.html na pasta public)
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Endpoint para verificar sessão (para o Frontend JS atualizar a Nav)
+// 2. DASHBOARD (ANTIGA LANDING PAGE) - NOVA ROTA
+// Protegida pelo middleware 'isAuthenticated'
+app.get("/dashboard.html", isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+});
+
+// 3. PÁGINA DE REGISTO
+app.get("/registo.html", (req, res) => {
+  if (req.session.loggedin) {
+    return res.redirect("/dashboard.html");
+  }
+  res.sendFile(path.join(__dirname, "public", "registo.html"));
+});
+
+// 4. VERIFICAR SESSÃO (API para o Frontend)
 app.get("/check-session", (req, res) => {
-  res.json({ loggedin: req.session.loggedin || false });
+  res.json({
+    loggedin: req.session.loggedin || false,
+    email: req.session.email || null // <--- ADICIONA ESTA LINHA
+  });
 });
 
-// Registo (POST)
-// Registo (POST) - ATUALIZADO
+// 5. REGISTO (POST)
 app.post(
   "/registo",
   upload.fields([{ name: "fotografia" }, { name: "documento" }]),
   async (req, res) => {
-    // Adicionei 'cargo' e 'biografia' (podem vir do form ou ser default)
     const {
       nome,
       data_nascimento,
@@ -93,27 +118,19 @@ app.post(
       biografia,
     } = req.body;
 
-    // Vamos atribuir um cargo aleatório para ser divertido, ou podes por no form
-    const cargos = [
-      "Cadete",
-      "Engenheiro",
-      "Piloto",
-      "Cientista",
-      "Comandante",
-    ];
+    // Atribuição de cargo aleatório (mantido do teu código original)
+    const cargos = ["Cadete", "Engenheiro", "Piloto", "Cientista", "Comandante"]; // [cite: 8]
     const cargoAtribuido = cargos[Math.floor(Math.random() * cargos.length)];
 
     const fotoPath = req.files["fotografia"]
       ? req.files["fotografia"][0].path
-      : "uploads/default-avatar.png"; // Fallback image
-    const docPath = req.files["documento"]
-      ? req.files["documento"][0].path
-      : null;
+      : "uploads/default-avatar.png";
+    const docPath = req.files["documento"] ? req.files["documento"][0].path : null;
 
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Query Atualizada
+      // Inserção na Base de Dados
       const query = `INSERT INTO utilizadores (nome, data_nascimento, morada, email, telefone, genero, fotografia, documento, password, cargo, biografia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
       db.query(
@@ -135,12 +152,14 @@ app.post(
           if (err) {
             console.error(err);
             return res.send(
-              '<script>alert("Erro no registo!"); window.location.href="/registo.html";</script>'
+              '<script>alert("Erro no registo! O email pode já estar a ser usado."); window.location.href="/registo.html";</script>'
             );
           }
+          // Login automático após registo
           req.session.loggedin = true;
           req.session.email = email;
-          res.redirect("/");
+          // ALTERADO: Redireciona para o dashboard em vez da raiz
+          res.redirect("/dashboard.html");
         }
       );
     } catch (e) {
@@ -150,7 +169,7 @@ app.post(
   }
 );
 
-// Login (POST)
+// 6. LOGIN (POST)
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -165,39 +184,44 @@ app.post("/login", (req, res) => {
         if (comparison) {
           req.session.loggedin = true;
           req.session.email = email;
-          res.redirect("/");
+          // ALTERADO: Redireciona para o dashboard
+          res.redirect("/dashboard.html");
         } else {
           res.send(
-            '<script>alert("Password incorreta!"); window.location.href="/login.html";</script>'
+            '<script>alert("Password incorreta!"); window.location.href="/";</script>'
           );
         }
       } else {
         res.send(
-          '<script>alert("Utilizador não encontrado!"); window.location.href="/login.html";</script>'
+          '<script>alert("Utilizador não encontrado!"); window.location.href="/";</script>'
         );
       }
     }
   );
 });
 
-// Logout
+// 7. LOGOUT
 app.get("/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("/");
+  res.redirect("/"); // Redireciona para o Login
 });
 
-// Visualizar Dados (Protegido) - Retorna JSON
+// 8. API: DADOS DOS UTILIZADORES (Protegido)
 app.get("/getutilizadores", isAuthenticated, (req, res) => {
+  // ADICIONADO: 'documento' na lista de campos a selecionar
   db.query(
-    "SELECT id, nome, data_nascimento, morada, email, telefone, genero, fotografia FROM utilizadores",
+    "SELECT id, nome, data_nascimento, morada, email, telefone, genero, fotografia, documento, cargo, biografia FROM utilizadores",
     (err, results) => {
-      if (err) throw err;
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Erro ao buscar tripulação.");
+      }
       res.json(results);
     }
   );
 });
 
-// Rotas para páginas protegidas (HTML diretos)
+// 9. OUTRAS PÁGINAS PROTEGIDAS
 app.get("/visualizacao.html", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "public", "visualizacao.html"));
 });
@@ -206,6 +230,58 @@ app.get("/astronomia.html", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "public", "astronomia.html"));
 });
 
+// INICIAR SERVIDOR
+// --- NOVO: ROTA PARA OBTER DADOS DO UTILIZADOR LOGADO (SEGURO) ---
+app.get("/api/me", isAuthenticated, (req, res) => {
+  const email = req.session.email;
+
+  db.query("SELECT * FROM utilizadores WHERE email = ?", [email], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Erro ao buscar dados." });
+    }
+    if (results.length > 0) {
+      // Removemos a password antes de enviar para o frontend por segurança
+      const user = results[0];
+      delete user.password;
+      res.json(user);
+    } else {
+      res.status(404).json({ error: "Utilizador não encontrado." });
+    }
+  });
+});
+
+// --- NOVO: ROTA PARA ATUALIZAR PERFIL ---
+app.post("/update-profile", isAuthenticated, upload.fields([{ name: "fotografia" }, { name: "documento" }]), async (req, res) => {
+  const { nome, telefone, morada, biografia } = req.body;
+  const email = req.session.email; // Usamos o email da sessão para garantir que alteramos o user certo
+
+  // Lógica para manter a imagem antiga se não for feito upload de uma nova
+  // Primeiro buscamos os dados atuais para saber os caminhos antigos
+  db.query("SELECT fotografia, documento FROM utilizadores WHERE email = ?", [email], (err, results) => {
+    if (err) throw err;
+    // 8. API: DADOS DOS UTILIZADORES
+    const currentUser = results[0];
+
+    // Se houver novo ficheiro, usa o novo path. Se não, mantém o antigo.
+    const fotoPath = req.files["fotografia"] ? req.files["fotografia"][0].path : currentUser.fotografia;
+    const docPath = req.files["documento"] ? req.files["documento"][0].path : currentUser.documento;
+
+    const query = `
+            UPDATE utilizadores 
+            SET nome = ?, telefone = ?, morada = ?, biografia = ?, fotografia = ?, documento = ?
+            WHERE email = ?
+        `;
+
+    db.query(query, [nome, telefone, morada, biografia, fotoPath, docPath, email], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.send('<script>alert("Erro ao atualizar."); window.location.href="/perfil.html";</script>');
+      }
+      res.send('<script>alert("Perfil atualizado com sucesso!"); window.location.href="/perfil.html";</script>');
+    });
+  });
+});
 app.listen(port, () => {
   console.log(`Servidor a rodar em http://localhost:${port}`);
 });

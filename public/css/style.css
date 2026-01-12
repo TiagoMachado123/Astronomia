@@ -53,6 +53,7 @@ body {
     opacity: 0.3;
     transform: scale(0.8);
   }
+
   100% {
     opacity: 1;
     transform: scale(1.2);
@@ -63,17 +64,20 @@ body {
   0% {
     transform: translateY(0) rotate(-2deg);
   }
+
   100% {
     transform: translateY(-20px) rotate(2deg);
   }
 }
 
 @keyframes flame-flicker {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(0.95);
     opacity: 0.8;
@@ -92,6 +96,7 @@ body {
   transform: translateY(30px);
   transition: all 0.8s ease-out;
 }
+
 .show {
   opacity: 1;
   transform: translateY(0);
@@ -145,7 +150,8 @@ a {
 /* --- HEADER / NAVBAR --- */
 header {
   padding: 20px 0;
-  position: absolute; /* Fica por cima do Hero */
+  position: absolute;
+  /* Fica por cima do Hero */
   width: 100%;
   z-index: 100;
   background: linear-gradient(to bottom, rgba(62, 65, 80, 0.9), transparent);
@@ -172,18 +178,21 @@ header {
   align-items: center;
   gap: 20px;
 }
+
 .nav-links a.nav-item {
   color: var(--text-gray);
   font-weight: 600;
   font-size: 0.95rem;
 }
+
 .nav-links a.nav-item:hover {
   color: var(--accent-pink);
 }
 
 /* --- FOOTER --- */
 footer {
-  margin-top: auto; /* Empurra o footer para baixo */
+  margin-top: auto;
+  /* Empurra o footer para baixo */
   background: var(--bg-darker);
   padding: 40px 0;
   text-align: center;
@@ -196,126 +205,133 @@ footer a {
   margin: 0 10px;
   font-size: 1.2rem;
 }
+
 footer a:hover {
   color: var(--accent-pink);
 }
 
-/* --- NAVBAR USER DROPDOWN --- */
-.nav-user-container {
+/* --- /public/css/style.css --- */
+
+/* ... (mantém o resto do teu CSS) ... */
+
+/* --- USER PROFILE DROPDOWN --- */
+.user-menu-container {
   position: relative;
-  display: inline-block;
+  margin-left: 20px;
 }
 
-.user-avatar-mini {
-  width: 40px;
-  height: 40px;
+/* O Ícone/Avatar do User */
+.user-avatar-btn {
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  object-fit: cover;
+  background: rgba(255, 255, 255, 0.1);
   border: 2px solid var(--accent-pink);
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.user-avatar-mini:hover {
-  transform: scale(1.1);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 55px;
-  right: 0;
-  background: var(--bg-darker);
-  border: 1px solid var(--glass-border);
-  border-radius: 10px;
-  width: 200px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  display: none; /* Escondido por defeito */
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-}
-
-.dropdown-menu.active {
   display: flex;
-  animation: fadeIn 0.2s ease-out;
-}
-
-.dropdown-item {
-  padding: 12px 20px;
-  color: var(--text-gray);
-  font-size: 0.9rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.dropdown-item:hover {
-  background: rgba(255,255,255,0.05);
-  color: #fff;
-}
-
-.dropdown-item:last-child {
-  border-bottom: none;
-  color: #ff6b6b; /* Vermelho para logout */
-}
-
-/* --- MODAL DE PREVIEW DE DOCUMENTOS --- */
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.85);
-  z-index: 2000;
-  display: none; /* Escondido */
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(5px);
-}
-
-.modal-content {
-  background: var(--bg-darker);
-  padding: 20px;
-  border-radius: 15px;
-  max-width: 90%;
-  max-height: 90vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 30px rgba(228, 114, 103, 0.2);
-}
-
-.modal-close {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  font-size: 2rem;
-  color: #fff;
   cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff;
+  font-size: 1.2rem;
+  overflow: hidden;
+  /* Para a imagem não sair fora */
 }
 
-.modal-body {
+.user-avatar-btn:hover {
+  background: var(--accent-pink);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(228, 114, 103, 0.6);
+}
+
+.user-avatar-btn img {
   width: 100%;
   height: 100%;
-  overflow: auto;
+  object-fit: cover;
+}
+
+/* O Menu Flutuante (Escondido por defeito) */
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  /* Distância do topo */
+  right: 0;
+  width: 220px;
+  background: var(--bg-darker);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 10px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Animação */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 1000;
+}
+
+/* Classe para mostrar o menu (adicionada via JS) */
+.profile-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Seta decorativa no topo do menu */
+.profile-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  width: 12px;
+  height: 12px;
+  background: var(--bg-darker);
+  border-top: 1px solid var(--glass-border);
+  border-left: 1px solid var(--glass-border);
+  transform: rotate(45deg);
+}
+
+/* Itens do Menu */
+.profile-dropdown a {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  transition: 0.2s;
+  border-left: 3px solid transparent;
+  /* Indicador lateral */
 }
 
-.preview-file {
-  max-width: 100%;
-  max-height: 80vh;
-  border-radius: 5px;
+.profile-dropdown a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-left-color: var(--accent-pink);
 }
 
-iframe.preview-file {
-  width: 800px;
-  height: 600px;
-  background: #fff;
+.profile-dropdown a i {
+  width: 20px;
+  text-align: center;
+  color: var(--accent-pink);
+}
+
+/* Linha separadora antes do Logout */
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 8px 0;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,0 +1,161 @@
+<!-- /public/perfil.html -->
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meu Perfil - Astronomia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+
+
+</head>
+
+<body>
+    <div id="star-container"></div>
+
+    <div class="container page-container">
+        <div class="page-header">
+            <h2>Identificação do Explorador</h2>
+            <p>Atualiza os teus dados de missão e biografia estelar.</p>
+        </div>
+
+        <div class="profile-layout">
+
+            <div class="glass-panel profile-card">
+                <img id="display-avatar" src="img/default.png" alt="Avatar" class="profile-big-avatar">
+                <h3 id="display-name" style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 5px;">A
+                    carregar...</h3>
+                <div id="display-role" class="profile-role-badge">...</div>
+                <p id="display-email" style="color: var(--text-gray); font-size: 0.9rem;"></p>
+
+                <div style="margin-top: 15px;">
+                    <a id="btn-view-doc" href="#" target="_blank" class="btn-sm btn-outline"
+                        style="display: none; border-color: var(--accent-pink); color: var(--accent-pink);">
+                        <i class="fa-solid fa-file-contract"></i> Ver Documento
+                    </a>
+                </div>
+
+                <div
+                    style="margin-top: 20px; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <p style="font-style: italic; color: #aaa; font-size: 0.9rem;">
+                        "<span id="display-bio">...</span>"
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <h3 style="margin-bottom: 25px; color: var(--accent-pink);">
+                    <i class="fa-solid fa-pen-to-square"></i> Editar Dados
+                </h3>
+
+                <form id="profile-form" action="/update-profile" method="POST" enctype="multipart/form-data">
+                    <div class="register-grid">
+
+                        <div class="form-group">
+                            <label>Nome de Operação</label>
+                            <div class="input-wrapper">
+                                <input type="text" name="nome" id="input-nome" required />
+                                <i class="fa-solid fa-user-astronaut"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Comunicador (Tel)</label>
+                            <div class="input-wrapper">
+                                <input type="tel" name="telefone" id="input-telefone" required />
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                        </div>
+
+                        <div class="full-width form-group">
+                            <label>Base Principal (Morada)</label>
+                            <div class="input-wrapper">
+                                <input type="text" name="morada" id="input-morada" required />
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                        </div>
+
+                        <div class="full-width form-group">
+                            <label>Diário de Bordo (Biografia)</label>
+                            <div class="input-wrapper">
+                                <textarea name="biografia" id="input-biografia" rows="4"
+                                    style="width: 100%; background: rgba(0,0,0,0.3); border: none; color: white; padding: 15px; border-radius: 15px; font-family: var(--font-body);"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="full-width form-group">
+                            <label>Nova Foto (Opcional)</label>
+                            <div class="input-wrapper"> <input type="file" name="fotografia" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="full-width form-group">
+                            <label>Novo Documento (Opcional)</label>
+                            <div class="input-wrapper">
+                                <input type="file" name="documento" accept=".pdf,.jpg,.png,.doc" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: right;">
+                        <button type="submit" class="btn">
+                            <i class="fa-solid fa-floppy-disk"></i> Gravar Alterações
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
+
+<style>
+    .profile-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    @media (min-width: 900px) {
+        .profile-layout {
+            grid-template-columns: 350px 1fr;
+            /* Coluna esquerda fixa, direita flexível */
+        }
+    }
+
+    .profile-card {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-big-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid var(--accent-pink);
+        object-fit: cover;
+        box-shadow: 0 0 30px rgba(228, 114, 103, 0.4);
+        margin-bottom: 20px;
+    }
+
+    .profile-role-badge {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: var(--accent-beige);
+        margin-bottom: 15px;
+        border: 1px solid var(--glass-border);
+    }
+</style>
