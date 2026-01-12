@@ -64,10 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Páginas Privadas (Dashboard, etc.)
     else {
+      // Função auxiliar para verificar se o link está ativo
+      const isActive = (p) => path.includes(p) ? 'active' : '';
+
       navContainer.innerHTML = `
-            <a href="/dashboard.html" class="nav-item">Início</a>
-            <a href="/astronomia.html" class="nav-item">Curiosidades</a>
-            <a href="/visualizacao.html" class="nav-item">Tripulação</a>
+            <a href="/dashboard.html" class="nav-item ${isActive('dashboard.html')}">Início</a>
+            <a href="/astronomia.html" class="nav-item ${isActive('astronomia.html')}">Curiosidades</a>
+            <a href="/visualizacao.html" class="nav-item ${isActive('visualizacao.html')}">Tripulação</a>
             
             <div class="user-menu-container">
                 <div class="user-avatar-btn" id="profile-trigger">
@@ -75,11 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="/perfil.html">
+                    <a href="/perfil.html" class="${isActive('perfil.html')}">
                         <i class="fa-solid fa-id-card"></i> O meu Perfil
-                    </a>
-                    <a href="/settings.html">
-                        <i class="fa-solid fa-gear"></i> Configurações
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="/logout" style="color: #ff6b6b;">
@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
   }
-
   // --- 5. Lógica de Formulários (Registo) ---
   const regForm = document.querySelector('form[action="/registo"]');
   if (regForm) {

@@ -246,7 +246,7 @@
 .step-number {
   font-size: 4rem;
   font-weight: 800;
-  color: rgba(228, 114, 103, 0.2); /* Transparente */
+  color: rgba(228, 114, 103, 0.8); /* Transparente */
   font-family: var(--font-heading);
   line-height: 1;
   position: absolute;

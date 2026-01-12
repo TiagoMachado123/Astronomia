@@ -16,8 +16,8 @@ const port = 3000;
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "h4dk3M,^D0%hLy12}]", // [cite: 1] Mantive a password do teu ficheiro original
-  database: "astronomia_registos", // [cite: 1]
+  password: "h4dk3M,^D0%hLy12}]", 
+  database: "astronomia_registos", 
 });
 
 db.connect((err) => {
@@ -35,10 +35,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
   session({
-    secret: "segredo_cosmico_super_seguro", // [cite: 1]
+    secret: "segredo_cosmico_super_seguro", 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // 'true' apenas se usares HTTPS
+    cookie: { secure: false }, 
   })
 );
 

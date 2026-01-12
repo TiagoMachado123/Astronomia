@@ -18,135 +18,151 @@
     <div class="page-header">
       <h2>Base de Conhecimento</h2>
       <p>
-        Acesso restrito a dados do sistema solar e curiosidades avançadas.
+        Acesso restrito aos segredos do sistema solar e fenómenos galácticos.
       </p>
     </div>
 
-    <div class="glass-panel" style="margin-bottom: 50px">
-      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center">
-        <div style="flex: 1; min-width: 300px">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
-            alt="Espaço" style="
-                width: 100%;
-                border-radius: 15px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-              " />
-        </div>
-        <div style="flex: 1; min-width: 300px">
-          <h3 style="
-                font-family: var(--font-heading);
-                color: var(--accent-pink);
-                font-size: 1.8rem;
-              ">
-            O Universo Observável
+    <div class="glass-panel" style="margin-bottom: 50px; position: relative; overflow: hidden;">
+      <div
+        style="position: absolute; top:0; left:0; width: 100%; height: 100%; background: url('https://apod.nasa.gov/apod/image/2311/M1_Hubble_960.jpg') center/cover; opacity: 0.2; z-index: 0;">
+      </div>
+
+      <div style="position: relative; z-index: 1; display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
+        <div style="flex: 2;">
+          <h3 style="font-family: var(--font-heading); color: var(--accent-pink); font-size: 1.8rem;">
+            <i class="fa-solid fa-star"></i> Facto do Dia
           </h3>
-          <p style="margin-top: 15px; color: #ddd; line-height: 1.8">
-            Sabias que olhar para o céu é olhar para o passado? A luz do Sol
-            demora 8 minutos a chegar à Terra. A luz das estrelas mais
-            distantes que vemos hoje partiu há milhões de anos, quando os
-            dinossauros ainda caminhavam no nosso planeta.
+          <p style="margin-top: 15px; color: #ddd; line-height: 1.8; font-size: 1.1rem;">
+            <strong>A Nebulosa do Caranguejo:</strong> O que vês aqui é o remanescente de uma estrela que explodiu como
+            supernova.
+            A luz da explosão chegou à Terra no ano 1054 e foi tão brilhante que podia ser vista durante o dia!
+            Hoje, é um dos objetos mais estudados pelos astrónomos.
           </p>
 
           <button id="toggle-fact" class="btn" style="margin-top: 25px">
-            <i class="fa-solid fa-lightbulb"></i> Revelar Dados Secretos
+            <i class="fa-solid fa-microscope"></i> Ler Análise Completa
           </button>
 
-          <div id="fact-box" class="fact-box">
+          <div id="fact-box" class="fact-box" style="margin-top: 20px;">
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <strong>Alerta:</strong> Se caísses num buraco negro, sofrerias de
-            "espaguetificação" - serias esticado como um fio de massa devido à
-            gravidade extrema!
+            <strong>Nota Científica:</strong> No centro desta nebulosa existe um pulsar: uma estrela de neutrões que
+            gira 30 vezes por segundo!
           </div>
         </div>
       </div>
     </div>
 
-    <div class="data-panel">
-      <h3 style="
-            font-family: var(--font-heading);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-          ">
-        <i class="fa-solid fa-database"></i> Telemetria Planetária
-      </h3>
+    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-top: 60px; text-align: center;">
+      <i class="fa-solid fa-globe"></i> Sistema Solar
+    </h3>
 
-      <div class="table-wrapper">
-        <table class="cosmic-table">
-          <thead>
-            <tr>
-              <th>Planeta</th>
-              <th>Tipo</th>
-              <th>Luas</th>
-              <th>Dia (Horas)</th>
-              <th>Temperatura Média</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <span class="planet-icon" style="background: #aaa">M</span>
-                Mercúrio
-              </td>
-              <td>Rochoso</td>
-              <td>0</td>
-              <td>1,408 h</td>
-              <td>167°C</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="planet-icon" style="background: #e3bb76">V</span>
-                Vénus
-              </td>
-              <td>Rochoso</td>
-              <td>0</td>
-              <td>5,832 h</td>
-              <td>464°C</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="planet-icon" style="background: #4b70dd">T</span>
-                Terra
-              </td>
-              <td>Rochoso</td>
-              <td>1</td>
-              <td>24 h</td>
-              <td>15°C</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="planet-icon" style="background: #dd4b4b">M</span>
-                Marte
-              </td>
-              <td>Rochoso</td>
-              <td>2</td>
-              <td>25 h</td>
-              <td>-65°C</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="planet-icon" style="background: #d8ca9d; color: #000">J</span>
-                Júpiter
-              </td>
-              <td>Gasoso</td>
-              <td>79+</td>
-              <td>10 h</td>
-              <td>-110°C</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="planet-icon" style="background: #ead6b8; color: #000">S</span>
-                Saturno
-              </td>
-              <td>Gasoso</td>
-              <td>82+</td>
-              <td>11 h</td>
-              <td>-140°C</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="planets-grid">
+
+      <div class="planet-card">
+        <div class="planet-visual p-mercurio"></div>
+        <h3>Mercúrio</h3>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-temperature-high"></i> Temp</span>
+          <span>167°C</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-clock"></i> Dia</span>
+          <span>1,408 h</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-moon"></i> Luas</span>
+          <span>0</span>
+        </div>
       </div>
+
+      <div class="planet-card">
+        <div class="planet-visual p-venus"></div>
+        <h3>Vénus</h3>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-temperature-high"></i> Temp</span>
+          <span>464°C</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-clock"></i> Dia</span>
+          <span>5,832 h</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-moon"></i> Luas</span>
+          <span>0</span>
+        </div>
+      </div>
+
+      <div class="planet-card">
+        <div class="planet-visual p-terra"></div>
+        <h3>Terra</h3>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-temperature-high"></i> Temp</span>
+          <span>15°C</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-clock"></i> Dia</span>
+          <span>24 h</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-moon"></i> Luas</span>
+          <span>1</span>
+        </div>
+      </div>
+
+      <div class="planet-card">
+        <div class="planet-visual p-marte"></div>
+        <h3>Marte</h3>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-temperature-high"></i> Temp</span>
+          <span>-65°C</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-clock"></i> Dia</span>
+          <span>25 h</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-moon"></i> Luas</span>
+          <span>2</span>
+        </div>
+      </div>
+
+      <div class="planet-card">
+        <div class="planet-visual p-jupiter"></div>
+        <h3>Júpiter</h3>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-temperature-high"></i> Temp</span>
+          <span>-110°C</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-clock"></i> Dia</span>
+          <span>10 h</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-moon"></i> Luas</span>
+          <span>79+</span>
+        </div>
+      </div>
+
+      <div class="planet-card">
+        <div class="planet-visual p-saturno"></div>
+        <h3>Saturno</h3>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-temperature-high"></i> Temp</span>
+          <span>-140°C</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-clock"></i> Dia</span>
+          <span>11 h</span>
+        </div>
+        <div class="planet-stats">
+          <span><i class="fa-solid fa-moon"></i> Luas</span>
+          <span>82+</span>
+        </div>
+      </div>
+
     </div>
   </div>
+
   <script src="js/script.js"></script>
 </body>
 

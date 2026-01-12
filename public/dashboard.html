@@ -1,11 +1,10 @@
-<!-- /public/landing.html -->
 <!DOCTYPE html>
 <html lang="pt">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Astronomia Explorer</title>
+  <title>Dashboard - Astronomia Explorer</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&family=Open+Sans:wght@400;600&display=swap"
     rel="stylesheet" />
@@ -20,14 +19,18 @@
   <section class="hero">
     <div class="container hero-layout">
       <div class="hero-text">
-        <h1>Explora o <span class="gradient-text">Universo!</span></h1>
+        <h1>Painel de <span class="gradient-text">Comando</span></h1>
         <p>
-          Descobre curiosidades sobre astronomia, mapeia estrelas e junta-te à
-          maior comunidade de exploradores espaciais.
+          Bem-vindo de volta, Explorador. Os sistemas estão operacionais.
+          Consulta a tua tripulação, verifica os dados astronómicos ou atualiza o teu diário de bordo.
         </p>
         <div class="hero-buttons">
-          <a href="#learn-more" class="btn">Saber Mais</a>
-          <a href="#" class="btn btn-outline">Ver Demo</a>
+          <a href="/visualizacao.html" class="btn">
+            <i class="fa-solid fa-users"></i> Ver Tripulação
+          </a>
+          <a href="/astronomia.html" class="btn btn-outline">
+            <i class="fa-solid fa-star"></i> Curiosidades
+          </a>
         </div>
       </div>
 
@@ -48,24 +51,24 @@
     </div>
   </section>
 
-  <section id="learn-more" class="container section-padding text-center">
-    <h2 class="section-heading">Porquê Astronomia?</h2>
+  <section id="features" class="container section-padding text-center">
+    <h2 class="section-heading">Estado da Missão</h2>
 
     <div class="cards-horizontal">
       <div class="glass-panel">
-        <i class="fa-solid fa-star icon-feature"></i>
-        <h3>Estrelas</h3>
-        <p>O berço da vida e a luz que guia a nossa curiosidade.</p>
+        <i class="fa-solid fa-user-astronaut icon-feature"></i>
+        <h3>Perfil Ativo</h3>
+        <p>A tua identidade e documentos estão seguros na base de dados.</p>
       </div>
       <div class="glass-panel">
-        <i class="fa-solid fa-globe icon-feature"></i>
-        <h3>Planetas</h3>
-        <p>Mundos novos e exoplanetas à espera de serem descobertos.</p>
+        <i class="fa-solid fa-satellite-dish icon-feature"></i>
+        <h3>Comunicações</h3>
+        <p>Ligação estabelecida com a rede de exploradores em tempo real.</p>
       </div>
       <div class="glass-panel">
-        <i class="fa-solid fa-eye icon-feature"></i>
-        <h3>Observação</h3>
-        <p>Aprende a usar telescópios e olha para cima com clareza.</p>
+        <i class="fa-solid fa-rocket icon-feature"></i>
+        <h3>Pronto a Lançar</h3>
+        <p>Todos os sistemas de propulsão e navegação estão a 100%.</p>
       </div>
     </div>
   </section>
@@ -73,44 +76,53 @@
   <div class="bg-contrast">
     <div class="container split-layout">
       <div class="split-image">
-        <img alt="Espaço Sideral"
-          src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80" />
+        <img alt="Nebulosa"
+          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" />
       </div>
       <div class="split-content">
-        <h2>O Nosso Sistema</h2>
+        <h2>Base de Conhecimento</h2>
         <p>
-          Utilizamos tecnologia de ponta para mapear as tuas observações e
-          conectar-te com outros entusiastas. A nossa base de dados é
-          atualizada em tempo real pela NASA.
+          Sabias que temos uma secção dedicada a factos sobre o sistema solar?
+          [cite_start][cite: 5] Podes consultar temperaturas, dias planetários e até a "Imagem do Dia" da NASA.
         </p>
-        <a href="#" class="btn-text">Ler Documentação <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="/astronomia.html" class="btn-text">Ver Base de Dados <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </div>
 
   <section class="container section-padding text-center">
-    <h2 class="section-heading">Começa em 3 Passos</h2>
+    <h2 class="section-heading">Ações Rápidas</h2>
 
     <div class="steps-container">
       <div class="step-card">
         <div class="step-number">1</div>
-        <h3>Regista-te</h3>
-        <p>Cria a tua conta gratuita em segundos.</p>
+        <h3>Identidade</h3>
+        <p>Atualiza a tua foto e documento no Perfil.</p>
+        <a href="/perfil.html" class="btn-sm btn-outline" style="margin-top: 15px; display:inline-block">Ir para
+          Perfil</a>
       </div>
+
       <div class="step-card">
         <div class="step-number">2</div>
-        <h3>Observa</h3>
-        <p>Aponta para o céu e regista dados.</p>
+        <h3>Tripulação</h3>
+        <p>Vê quem mais está nesta missão contigo.</p>
+        <a href="/visualizacao.html" class="btn-sm btn-outline" style="margin-top: 15px; display:inline-block">Ver
+          Lista</a>
       </div>
+
       <div class="step-card">
         <div class="step-number">3</div>
-        <h3>Partilha</h3>
-        <p>Mostra as tuas descobertas à rede.</p>
+        <h3>Terminar</h3>
+        <p>Fecha a sessão de forma segura ao sair.</p>
+        <a href="/logout" class="btn-sm btn-outline"
+          style="margin-top: 15px; display:inline-block; border-color: #ff6b6b; color: #ff6b6b;">Logout</a>
       </div>
     </div>
 
     <div style="margin-top: 50px">
-      <a href="/registo.html" class="btn btn-lg">Começar Aventura</a>
+      <a href="/perfil.html" class="btn btn-lg">
+        <i class="fa-solid fa-id-card"></i> O Meu Passaporte
+      </a>
     </div>
   </section>
 
