@@ -1,0 +1,550 @@
+/* --- /public/css/astronomia.css --- */
+/* HEADER DA PÁGINA */
+.page-header .header-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--accent-pink), #ff9a8b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 10px 40px rgba(228, 114, 103, 0.4);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 10px 40px rgba(228, 114, 103, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 10px 60px rgba(228, 114, 103, 0.7);
+    }
+}
+
+/* FACTO DO DIA - HERO SECTION */
+.fact-hero {
+    position: relative;
+    background: linear-gradient(135deg, rgba(30, 32, 45, 0.95), rgba(43, 45, 56, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 60px;
+}
+
+.fact-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top right, rgba(228, 114, 103, 0.15), transparent 60%);
+    pointer-events: none;
+}
+
+.fact-hero-content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px;
+}
+
+@media (min-width: 900px) {
+    .fact-hero-content {
+        grid-template-columns: 350px 1fr;
+        padding: 40px;
+    }
+}
+
+.fact-hero-image {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.fact-hero-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.fact-hero-image:hover img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: #aaa;
+    font-size: 0.8rem;
+}
+
+.image-overlay i {
+    margin-right: 5px;
+}
+
+.fact-hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.fact-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--accent-pink), #ff9a8b);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: fit-content;
+    margin-bottom: 15px;
+}
+
+.fact-hero-text h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.fact-hero-text>p {
+    color: #ccc;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+}
+
+/* BOTÃO DA CURIOSIDADE */
+.btn-fact {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.btn-fact:hover {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(228, 114, 103, 0.4);
+}
+
+.btn-fact.active {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+}
+
+/* CAIXA DE FACTO - CORRIGIDO */
+.fact-box {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 4px solid var(--accent-pink);
+    border-radius: 0 12px 12px 0;
+    animation: slideDown 0.3s ease-out;
+}
+
+.fact-box.show {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fact-box-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent-pink);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.fact-box p {
+    color: #bbb;
+    line-height: 1.7;
+}
+
+.fact-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.fact-tags .tag {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--accent-beige);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* DIVISOR DE SECÇÃO */
+.section-divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 50px 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.divider-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-beige);
+    font-size: 1.2rem;
+}
+
+/* TÍTULO DE SECÇÃO */
+.section-title {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.section-title span {
+    background: linear-gradient(120deg, #fff, var(--accent-beige));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 40px;
+}
+
+/* GRELHA DE PLANETAS - MELHORADA */
+.planets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+.planet-card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(30, 32, 45, 0.9), rgba(20, 22, 30, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 30px 25px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.planet-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.planet-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.planet-card:hover .planet-glow {
+    opacity: 1;
+}
+
+.planet-card[data-planet="mercurio"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(165, 165, 165, 0.1), transparent 70%);
+}
+
+.planet-card[data-planet="venus"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(230, 219, 179, 0.1), transparent 70%);
+}
+
+.planet-card[data-planet="terra"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(75, 112, 221, 0.15), transparent 70%);
+}
+
+.planet-card[data-planet="marte"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(255, 107, 107, 0.15), transparent 70%);
+}
+
+.planet-card[data-planet="jupiter"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(216, 202, 157, 0.1), transparent 70%);
+}
+
+.planet-card[data-planet="saturno"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(234, 214, 184, 0.1), transparent 70%);
+}
+
+.planet-card[data-planet="urano"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(175, 238, 238, 0.15), transparent 70%);
+}
+
+.planet-card[data-planet="neptuno"] .planet-glow {
+    background: radial-gradient(circle at center, rgba(65, 105, 225, 0.15), transparent 70%);
+}
+
+/* VISUAL DO PLANETA */
+.planet-visual {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    position: relative;
+    box-shadow:
+        inset -15px -15px 30px rgba(0, 0, 0, 0.6),
+        inset 5px 5px 15px rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s ease;
+}
+
+.planet-card:hover .planet-visual {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.planet-shine {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 25%;
+    height: 25%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+    border-radius: 50%;
+}
+
+/* Cores dos Planetas */
+.p-mercurio {
+    background: radial-gradient(circle at 30% 30%, #c4c4c4, #5a5a5a, #3a3a3a);
+}
+
+.p-venus {
+    background: radial-gradient(circle at 30% 30%, #f5e6c8, #d4a857, #8b6914);
+}
+
+.p-terra {
+    background: radial-gradient(circle at 30% 30%, #6b93d6, #4b70dd, #1a3a8a);
+}
+
+.p-marte {
+    background: radial-gradient(circle at 30% 30%, #e77d6a, #c1440e, #8b2500);
+}
+
+.p-jupiter {
+    background: radial-gradient(circle at 30% 30%, #e8d5b3, #d4a574, #8b6914);
+}
+
+.p-saturno {
+    background: radial-gradient(circle at 30% 30%, #f4e4c1, #c9a86c, #8b7355);
+}
+
+.p-urano {
+    background: radial-gradient(circle at 30% 30%, #b8e4e4, #7dd8d8, #4fa8a8);
+}
+
+.p-neptuno {
+    background: radial-gradient(circle at 30% 30%, #5b8dd9, #3a5fd9, #1e3a8a);
+}
+
+/* Anel de Saturno */
+.saturn-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 160%;
+    height: 40%;
+    border: 10px solid transparent;
+    border-top-color: rgba(244, 228, 193, 0.4);
+    border-bottom-color: rgba(244, 228, 193, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    pointer-events: none;
+}
+
+/* Bandas de Júpiter */
+.jupiter-bands {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+    height: 40%;
+    background: repeating-linear-gradient(to bottom,
+            transparent,
+            transparent 4px,
+            rgba(139, 90, 43, 0.3) 4px,
+            rgba(139, 90, 43, 0.3) 8px);
+    border-radius: 50%;
+}
+
+.planet-card h3 {
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+}
+
+.planet-desc {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* ESTATÍSTICAS DO PLANETA */
+.planet-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.planet-stats .stat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.planet-stats .stat:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.planet-stats .stat i {
+    color: var(--accent-pink);
+    font-size: 1rem;
+    width: 20px;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.stat-value {
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* CURIOSIDADES RÁPIDAS */
+.quick-facts-section {
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.quick-facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.quick-fact-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.quick-fact-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-5px);
+    border-color: var(--accent-pink);
+}
+
+.quick-fact-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(228, 114, 103, 0.2), rgba(255, 154, 139, 0.1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 1.5rem;
+    color: var(--accent-pink);
+}
+
+.quick-fact-card h4 {
+    color: var(--accent-beige);
+    font-family: var(--font-heading);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.quick-fact-card p {
+    color: #999;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}

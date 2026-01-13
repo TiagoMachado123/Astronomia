@@ -4,64 +4,568 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tripulação - Astronomia</title>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/dashboard.css" />
+  <style>
+    /* Estilos específicos da página de Tripulação */
+
+    /* Animações */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* Header da Página melhorado */
+    .page-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .page-header h2 {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(228, 114, 103, 0.5);
+      margin-bottom: 15px;
+    }
+
+    .page-header h2 i {
+      color: var(--accent-pink);
+      margin-right: 15px;
+    }
+
+    .page-header p {
+      color: var(--text-gray);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    /* Container de Pesquisa e Filtros - REDESENHADO */
+    .search-container {
+      margin-bottom: 50px;
+      animation: fadeInUp 0.6s ease-out 0.2s forwards;
+      opacity: 0;
+    }
+
+    .search-panel {
+      background: linear-gradient(145deg, rgba(30, 32, 40, 0.9), rgba(43, 45, 56, 0.8));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      padding: 30px 35px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-pink), var(--accent-beige), var(--accent-pink));
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    .search-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--accent-beige);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-title i {
+      color: var(--accent-pink);
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .search-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+        align-items: end;
+      }
+    }
+
+    .search-field {
+      position: relative;
+    }
+
+    .search-field label {
+      display: block;
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input-wrapper i {
+      position: absolute;
+      left: 20px;
+      color: var(--accent-pink);
+      font-size: 1.1rem;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 55px;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-pink);
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 20px rgba(228, 114, 103, 0.2);
+    }
+
+    .search-input:focus+i,
+    .search-input:focus~i {
+      color: var(--accent-beige);
+      transform: scale(1.1);
+    }
+
+    .search-input::placeholder {
+      color: #666;
+    }
+
+    /* Select estilizado */
+    .search-select {
+      width: 100%;
+      padding: 16px 20px 16px 55px;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      appearance: none;
+    }
+
+    .search-select:focus {
+      outline: none;
+      border-color: var(--accent-pink);
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 20px rgba(228, 114, 103, 0.2);
+    }
+
+    .search-select option {
+      background: var(--bg-darker);
+      color: #fff;
+      padding: 10px;
+    }
+
+    /* Ícone de seta para o select */
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .select-wrapper:focus-within::after {
+      color: var(--accent-pink);
+    }
+
+    /* Botão de Limpar Filtros */
+    .btn-clear {
+      padding: 16px 25px;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: #aaa;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-clear:hover {
+      border-color: var(--accent-pink);
+      color: var(--accent-pink);
+      background: rgba(228, 114, 103, 0.1);
+    }
+
+    /* Contador de Resultados */
+    .results-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 15px 25px;
+      background: rgba(30, 32, 40, 0.5);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .results-count {
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    .results-count strong {
+      color: var(--accent-pink);
+      font-size: 1.1rem;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 5px;
+    }
+
+    .view-toggle button {
+      padding: 8px 12px;
+      border: none;
+      background: rgba(255, 255, 255, 0.05);
+      color: #666;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .view-toggle button.active,
+    .view-toggle button:hover {
+      background: var(--accent-pink);
+      color: #fff;
+    }
+
+    /* Grid Container */
+    #user-grid-container {
+      min-height: 300px;
+    }
+
+    /* Mensagem de Loading */
+    .loading-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: #aaa;
+    }
+
+    .loading-message i {
+      font-size: 2.5rem;
+      color: var(--accent-pink);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .loading-message p {
+      font-size: 1.1rem;
+    }
+
+    /* Crew Cards Melhorados */
+    .crew-card {
+      background: linear-gradient(145deg, rgba(30, 32, 40, 0.8), rgba(43, 45, 56, 0.6));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px 25px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .crew-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(228, 114, 103, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .crew-card:hover::before {
+      opacity: 1;
+    }
+
+    .crew-card:hover {
+      transform: translateY(-12px);
+      border-color: var(--accent-pink);
+      box-shadow: 0 20px 50px rgba(228, 114, 103, 0.25);
+    }
+
+    /* Avatar com borda animada */
+    .crew-avatar-container {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 20px;
+    }
+
+    .crew-avatar-container::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-beige));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+
+    .crew-card:hover .crew-avatar-container::before {
+      opacity: 1;
+    }
+
+    .crew-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+      background: var(--bg-darker);
+    }
+
+    .crew-card:hover .crew-avatar {
+      border-color: transparent;
+    }
+
+    /* Badge de Cargo */
+    .crew-badge {
+      background: linear-gradient(135deg, var(--accent-pink), #ff857a);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 25px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      display: inline-block;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 15px rgba(228, 114, 103, 0.3);
+    }
+
+    .crew-name {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .crew-bio {
+      font-size: 0.9rem;
+      color: #aaa;
+      line-height: 1.6;
+      font-style: italic;
+      flex-grow: 1;
+      margin: 10px 0 20px;
+      padding: 0 10px;
+    }
+
+    /* Documento Preview no Card */
+    .crew-card .doc-preview-container {
+      margin-top: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 60px;
+    }
+  </style>
 </head>
 
 <body>
   <div id="star-container"></div>
-
   <div class="container page-container">
-    <div class="page-header">
-      <h2>Tripulação da Missão</h2>
-      <p>
-        Lista oficial de exploradores registados na base de dados intergaláctica.
-      </p>
+    <!-- Header da Página -->
+    <div class="page-header fade-in">
+      <h2><i class="fa-solid fa-user-astronaut"></i>Tripulação da Missão</h2>
+      <p>Lista oficial de exploradores registados na base de dados intergaláctica.</p>
     </div>
-
-    <div class="search-wrapper glass-panel"
-      style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center; padding: 20px;">
-
-      <div class="input-wrapper" style="flex: 2; min-width: 250px;">
-        <input type="text" id="crew-search" placeholder="Pesquisar por nome..."
-          style="width: 100%; padding: 12px 15px 12px 45px; border-radius: 50px; border: none; background: rgba(0,0,0,0.3); color: white;">
-        <i class="fa-solid fa-magnifying-glass"
-          style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
+    <!-- Painel de Pesquisa e Filtros -->
+    <div class="search-container">
+      <div class="search-panel">
+        <div class="search-title">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Filtrar Tripulação</span>
+        </div>
+        <div class="search-grid">
+          <!-- Campo de Pesquisa por Nome -->
+          <div class="search-field">
+            <label>Pesquisar por Nome</label>
+            <div class="search-input-wrapper">
+              <input type="text" id="crew-search" class="search-input" placeholder="Digite o nome do tripulante..." />
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+          </div>
+          <!-- Filtro por Cargo -->
+          <div class="search-field">
+            <label>Filtrar por Cargo</label>
+            <div class="select-wrapper search-input-wrapper">
+              <i class="fa-solid fa-id-badge"></i>
+              <select id="crew-role-filter" class="search-select">
+                <option value="">Todos os Cargos</option>
+                <option value="Comandante">🎖️ Comandante</option>
+                <option value="Piloto">✈️ Piloto</option>
+                <option value="Cientista">🔬 Cientista</option>
+                <option value="Engenheiro">⚙️ Engenheiro</option>
+                <option value="Cadete">🚀 Cadete</option>
+              </select>
+            </div>
+          </div>
+          <!-- Botão Limpar -->
+          <div class="search-field">
+            <label>&nbsp;</label>
+            <button type="button" id="btn-clear-filters" class="btn-clear">
+              <i class="fa-solid fa-rotate-left"></i>
+              Limpar Filtros
+            </button>
+          </div>
+        </div>
       </div>
-
-      <div class="input-wrapper" style="flex: 1; min-width: 200px;">
-        <select id="crew-role-filter"
-          style="width: 100%; padding: 12px 15px 12px 45px; border-radius: 50px; border: none; background: rgba(0,0,0,0.3); color: white; cursor: pointer;">
-          <option value="">Todos os Cargos</option>
-          <option value="Comandante">Comandante</option>
-          <option value="Piloto">Piloto</option>
-          <option value="Cientista">Cientista</option>
-          <option value="Engenheiro">Engenheiro</option>
-          <option value="Cadete">Cadete</option>
-        </select>
-        <i class="fa-solid fa-filter"
-          style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
+    </div>
+    <!-- Info de Resultados -->
+    <div class="results-info" id="results-info" style="display: none;">
+      <span class="results-count">
+        A mostrar <strong id="results-count-number">0</strong> tripulante(s)
+      </span>
+      <div class="view-toggle">
+        <button class="active" title="Vista em grelha">
+          <i class="fa-solid fa-grip"></i>
+        </button>
+        <button title="Vista em lista">
+          <i class="fa-solid fa-list"></i>
+        </button>
       </div>
-
     </div>
-
+    <!-- Grelha de Utilizadores -->
     <div id="user-grid-container" class="user-grid">
-      <p style="text-align: center; font-size: 1.2rem; color: #aaa">
-        <i class="fa-solid fa-circle-notch fa-spin"></i> A estabelecer comunicação...
-      </p>
-    </div>
-
-    <div id="user-grid-container" class="user-grid">
-      <p style="text-align: center; font-size: 1.2rem; color: #aaa">
-        <i class="fa-solid fa-circle-notch fa-spin"></i> A estabelecer
-        comunicação...
-      </p>
+      <div class="loading-message">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>A estabelecer comunicação com a base de dados...</p>
+      </div>
     </div>
   </div>
+  <footer>
+    <p>&copy; 2024 Astronomia Explorer. Todos os direitos reservados.</p>
+  </footer>
   <script src="js/script.js"></script>
+  <script>
+    // Script específico para a página de visualização
+    document.addEventListener("DOMContentLoaded", function () {
+      const btnClear = document.getElementById("btn-clear-filters");
+      const searchInput = document.getElementById("crew-search");
+      const roleFilter = document.getElementById("crew-role-filter");
+
+      // Botão de limpar filtros
+      if (btnClear && searchInput && roleFilter) {
+        btnClear.addEventListener("click", function () {
+          searchInput.value = "";
+          roleFilter.value = "";
+          // Dispara o evento de input para atualizar a lista
+          searchInput.dispatchEvent(new Event('input'));
+          roleFilter.dispatchEvent(new Event('change'));
+        });
+      }
+      // Atualizar contador de resultados
+      const observer = new MutationObserver(function (mutations) {
+        const grid = document.getElementById("user-grid-container");
+        const resultsInfo = document.getElementById("results-info");
+        const countNumber = document.getElementById("results-count-number");
+
+        if (grid && resultsInfo && countNumber) {
+          const cards = grid.querySelectorAll(".crew-card");
+          if (cards.length > 0) {
+            resultsInfo.style.display = "flex";
+            countNumber.textContent = cards.length;
+          } else {
+            const hasLoading = grid.querySelector(".loading-message");
+            if (!hasLoading) {
+              resultsInfo.style.display = "flex";
+              countNumber.textContent = "0";
+            }
+          }
+        }
+      });
+      const gridContainer = document.getElementById("user-grid-container");
+      if (gridContainer) {
+        observer.observe(gridContainer, { childList: true, subtree: true });
+      }
+    });
+  </script>
 </body>
 
 </html>
