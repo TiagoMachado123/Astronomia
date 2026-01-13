@@ -321,6 +321,12 @@
     }
 
     /* Crew Cards Melhorados */
+
+    .crew-card>* {
+      position: relative;
+      z-index: 2;
+    }
+
     .crew-card {
       background: linear-gradient(145deg, rgba(30, 32, 40, 0.8), rgba(43, 45, 56, 0.6));
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -334,6 +340,8 @@
       display: flex;
       flex-direction: column;
       height: 100%;
+      /* Garante que o cartão em si pode ser arrastado/clicado */
+      z-index: 1;
     }
 
     .crew-card::before {
@@ -346,6 +354,11 @@
       background: radial-gradient(circle, rgba(228, 114, 103, 0.1) 0%, transparent 70%);
       opacity: 0;
       transition: opacity 0.5s ease;
+      /* ESTA É A CORREÇÃO CRUCIAL: */
+      pointer-events: none;
+      /* Permite que o clique atravesse este efeito */
+      z-index: 0;
+      /* Fica atrás do conteúdo */
     }
 
     .crew-card:hover::before {
