@@ -31,16 +31,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 2. RESTRIÇÃO DE DATA (NÃO PERMITIR FUTURO) ---
+    // --- 2. RESTRIÇÃO DE DATA (FUTURO E PASSADO DISTANTE) ---
     const dateInput = regForm.querySelector('input[name="data_nascimento"]');
-    if (dateInput) {
-        const today = new Date().toISOString().split("T")[0];
-        dateInput.setAttribute("max", today); // Define o max no HTML5
 
+    if (dateInput) {
+        const today = new Date();
+
+        // 1. Calcular a data mínima (130 anos atrás)
+        const maxAge = 130; // Limite seguro baseado no recorde humano (~122 anos)
+        const minDateObj = new Date();
+        minDateObj.setFullYear(today.getFullYear() - maxAge);
+
+        // Formatar datas para YYYY-MM-DD (formato do input HTML)
+        const maxDateStr = today.toISOString().split("T")[0];      // Hoje
+        const minDateStr = minDateObj.toISOString().split("T")[0]; // 130 anos atrás
+
+        // Definir os atributos no HTML
+        dateInput.setAttribute("max", maxDateStr);
+        dateInput.setAttribute("min", minDateStr);
+
+        // Validar quando o utilizador altera o valor
         dateInput.addEventListener("change", function () {
-            if (this.value > today) {
+            const selectedDate = this.value;
+
+            // Validação: Futuro
+            if (selectedDate > maxDateStr) {
                 alert("A data de nascimento não pode ser no futuro, viajante do tempo!");
-                this.value = "";
+                this.value = ""; // Limpar campo
+            }
+            // Validação: Passado excessivo
+            else if (selectedDate < minDateStr) {
+                alert(`Data inválida. O recorde de longevidade humana é cerca de 122 anos. Por favor insere uma data a partir de ${minDateObj.getFullYear()}.`);
+                this.value = ""; // Limpar campo
             }
         });
     }
