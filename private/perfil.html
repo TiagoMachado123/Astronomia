@@ -1,124 +1,217 @@
-<!-- /public/perfil.html -->
+<!-- /private/perfil.html -->
 <!DOCTYPE html>
 <html lang="pt">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meu Perfil - Astronomia</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <title>Meu Perfil - Cosmos Explorer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/auth.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/perfil.css" />
+  </head>
 
-
-</head>
-
-<body>
+  <body>
     <div id="star-container"></div>
 
+    <nav id="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="/dashboard.html" class="logo">
+            <i class="fa-solid fa-satellite"></i>
+            Cosmos Explorer
+          </a>
+          <div class="nav-links" id="navLinks">
+            <a href="/dashboard.html">Início</a>
+            <a href="/visualizacao.html">Tripulação</a>
+            <a href="/astronomia.html">Base de Dados</a>
+            <a href="/perfil.html" class="active">Perfil</a>
+            <a href="/logout" style="color: var(--accent-pink)">Sair</a>
+          </div>
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
     <div class="container page-container">
-        <div class="page-header">
-            <h2>Identificação do Explorador</h2>
-            <p>Atualiza os teus dados de missão e biografia estelar.</p>
+      <div class="page-header">
+        <h2>Identificação do Explorador</h2>
+        <p>Atualiza os teus dados de missão e biografia estelar.</p>
+      </div>
+
+      <div class="profile-layout">
+        <div class="glass-panel profile-card">
+          <img
+            id="display-avatar"
+            src="img/default.png"
+            alt="Avatar"
+            class="profile-big-avatar"
+          />
+          <h3
+            id="display-name"
+            style="
+              font-family: var(--font-heading);
+              font-size: 1.5rem;
+              margin-bottom: 5px;
+            "
+          >
+            A carregar...
+          </h3>
+          <div id="display-role" class="profile-role-badge">...</div>
+          <p
+            id="display-email"
+            style="color: var(--text-gray); font-size: 0.9rem"
+          ></p>
+
+          <div style="width: 100%; margin-top: 20px">
+            <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 5px">
+              Documento de Identificação:
+            </p>
+            <div id="document-preview-area">
+              <span style="font-size: 0.8rem; color: #555"
+                >Nenhum documento.</span
+              >
+            </div>
+          </div>
+
+          <div
+            style="
+              margin-top: 20px;
+              width: 100%;
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+              padding-top: 20px;
+            "
+          >
+            <p style="font-style: italic; color: #aaa; font-size: 0.9rem">
+              "<span id="display-bio">...</span>"
+            </p>
+          </div>
         </div>
 
-        <div class="profile-layout">
+        <div class="glass-panel">
+          <h3
+            style="
+              margin-bottom: 25px;
+              color: var(--accent-pink);
+              font-family: var(--font-heading);
+            "
+          >
+            <i class="fa-solid fa-pen-to-square"></i> Editar Dados
+          </h3>
 
-            <div class="glass-panel profile-card">
-                <img id="display-avatar" src="img/default.png" alt="Avatar" class="profile-big-avatar">
-
-                <h3 id="display-name" style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 5px;">A
-                    carregar...</h3>
-                <div id="display-role" class="profile-role-badge">...</div>
-                <p id="display-email" style="color: var(--text-gray); font-size: 0.9rem;"></p>
-
-                <div style="width: 100%; margin-top: 20px;">
-                    <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 5px;">Documento de Identificação:</p>
-
-                    <div id="document-preview-area">
-                        <span style="font-size: 0.8rem; color: #555;">Nenhum documento.</span>
-                    </div>
+          <form
+            id="profile-form"
+            action="/update-profile"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="register-grid">
+              <div class="form-group">
+                <label>Nome de Operação</label>
+                <div class="input-wrapper">
+                  <input type="text" name="nome" id="input-nome" required />
+                  <i class="fa-solid fa-user-astronaut"></i>
                 </div>
-
-                <div
-                    style="margin-top: 20px; width: 100%; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-                    <p style="font-style: italic; color: #aaa; font-size: 0.9rem;">
-                        "<span id="display-bio">...</span>"
-                    </p>
+              </div>
+              <div class="form-group">
+                <label>Comunicador (Tel)</label>
+                <div class="input-wrapper">
+                  <input
+                    type="tel"
+                    name="telefone"
+                    id="input-telefone"
+                    required
+                  />
+                  <i class="fa-solid fa-phone"></i>
                 </div>
+              </div>
+              <div class="full-width form-group">
+                <label>Base Principal (Morada)</label>
+                <div class="input-wrapper">
+                  <input type="text" name="morada" id="input-morada" required />
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+              </div>
+              <div class="full-width form-group">
+                <label>Diário de Bordo (Biografia)</label>
+                <div class="input-wrapper">
+                  <textarea
+                    name="biografia"
+                    id="input-biografia"
+                    rows="4"
+                    style="
+                      width: 100%;
+                      background: rgba(0, 0, 0, 0.3);
+                      border: none;
+                      color: white;
+                      padding: 15px;
+                      border-radius: 15px;
+                      font-family: var(--font-body);
+                    "
+                  ></textarea>
+                </div>
+              </div>
+              <div class="full-width form-group">
+                <label>Nova Foto (Opcional)</label>
+                <div class="input-wrapper">
+                  <input type="file" name="fotografia" accept="image/*" />
+                </div>
+              </div>
+              <div class="full-width form-group">
+                <label>Novo Documento (Opcional)</label>
+                <div class="input-wrapper">
+                  <input
+                    type="file"
+                    name="documento"
+                    accept=".pdf,.jpg,.png,.doc"
+                  />
+                </div>
+              </div>
             </div>
-
-            <div class="glass-panel">
-                <h3 style="margin-bottom: 25px; color: var(--accent-pink);">
-                    <i class="fa-solid fa-pen-to-square"></i> Editar Dados
-                </h3>
-
-                <form id="profile-form" action="/update-profile" method="POST" enctype="multipart/form-data">
-                    <div class="register-grid">
-
-                        <div class="form-group">
-                            <label>Nome de Operação</label>
-                            <div class="input-wrapper">
-                                <input type="text" name="nome" id="input-nome" required />
-                                <i class="fa-solid fa-user-astronaut"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Comunicador (Tel)</label>
-                            <div class="input-wrapper">
-                                <input type="tel" name="telefone" id="input-telefone" required />
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                        </div>
-
-                        <div class="full-width form-group">
-                            <label>Base Principal (Morada)</label>
-                            <div class="input-wrapper">
-                                <input type="text" name="morada" id="input-morada" required />
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                        </div>
-
-                        <div class="full-width form-group">
-                            <label>Diário de Bordo (Biografia)</label>
-                            <div class="input-wrapper">
-                                <textarea name="biografia" id="input-biografia" rows="4"
-                                    style="width: 100%; background: rgba(0,0,0,0.3); border: none; color: white; padding: 15px; border-radius: 15px; font-family: var(--font-body);"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="full-width form-group">
-                            <label>Nova Foto (Opcional)</label>
-                            <div class="input-wrapper"> <input type="file" name="fotografia" accept="image/*" />
-                            </div>
-                        </div>
-
-                        <div class="full-width form-group">
-                            <label>Novo Documento (Opcional)</label>
-                            <div class="input-wrapper">
-                                <input type="file" name="documento" accept=".pdf,.jpg,.png,.doc" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div style="margin-top: 20px; text-align: right;">
-                        <button type="submit" class="btn">
-                            <i class="fa-solid fa-floppy-disk"></i> Gravar Alterações
-                        </button>
-                    </div>
-                </form>
+            <div style="margin-top: 20px; text-align: right">
+              <button type="submit" class="btn">
+                <i class="fa-solid fa-floppy-disk"></i> Gravar Alterações
+              </button>
             </div>
-
+          </form>
         </div>
+      </div>
     </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h3><i class="fa-solid fa-satellite"></i> Cosmos Explorer</h3>
+            <p>Uma jornada educativa pelos mistérios do universo.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Explorar</h4>
+            <a href="/dashboard.html">Início</a>
+            <a href="/visualizacao.html">Tripulação</a>
+            <a href="/astronomia.html">Dados Cósmicos</a>
+            <a href="/perfil.html">Meu Perfil</a>
+          </div>
+          <div class="footer-links">
+            <h4>Recursos</h4>
+            <a href="#">NASA</a>
+            <a href="#">ESA</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 Cosmos Explorer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
     <script src="js/utils.js"></script>
     <script src="js/ui-core.js"></script>
     <script src="js/profile.js"></script>
-</body>
-
+  </body>
 </html>

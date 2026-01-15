@@ -1,141 +1,151 @@
-// --- /js/ui-core.js ---
+/* --- /public/js/ui-core.js --- */
+
 document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
 
-  // Lista de páginas públicas que NÃO precisam de verificação
+  // --- 1. VERIFICAÇÃO DE SESSÃO (Segurança) ---
   const publicPages = ["/", "/index.html", "/login.html", "/registo.html"];
 
-  // Se a página atual NÃO for pública, verifica a sessão
   if (!publicPages.includes(path)) {
     fetch("/check-session")
       .then((res) => res.json())
       .then((data) => {
         if (!data.loggedin) {
-          // Se o servidor disser que não está logado, expulsa para o login
           window.location.href = "/";
         }
       })
       .catch(() => {
-        // Se houver erro de rede, assume logout por segurança
         window.location.href = "/";
       });
   }
 
-  // --- 1. INJETAR HEADER E NAVBAR ---
+  // --- 2. INJEÇÃO DE ESTRUTURA (Header/Nav) ---
+  // Apenas injeta se não estiver nas páginas de login/registo
   if (
     path !== "/" &&
     !path.includes("index.html") &&
-    !path.includes("login.html")
+    !path.includes("login.html") &&
+    !path.includes("registo.html")
   ) {
-    injectHeader();
-    setupDynamicNav(path);
-    setupDropdownLogic();
+    injectNavbar(); // Cria a <nav>
+    setupDynamicNav(path); // Preenche os links
+    setupDropdownLogic(); // Ativa o menu do user
+    initMobileMenu(); // Ativa o menu mobile
+    initNavbarScroll(); // Ativa o efeito de scroll
+  }
+  // Caso especial para página de registo (apenas botão voltar)
+  else if (path.includes("registo.html")) {
+    // Opcional: Injetar um header simples ou deixar o HTML tratar disso
   }
 
-  // --- 2. GERAÇÃO DE ESTRELAS ---
-  const starContainer = document.getElementById("star-container");
-  if (starContainer) {
-    for (let i = 0; i < 60; i++) {
-      const star = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "svg"
-      );
-      star.setAttribute("viewBox", "0 0 24 24");
-      star.classList.add("star");
-
-      // Posição e Tamanho aleatórios
-      star.style.left = Math.random() * 100 + "vw";
-      star.style.top = Math.random() * 100 + "vh";
-      const size = Math.random() * 15 + 5;
-      star.style.width = size + "px";
-      star.style.height = size + "px";
-      star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
-
-      star.innerHTML =
-        '<path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/>';
-      starContainer.appendChild(star);
-    }
-  }
-
-  // --- 3. SMOOTH SCROLL ---
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-    });
-  });
-
-  // --- 4. ANIMAÇÕES (OBSERVER) ---
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add("show");
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  document.querySelectorAll(".hidden").forEach((el) => observer.observe(el));
+  // --- 3. INICIAR EFEITOS VISUAIS ---
+  initStars(); // Estrelas e Cometas
+  initObservers(); // Animações de scroll
+  initSmoothScroll(); // Links âncora
 });
 
-// --- FUNÇÕES DE UI ---
+/* =========================================
+   FUNÇÕES DE UI E LÓGICA
+   ========================================= */
 
-function injectHeader() {
-  const header = document.createElement("header");
-  header.innerHTML = `
+// --- A. INJEÇÃO DA NAVBAR ---
+function injectNavbar() {
+  // Cria o elemento <nav> em vez de <header> para bater certo com o CSS novo
+  const nav = document.createElement("nav");
+  nav.id = "main-navbar"; // ID para referência
+
+  nav.innerHTML = `
       <div class="container nav-wrapper">
         <a href="/dashboard.html" class="logo">
           <i class="fa-solid fa-rocket"></i> Astronomia Explorer
         </a>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
         <div id="dynamic-nav" class="nav-links"></div>
       </div>
     `;
-  document.body.prepend(header);
+
+  // Insere no topo do body
+  document.body.prepend(nav);
 }
 
+// --- B. LINKS DINÂMICOS & PERFIL ---
 function setupDynamicNav(path) {
   const navContainer = document.getElementById("dynamic-nav");
   if (!navContainer) return;
 
-  if (path.includes("registo.html")) {
-    navContainer.innerHTML = `
-            <a href="/" class="nav-item">
-                <i class="fa-solid fa-arrow-left"></i> Voltar ao Login
-            </a>`;
-  } else {
-    const isActive = (p) => (path.includes(p) ? "active" : "");
-    navContainer.innerHTML = `
-            <a href="/dashboard.html" class="nav-item ${isActive(
-              "dashboard.html"
-            )}">Início</a>
-            <a href="/astronomia.html" class="nav-item ${isActive(
-              "astronomia.html"
-            )}">Curiosidades</a>
-            <a href="/visualizacao.html" class="nav-item ${isActive(
-              "visualizacao.html"
-            )}">Tripulação</a>
-            
-            <div class="user-menu-container">
-                <div class="user-avatar-btn" id="profile-trigger">
-                     <i class="fa-solid fa-user-astronaut"></i>
-                </div>
-                
-                <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="/perfil.html" class="${isActive("perfil.html")}">
-                        <i class="fa-solid fa-id-card"></i> O meu Perfil
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="/logout" style="color: #ff6b6b;">
-                        <i class="fa-solid fa-power-off"></i> Terminar Missão
-                    </a>
-                </div>
-            </div>
-        `;
+  const isActive = (p) => (path.includes(p) ? "active" : "");
+
+  navContainer.innerHTML = `
+      <a href="/dashboard.html" class="nav-item ${isActive(
+        "dashboard.html"
+      )}">Início</a>
+      <a href="/astronomia.html" class="nav-item ${isActive(
+        "astronomia.html"
+      )}">Curiosidades</a>
+      <a href="/visualizacao.html" class="nav-item ${isActive(
+        "visualizacao.html"
+      )}">Tripulação</a>
+      
+      <div class="user-menu-container">
+          <div class="user-avatar-btn" id="profile-trigger">
+               <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User">
+          </div>
+          
+          <div class="profile-dropdown" id="profile-dropdown">
+              <a href="/perfil.html" class="${isActive("perfil.html")}">
+                  <i class="fa-solid fa-id-card"></i> O meu Perfil
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="/logout" style="color: #ff6b6b;">
+                  <i class="fa-solid fa-power-off"></i> Terminar Missão
+              </a>
+          </div>
+      </div>
+  `;
+}
+
+// --- C. EFEITOS VISUAIS (ESTRELAS & COMETAS) ---
+function initStars() {
+  const container = document.getElementById("star-container");
+  if (!container) return; // Se não houver container no HTML, sai.
+
+  // 1. Estrelas Estáticas
+  const starCount = 150;
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    // Posição aleatória
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    // Tamanho aleatório
+    const size = Math.random() * 3 + 1;
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+    // Duração da animação aleatória
+    star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
+    container.appendChild(star);
+  }
+
+  // 2. Cometas / Estrelas Cadentes
+  for (let i = 0; i < 3; i++) {
+    const shootingStar = document.createElement("div");
+    shootingStar.className = "shooting-star";
+    // Começam mais à direita para cruzar a tela
+    shootingStar.style.left = Math.random() * 50 + 50 + "%";
+    shootingStar.style.top = Math.random() * 30 + "%";
+    shootingStar.style.animationDelay = Math.random() * 10 + i * 5 + "s";
+    container.appendChild(shootingStar);
   }
 }
 
+// --- D. INTERATIVIDADE ---
+
 function setupDropdownLogic() {
+  // Pequeno timeout para garantir que o DOM foi injetado
   setTimeout(() => {
     const trigger = document.getElementById("profile-trigger");
     const dropdown = document.getElementById("profile-dropdown");
@@ -151,4 +161,54 @@ function setupDropdownLogic() {
       });
     }
   }, 100);
+}
+
+function initMobileMenu() {
+  // Timeout para esperar a injeção da navbar
+  setTimeout(() => {
+    const btn = document.getElementById("mobileMenuBtn");
+    const links = document.getElementById("dynamic-nav"); // O container dos links
+
+    if (btn && links) {
+      btn.addEventListener("click", () => {
+        links.classList.toggle("active"); // O CSS usa .active para mostrar o menu mobile
+      });
+    }
+  }, 100);
+}
+
+function initNavbarScroll() {
+  window.addEventListener("scroll", () => {
+    const navbar = document.querySelector("nav");
+    if (navbar) {
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    }
+  });
+}
+
+function initObservers() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll(".hidden").forEach((el) => observer.observe(el));
+}
+
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+    });
+  });
 }

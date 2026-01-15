@@ -1,18 +1,35 @@
-/* --- /public/css/style.css: Estilos Globais e Variáveis --- */
+/* --- /public/css/style.css --- */
 
+/* 1. IMPORTAÇÃO DE FONTES */
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&display=swap");
+
+/* 2. VARIÁVEIS GLOBAIS (:root) */
 :root {
-  --bg-space: #3e4150;
-  --bg-darker: #2b2d38;
+  /* Paleta Espacial */
+  --bg-space: #0a0a1a;
+  --bg-darker: #050510;
+
+  /* Cores de Destaque */
   --accent-pink: #e47267;
+  --accent-purple: #8b5cf6;
+  --accent-cyan: #06b6d4;
   --accent-beige: #ffedaa;
+  --accent-gold: #fbbf24; /* Trazido do CSS antigo */
+
+  /* Texto */
   --text-white: #ffffff;
-  --text-gray: #dddddd;
+  --text-gray: #a1a1aa;
+
+  /* Vidro / Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
-  --font-heading: "Exo 2", sans-serif;
-  --font-body: "Open Sans", sans-serif;
+
+  /* Fontes */
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Exo 2", sans-serif;
 }
 
+/* 3. RESET E ESTRUTURA BÁSICA */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,10 +44,16 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Essencial para o footer ficar no fundo */
 }
 
-/* --- ANIMAÇÕES GLOBAIS --- */
+a {
+  text-decoration: none;
+  transition: 0.3s;
+  color: inherit;
+}
+
+/* 4. ANIMAÇÕES DE FUNDO (Estrelas e Cometas) */
 #star-container {
   position: fixed;
   top: 0;
@@ -43,54 +66,102 @@ body {
 
 .star {
   position: absolute;
-  fill: var(--accent-beige);
-  opacity: 0.8;
+  background: white; /* ou var(--accent-beige) se preferir mais quente */
+  border-radius: 50%;
   animation: twinkle var(--duration, 3s) infinite ease-in-out alternate;
 }
 
+/* Cometas / Estrelas Cadentes */
+.shooting-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, white, transparent);
+  border-radius: 50%;
+  animation: shoot 3s linear infinite;
+  opacity: 0;
+  z-index: -1;
+}
+
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
+}
+
+/* Keyframes de Animação */
 @keyframes twinkle {
   0% {
     opacity: 0.3;
     transform: scale(0.8);
   }
-
   100% {
     opacity: 1;
     transform: scale(1.2);
   }
 }
 
+@keyframes shoot {
+  0% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-500px) translateY(300px);
+  }
+}
+
+/* Animações utilitárias trazidas do CSS antigo */
 @keyframes float {
   0% {
     transform: translateY(0) rotate(-2deg);
   }
-
   100% {
     transform: translateY(-20px) rotate(2deg);
   }
 }
 
 @keyframes flame-flicker {
-
   0%,
   100% {
     transform: scale(1);
     opacity: 1;
   }
-
   50% {
     transform: scale(0.95);
     opacity: 0.8;
   }
 }
 
-/* --- LAYOUT E UTILITÁRIOS --- */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* 5. LAYOUT E UTILITÁRIOS */
+.container {
+  max-width: 1400px; /* Mais largo para telas modernas */
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Utilitários de visibilidade (do CSS antigo) */
 .hidden {
   opacity: 0;
   transform: translateY(30px);
@@ -102,59 +173,23 @@ body {
   transform: translateY(0);
 }
 
-/* --- BOTÕES --- */
-a {
-  text-decoration: none;
-  transition: 0.3s;
-  color: inherit;
+/* 6. NAVBAR (Estilo Cosmos Explorer) */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 15px 0;
+  background: linear-gradient(to bottom, rgba(10, 10, 26, 0.95), transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
 
-.btn {
-  display: inline-block;
-  background: var(--accent-pink);
-  color: #fff;
-  padding: 12px 30px;
-  border-radius: 50px;
-  font-weight: 700;
-  font-family: var(--font-heading);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(228, 114, 103, 0.4);
-}
-
-.btn:hover {
-  background: #ff857a;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(228, 114, 103, 0.6);
-}
-
-.btn-outline {
-  background: transparent;
-  border: 2px solid #fff;
-  margin-left: 10px;
-  padding: 10px 25px;
-}
-
-.btn-outline:hover {
-  background: #fff;
-  color: var(--bg-space);
-}
-
-.btn-sm {
-  padding: 8px 20px;
-  font-size: 0.9rem;
-}
-
-/* --- HEADER / NAVBAR --- */
-header {
-  padding: 20px 0;
-  position: absolute;
-  /* Fica por cima do Hero */
-  width: 100%;
-  z-index: 100;
-  background: linear-gradient(to bottom, rgba(62, 65, 80, 0.9), transparent);
+nav.scrolled {
+  background: rgba(10, 10, 26, 0.98);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .nav-wrapper {
@@ -167,69 +202,144 @@ header {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
+}
+
+.logo i {
+  -webkit-text-fill-color: var(--accent-pink);
 }
 
 .nav-links {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  align-items: center; /* Garante alinhamento vertical */
+  gap: 30px;
 }
 
-.nav-links a.nav-item {
+.nav-links a {
   color: var(--text-gray);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.nav-links a.nav-item:hover {
-  color: var(--accent-pink);
-}
-
-.nav-links a.nav-item.active {
-  color: var(--accent-pink);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
   position: relative;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
 }
 
-.nav-links a.nav-item.active::after {
-  content: '';
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent-pink);
+}
+
+.nav-links a::after {
+  content: "";
   position: absolute;
   bottom: -5px;
   left: 0;
-  width: 100%;
+  width: 0;
   height: 2px;
   background: var(--accent-pink);
-  box-shadow: 0 0 10px var(--accent-pink);
+  transition: width 0.3s;
 }
 
-/* --- FOOTER --- */
-footer {
-  margin-top: auto;
-  /* Empurra o footer para baixo */
-  background: var(--bg-darker);
-  padding: 40px 0;
-  text-align: center;
-  color: #777;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
 }
 
-footer a {
-  color: #777;
-  margin: 0 10px;
-  font-size: 1.2rem;
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
-footer a:hover {
-  color: var(--accent-pink);
+/* Responsividade Navbar */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 26, 0.98);
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+    transform: translateY(-150%);
+    transition: transform 0.3s ease;
+    text-align: center;
+  }
+  .nav-links.active {
+    transform: translateY(0);
+  }
+
+  /* Ajuste no dropdown do user no mobile */
+  .user-menu-container {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  .profile-dropdown {
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    right: auto;
+  }
 }
 
-/* --- /public/css/style.css --- */
+/* 7. BOTÕES GERAIS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(228, 114, 103, 0.4);
+  text-decoration: none;
+  transition: 0.3s;
+}
 
-/* ... (mantém o resto do teu CSS) ... */
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(228, 114, 103, 0.6);
+  background: linear-gradient(135deg, #ff857a, #a78bfa);
+}
 
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.btn-sm {
+  padding: 8px 20px;
+  font-size: 0.8rem;
+}
+
+/* 8. FUNCIONALIDADES ESPECÍFICAS (User Profile & Docs) */
 /* --- USER PROFILE DROPDOWN --- */
 .user-menu-container {
   position: relative;
@@ -251,7 +361,6 @@ footer a:hover {
   color: #fff;
   font-size: 1.2rem;
   overflow: hidden;
-  /* Para a imagem não sair fora */
 }
 
 .user-avatar-btn:hover {
@@ -266,11 +375,10 @@ footer a:hover {
   object-fit: cover;
 }
 
-/* O Menu Flutuante (Escondido por defeito) */
+/* O Menu Flutuante */
 .profile-dropdown {
   position: absolute;
   top: 60px;
-  /* Distância do topo */
   right: 0;
   width: 220px;
   background: var(--bg-darker);
@@ -279,15 +387,13 @@ footer a:hover {
   padding: 10px 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-  /* Animação */
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  z-index: 1000;
+  z-index: 1001; /* Maior que a nav */
 }
 
-/* Classe para mostrar o menu (adicionada via JS) */
 .profile-dropdown.active {
   opacity: 1;
   visibility: visible;
@@ -308,7 +414,6 @@ footer a:hover {
   transform: rotate(45deg);
 }
 
-/* Itens do Menu */
 .profile-dropdown a {
   display: flex;
   align-items: center;
@@ -318,7 +423,7 @@ footer a:hover {
   font-size: 0.95rem;
   transition: 0.2s;
   border-left: 3px solid transparent;
-  /* Indicador lateral */
+  text-decoration: none;
 }
 
 .profile-dropdown a:hover {
@@ -333,7 +438,6 @@ footer a:hover {
   color: var(--accent-pink);
 }
 
-/* Linha separadora antes do Logout */
 .dropdown-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.1);
@@ -358,7 +462,6 @@ footer a:hover {
 .doc-preview-pdf {
   width: 100%;
   height: 250px;
-  /* Altura da janela do PDF */
   border: none;
 }
 
@@ -379,14 +482,84 @@ footer a:hover {
   color: #fff;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
+/* 9. FOOTER GLOBAL */
+footer {
+  background: rgba(5, 5, 15, 0.95);
+  padding: 60px 0 30px;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-brand p {
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.footer-links h4 {
+  color: white;
+  margin-bottom: 20px;
+  font-family: var(--font-heading);
+}
+
+.footer-links a {
+  display: block;
+  color: var(--text-gray);
+  text-decoration: none;
+  padding: 8px 0;
+  transition: all 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--accent-pink);
+  padding-left: 10px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-gray);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.social-links a:hover {
+  background: var(--accent-pink);
+  color: white;
+  transform: translateY(-5px);
 }

@@ -1,375 +1,1128 @@
-<!-- /public/astronomia.html -->
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmos Explorer - Viagem pelo Universo</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dados Cósmicos - Astronomia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <link rel="stylesheet" href="css/astronomia.css" />
-</head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Orbitron:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-<body>
-  <div id="star-container"></div>
-  <div class="container page-container">
-    <div class="page-header">
-      <div class="header-icon">
-        <i class="fa-solid fa-satellite"></i>
-      </div>
-      <h2>Base de Conhecimento</h2>
-      <p>Acesso restrito aos segredos do sistema solar e fenómenos galácticos.</p>
-    </div>
-    <!-- FACTO DO DIA - REDESENHADO -->
-    <div class="fact-hero">
-      <div class="fact-hero-bg"></div>
-      <div class="fact-hero-content">
-        <div class="fact-hero-image">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg" alt="Nebulosa do Caranguejo">
-          <div class="image-overlay">
-            <span><i class="fa-solid fa-expand"></i> NASA/Hubble</span>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/astronomia.css" />
+  </head>
+
+  <body>
+    <div id="star-container"></div>
+    <div class="nebula"></div>
+
+    <nav id="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="#" class="logo">
+            <i class="fa-solid fa-satellite"></i>
+            Cosmos Explorer
+          </a>
+          <div class="nav-links" id="navLinks">
+            <a href="#home">Início</a>
+            <a href="#fact">Facto do Dia</a>
+            <a href="#planets">Planetas</a>
+            <a href="#galaxies">Galáxias</a>
+            <a href="#phenomena">Fenómenos</a>
+            <a href="#facts">Curiosidades</a>
           </div>
-        </div>
-        <div class="fact-hero-text">
-          <div class="fact-label">
-            <i class="fa-solid fa-star"></i> Facto do Dia
-          </div>
-          <h3>A Nebulosa do Caranguejo</h3>
-          <p>
-            O que vês aqui é o remanescente de uma estrela que explodiu como supernova.
-            A luz da explosão chegou à Terra no ano <strong>1054</strong> e foi tão brilhante
-            que podia ser vista durante o dia! Hoje, é um dos objetos mais estudados pelos astrónomos.
-          </p>
-          <button id="toggle-fact" class="btn-fact">
-            <i class="fa-solid fa-microscope"></i>
-            <span>Ler Análise Completa</span>
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fa-solid fa-bars"></i>
           </button>
-          <div id="fact-box" class="fact-box">
-            <div class="fact-box-header">
-              <i class="fa-solid fa-flask"></i>
-              <span>Nota Científica</span>
-            </div>
-            <p>
-              No centro desta nebulosa existe um <strong>pulsar</strong>: uma estrela de neutrões
-              que gira <strong>30 vezes por segundo</strong>! Este pulsar emite radiação em forma
-              de feixes, como um farol cósmico, e é uma das fontes de raios-X mais brilhantes do céu.
-            </p>
-            <div class="fact-tags">
-              <span class="tag"><i class="fa-solid fa-atom"></i> Supernova</span>
-              <span class="tag"><i class="fa-solid fa-circle-radiation"></i> Pulsar</span>
-              <span class="tag"><i class="fa-solid fa-calendar"></i> 1054 d.C.</span>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
-    <!-- SISTEMA SOLAR -->
-    <div class="section-divider">
-      <div class="divider-line"></div>
-      <div class="divider-icon">
-        <i class="fa-solid fa-globe"></i>
-      </div>
-      <div class="divider-line"></div>
-    </div>
-    <h3 class="section-title">
-      <span>Sistema Solar</span>
-    </h3>
-    <p class="section-subtitle">Explora os dados dos planetas do nosso sistema</p>
-    <div class="planets-grid">
-      <div class="planet-card" data-planet="mercurio">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-mercurio">
-          <div class="planet-shine"></div>
-        </div>
-        <h3>Mercúrio</h3>
-        <p class="planet-desc">O mensageiro veloz</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">167°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">1,408h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="venus">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-venus">
-          <div class="planet-shine"></div>
-        </div>
-        <h3>Vénus</h3>
-        <p class="planet-desc">A estrela da manhã</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">464°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">5,832h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">0</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="terra">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-terra">
-          <div class="planet-shine"></div>
-        </div>
-        <h3>Terra</h3>
-        <p class="planet-desc">O nosso lar</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">15°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">24h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">1</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="marte">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-marte">
-          <div class="planet-shine"></div>
-        </div>
-        <h3>Marte</h3>
-        <p class="planet-desc">O planeta vermelho</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">-65°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">25h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">2</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="jupiter">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-jupiter">
-          <div class="planet-shine"></div>
-          <div class="jupiter-bands"></div>
-        </div>
-        <h3>Júpiter</h3>
-        <p class="planet-desc">O gigante gasoso</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">-110°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">10h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">95</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="saturno">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-saturno">
-          <div class="planet-shine"></div>
-          <div class="saturn-ring"></div>
-        </div>
-        <h3>Saturno</h3>
-        <p class="planet-desc">O senhor dos anéis</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">-140°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">11h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">146</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="urano">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-urano">
-          <div class="planet-shine"></div>
-        </div>
-        <h3>Úrano</h3>
-        <p class="planet-desc">O gigante gelado</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">-195°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">17h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">28</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="planet-card" data-planet="neptuno">
-        <div class="planet-glow"></div>
-        <div class="planet-visual p-neptuno">
-          <div class="planet-shine"></div>
-        </div>
-        <h3>Neptuno</h3>
-        <p class="planet-desc">O planeta azul distante</p>
-        <div class="planet-stats">
-          <div class="stat">
-            <i class="fa-solid fa-temperature-high"></i>
-            <div class="stat-info">
-              <span class="stat-value">-200°C</span>
-              <span class="stat-label">Temperatura</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-clock"></i>
-            <div class="stat-info">
-              <span class="stat-value">16h</span>
-              <span class="stat-label">Duração do Dia</span>
-            </div>
-          </div>
-          <div class="stat">
-            <i class="fa-solid fa-moon"></i>
-            <div class="stat-info">
-              <span class="stat-value">16</span>
-              <span class="stat-label">Luas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- CURIOSIDADES RÁPIDAS -->
-    <div class="quick-facts-section">
-      <h3 class="section-title"><span>Sabias Que...</span></h3>
-      <div class="quick-facts-grid">
-        <div class="quick-fact-card">
-          <div class="quick-fact-icon">
-            <i class="fa-solid fa-sun"></i>
-          </div>
-          <h4>O Sol</h4>
-          <p>Representa 99.86% de toda a massa do sistema solar.</p>
-        </div>
-        <div class="quick-fact-card">
-          <div class="quick-fact-icon">
-            <i class="fa-solid fa-meteor"></i>
-          </div>
-          <h4>Cintura de Asteroides</h4>
-          <p>Contém milhões de asteroides entre Marte e Júpiter.</p>
-        </div>
-        <div class="quick-fact-card">
-          <div class="quick-fact-icon">
-            <i class="fa-solid fa-diamond"></i>
-          </div>
-          <h4>Chuva de Diamantes</h4>
-          <p>Em Neptuno e Úrano, chove literalmente diamantes!</p>
-        </div>
-        <div class="quick-fact-card">
-          <div class="quick-fact-icon">
-            <i class="fa-solid fa-rocket"></i>
-          </div>
-          <h4>Voyager 1</h4>
-          <p>Está a mais de 24 mil milhões de km da Terra.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer>
-    <p>&copy; 2024 Astronomia Explorer. Todos os direitos reservados.</p>
-  </footer>
-  <script src="js/utils.js"></script>
-  <script src="js/ui-core.js"></script>
-</body>
+    </nav>
 
+    <section class="hero" id="home">
+      <div class="hero-planet"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fa-solid fa-rocket"></i>
+          Base de Conhecimento Cósmico
+        </div>
+        <h1>Explora os Segredos do Universo</h1>
+        <p>
+          Uma viagem fascinante pelos mistérios do cosmos, desde os confins do
+          nosso sistema solar até às galáxias mais distantes.
+        </p>
+        <div class="hero-buttons">
+          <a href="#planets" class="btn btn-primary">
+            <i class="fa-solid fa-globe"></i>
+            Explorar Planetas
+          </a>
+          <a href="#phenomena" class="btn btn-outline">
+            <i class="fa-solid fa-bolt"></i>
+            Fenómenos Extremos
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section id="fact" class="reveal">
+        <div class="fact-hero">
+          <div class="fact-hero-content">
+            <div class="fact-hero-image">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg"
+                alt="Nebulosa do Caranguejo"
+              />
+              <div class="image-credit">
+                <i class="fa-solid fa-camera"></i> NASA/ESA Hubble Space
+                Telescope
+              </div>
+            </div>
+            <div class="fact-hero-text">
+              <div class="fact-label">
+                <i class="fa-solid fa-star"></i> Facto do Dia
+              </div>
+              <h3>A Nebulosa do Caranguejo</h3>
+              <p>
+                O que vês aqui é o remanescente de uma estrela que explodiu como
+                supernova. A luz da explosão chegou à Terra no ano
+                <strong>1054</strong> e foi tão brilhante que podia ser vista
+                durante o dia! Astrónomos chineses e árabes registaram este
+                evento histórico.
+              </p>
+              <button id="toggle-fact" class="btn-fact">
+                <i class="fa-solid fa-microscope"></i>
+                <span>Ler Análise Completa</span>
+              </button>
+              <div id="fact-box" class="fact-box">
+                <div class="fact-box-header">
+                  <i class="fa-solid fa-flask"></i>
+                  <span>Nota Científica</span>
+                </div>
+                <p>
+                  No centro desta nebulosa existe um <strong>pulsar</strong>:
+                  uma estrela de neutrões que gira
+                  <strong>30 vezes por segundo</strong>! Este pulsar emite
+                  radiação em forma de feixes, como um farol cósmico, e é uma
+                  das fontes de raios-X mais brilhantes do céu. A nebulosa
+                  expande-se a uma velocidade de 1.500 km/s!
+                </p>
+                <div class="fact-tags">
+                  <span class="tag"
+                    ><i class="fa-solid fa-atom"></i> Supernova</span
+                  >
+                  <span class="tag"
+                    ><i class="fa-solid fa-circle-radiation"></i> Pulsar</span
+                  >
+                  <span class="tag"
+                    ><i class="fa-solid fa-calendar"></i> 1054 d.C.</span
+                  >
+                  <span class="tag"
+                    ><i class="fa-solid fa-ruler"></i> 6.500 anos-luz</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal">
+        <div class="stats-section">
+          <div class="stat-item">
+            <div class="stat-number" data-count="200">0</div>
+            <div class="stat-text">Mil Milhões de Galáxias</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="100">0</div>
+            <div class="stat-text">Mil Milhões de Estrelas na Via Láctea</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="8">0</div>
+            <div class="stat-text">Planetas no Sistema Solar</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="13">0</div>
+            <div class="stat-text">Mil Milhões de Anos do Universo</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fa-solid fa-sun"></i></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <section id="planets" class="reveal">
+        <div class="section-header">
+          <div class="section-badge">
+            <i class="fa-solid fa-globe"></i> Exploração Planetária
+          </div>
+          <h2 class="section-title">O Nosso Sistema Solar</h2>
+          <p class="section-subtitle">
+            Descobre os mundos fascinantes que orbitam a nossa estrela, cada um
+            com características únicas e mistérios por desvendar.
+          </p>
+        </div>
+
+        <div class="planets-grid">
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(255, 183, 77, 0.3)"
+          >
+            <div class="planet-visual p-sol">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Sol</h3>
+            <p class="planet-desc">A nossa estrela, coração do sistema</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-temperature-high"></i>
+                <div class="stat-info">
+                  <div class="stat-value">5.500°C</div>
+                  <div class="stat-label">Superfície</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-expand"></i>
+                <div class="stat-info">
+                  <div class="stat-value">1.4 milhões km</div>
+                  <div class="stat-label">Diâmetro</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-percent"></i>
+                <div class="stat-info">
+                  <div class="stat-value">99.86%</div>
+                  <div class="stat-label">Massa do Sistema</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(150, 150, 150, 0.2)"
+          >
+            <div class="planet-visual p-mercurio">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Mercúrio</h3>
+            <p class="planet-desc">O mensageiro veloz dos deuses</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-route"></i>
+                <div class="stat-info">
+                  <div class="stat-value">57.9M km</div>
+                  <div class="stat-label">Distância ao Sol</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-clock"></i>
+                <div class="stat-info">
+                  <div class="stat-value">88 dias</div>
+                  <div class="stat-label">Ano</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-temperature-arrow-up"></i>
+                <div class="stat-info">
+                  <div class="stat-value">-180° a 430°C</div>
+                  <div class="stat-label">Temperatura</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(230, 190, 120, 0.2)"
+          >
+            <div class="planet-visual p-venus">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Vénus</h3>
+            <p class="planet-desc">A estrela da manhã, gémeo infernal</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-temperature-high"></i>
+                <div class="stat-info">
+                  <div class="stat-value">465°C</div>
+                  <div class="stat-label">Temperatura média</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-rotate-left"></i>
+                <div class="stat-info">
+                  <div class="stat-value">243 dias</div>
+                  <div class="stat-label">Rotação (retrógrada)</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-cloud"></i>
+                <div class="stat-info">
+                  <div class="stat-value">96% CO₂</div>
+                  <div class="stat-label">Atmosfera</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(75, 112, 221, 0.25)"
+          >
+            <div class="planet-visual p-terra">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Terra</h3>
+            <p class="planet-desc">O nosso lar, ponto azul pálido</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-droplet"></i>
+                <div class="stat-info">
+                  <div class="stat-value">71%</div>
+                  <div class="stat-label">Água na superfície</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-moon"></i>
+                <div class="stat-info">
+                  <div class="stat-value">1</div>
+                  <div class="stat-label">Lua</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-users"></i>
+                <div class="stat-info">
+                  <div class="stat-value">8 mil milhões</div>
+                  <div class="stat-label">Habitantes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(193, 68, 14, 0.25)"
+          >
+            <div class="planet-visual p-marte">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Marte</h3>
+            <p class="planet-desc">O planeta vermelho, futuro da humanidade</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-mountain"></i>
+                <div class="stat-info">
+                  <div class="stat-value">21.9 km</div>
+                  <div class="stat-label">Olympus Mons (maior vulcão)</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-moon"></i>
+                <div class="stat-info">
+                  <div class="stat-value">2</div>
+                  <div class="stat-label">Luas (Fobos e Deimos)</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-robot"></i>
+                <div class="stat-info">
+                  <div class="stat-value">6</div>
+                  <div class="stat-label">Rovers exploradores</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(212, 165, 116, 0.2)"
+          >
+            <div class="planet-visual p-jupiter">
+              <div class="planet-shine"></div>
+              <div class="jupiter-bands"></div>
+            </div>
+            <h3>Júpiter</h3>
+            <p class="planet-desc">O gigante gasoso, rei dos planetas</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-wind"></i>
+                <div class="stat-info">
+                  <div class="stat-value">Grande Mancha</div>
+                  <div class="stat-label">Tempestade há 400+ anos</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-moon"></i>
+                <div class="stat-info">
+                  <div class="stat-value">95</div>
+                  <div class="stat-label">Luas conhecidas</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-expand"></i>
+                <div class="stat-info">
+                  <div class="stat-value">1.300 Terras</div>
+                  <div class="stat-label">Volume</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(201, 168, 108, 0.2)"
+          >
+            <div class="planet-visual p-saturno">
+              <div class="planet-shine"></div>
+              <div class="saturn-ring"></div>
+            </div>
+            <h3>Saturno</h3>
+            <p class="planet-desc">A jóia do sistema solar</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-ring"></i>
+                <div class="stat-info">
+                  <div class="stat-value">282.000 km</div>
+                  <div class="stat-label">Extensão dos anéis</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-moon"></i>
+                <div class="stat-info">
+                  <div class="stat-value">146</div>
+                  <div class="stat-label">Luas (incluindo Titã)</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-feather"></i>
+                <div class="stat-info">
+                  <div class="stat-value">0.69 g/cm³</div>
+                  <div class="stat-label">Flutuaria em água!</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(125, 216, 216, 0.25)"
+          >
+            <div class="planet-visual p-urano">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Úrano</h3>
+            <p class="planet-desc">O gigante de gelo deitado</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-rotate"></i>
+                <div class="stat-info">
+                  <div class="stat-value">98°</div>
+                  <div class="stat-label">Inclinação axial</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-gem"></i>
+                <div class="stat-info">
+                  <div class="stat-value">Diamantes</div>
+                  <div class="stat-label">Chuva no interior!</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-temperature-low"></i>
+                <div class="stat-info">
+                  <div class="stat-value">-224°C</div>
+                  <div class="stat-label">Mais frio do sistema</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="planet-card"
+            style="--glow-color: rgba(58, 95, 217, 0.25)"
+          >
+            <div class="planet-visual p-neptuno">
+              <div class="planet-shine"></div>
+            </div>
+            <h3>Neptuno</h3>
+            <p class="planet-desc">O gigante azul distante</p>
+            <div class="planet-stats">
+              <div class="stat">
+                <i class="fa-solid fa-wind"></i>
+                <div class="stat-info">
+                  <div class="stat-value">2.100 km/h</div>
+                  <div class="stat-label">Ventos mais fortes</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-clock"></i>
+                <div class="stat-info">
+                  <div class="stat-value">165 anos</div>
+                  <div class="stat-label">Órbita completa</div>
+                </div>
+              </div>
+              <div class="stat">
+                <i class="fa-solid fa-eye"></i>
+                <div class="stat-info">
+                  <div class="stat-value">1846</div>
+                  <div class="stat-label">Descoberto por cálculo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fa-solid fa-hurricane"></i></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <section id="galaxies" class="reveal">
+        <div class="section-header">
+          <div class="section-badge">
+            <i class="fa-solid fa-spinner"></i> Arquitetura Cósmica
+          </div>
+          <h2 class="section-title">Tipos de Galáxias</h2>
+          <p class="section-subtitle">
+            As ilhas estelares que povoam o cosmos, cada uma contendo milhares
+            de milhões de estrelas.
+          </p>
+        </div>
+
+        <div class="galaxy-grid">
+          <div class="galaxy-card">
+            <div class="galaxy-img">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/M101_hires_STScI-PRC2006-10a.jpg/640px-M101_hires_STScI-PRC2006-10a.jpg"
+                alt="Galáxia Espiral"
+              />
+              <div class="galaxy-overlay">
+                <i class="fa-solid fa-hurricane"></i>
+              </div>
+            </div>
+            <div class="galaxy-content">
+              <h4>Galáxias Espirais</h4>
+              <p>
+                Como a nossa Via Láctea e Andrómeda. Possuem braços majestosos
+                cheios de estrelas jovens e brilhantes, gás e poeira, todos
+                girando em torno de um núcleo denso. A Via Láctea tem 4 braços
+                principais!
+              </p>
+              <div class="galaxy-meta">
+                <span><i class="fa-solid fa-star"></i> Estrelas Jovens</span>
+                <span><i class="fa-solid fa-rotate"></i> Rotação</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="galaxy-card">
+            <div class="galaxy-img">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Portrait_of_a_Black_Hole.jpg/640px-Portrait_of_a_Black_Hole.jpg"
+                alt="Galáxia Elíptica"
+              />
+              <div class="galaxy-overlay">
+                <i class="fa-solid fa-circle"></i>
+              </div>
+            </div>
+            <div class="galaxy-content">
+              <h4>Galáxias Elípticas</h4>
+              <p>
+                As maiores galáxias conhecidas, como a M87. Têm a forma de ovos
+                cósmicos gigantes, contendo principalmente estrelas velhas e
+                vermelhas. M87 contém um buraco negro fotografado pela primeira
+                vez em 2019!
+              </p>
+              <div class="galaxy-meta">
+                <span
+                  ><i class="fa-solid fa-certificate"></i> Estrelas Velhas</span
+                >
+                <span><i class="fa-solid fa-infinity"></i> Gigantescas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="galaxy-card">
+            <div class="galaxy-img">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Rosette_Nebula.jpg/640px-Rosette_Nebula.jpg"
+                alt="Galáxia Irregular"
+              />
+              <div class="galaxy-overlay">
+                <i class="fa-solid fa-shapes"></i>
+              </div>
+            </div>
+            <div class="galaxy-content">
+              <h4>Galáxias Irregulares</h4>
+              <p>
+                Sem forma definida, muitas vezes resultado de colisões
+                galácticas. São caóticas, cheias de gás e poeira, verdadeiros
+                berçários onde nascem milhões de novas estrelas. As Nuvens de
+                Magalhães são exemplos!
+              </p>
+              <div class="galaxy-meta">
+                <span><i class="fa-solid fa-burst"></i> Caóticas</span>
+                <span
+                  ><i class="fa-solid fa-baby"></i> Berçários Estelares</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <section id="phenomena" class="reveal">
+        <div class="phenomena-container">
+          <div class="phenomena-text">
+            <div class="danger-badge">
+              <i class="fa-solid fa-triangle-exclamation"></i> Zona de Perigo
+              Cósmico
+            </div>
+            <h3>Fenómenos Extremos</h3>
+            <p>
+              O universo não é apenas belo; é violento e poderoso para além da
+              nossa imaginação. Descobre os monstros cósmicos que moldam a
+              realidade.
+            </p>
+
+            <div class="phenomena-list">
+              <div class="p-item">
+                <div class="p-icon">
+                  <i class="fa-solid fa-circle-notch"></i>
+                </div>
+                <div class="p-info">
+                  <strong>Buracos Negros</strong>
+                  <span
+                    >Regiões com gravidade tão extrema que nem a luz escapa. O
+                    tempo abranda drasticamente perto do horizonte de eventos. O
+                    maior conhecido tem 66 mil milhões de massas solares!</span
+                  >
+                </div>
+              </div>
+              <div class="p-item">
+                <div class="p-icon">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div class="p-info">
+                  <strong>Quasares</strong>
+                  <span
+                    >Os objetos mais brilhantes do universo! Um único quasar
+                    pode brilhar mais que toda a sua galáxia hospedeira,
+                    alimentado por buracos negros supermassivos a devorar
+                    matéria.</span
+                  >
+                </div>
+              </div>
+              <div class="p-item">
+                <div class="p-icon">
+                  <i class="fa-solid fa-magnet"></i>
+                </div>
+                <div class="p-info">
+                  <strong>Magnetars</strong>
+                  <span
+                    >Estrelas de neutrões com campos magnéticos 1000 triliões de
+                    vezes mais fortes que o da Terra. Uma colher de chá da sua
+                    matéria pesa mil milhões de toneladas!</span
+                  >
+                </div>
+              </div>
+              <div class="p-item">
+                <div class="p-icon">
+                  <i class="fa-solid fa-explosion"></i>
+                </div>
+                <div class="p-info">
+                  <strong>Explosões de Raios Gama (GRBs)</strong>
+                  <span
+                    >As explosões mais energéticas desde o Big Bang! Em
+                    segundos, libertam mais energia que o Sol em 10 mil milhões
+                    de anos. Felizmente, a mais próxima está a milhares de
+                    anos-luz.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phenomena-visual">
+            <div class="black-hole-visual">
+              <div class="gravitational-lens"></div>
+              <div class="accretion-disk"></div>
+              <div class="event-horizon"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <section class="reveal">
+        <div class="section-header">
+          <div class="section-badge">
+            <i class="fa-solid fa-clock-rotate-left"></i> História Espacial
+          </div>
+          <h2 class="section-title">Marcos da Exploração Espacial</h2>
+          <p class="section-subtitle">
+            Os momentos que definiram a nossa jornada para as estrelas.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1957</div>
+              <h4>Sputnik 1 - O Primeiro Satélite</h4>
+              <p>
+                A União Soviética lança o primeiro objeto feito pelo homem a
+                orbitar a Terra, iniciando a Era Espacial e a corrida ao espaço.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1961</div>
+              <h4>Yuri Gagarin - Primeiro Humano no Espaço</h4>
+              <p>
+                O cosmonauta soviético torna-se o primeiro ser humano a viajar
+                para o espaço e orbitar a Terra na Vostok 1.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1969</div>
+              <h4>Apollo 11 - O Homem na Lua</h4>
+              <p>
+                Neil Armstrong e Buzz Aldrin caminham na superfície lunar. "Um
+                pequeno passo para o homem, um salto gigante para a humanidade."
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">1990</div>
+              <h4>Telescópio Espacial Hubble</h4>
+              <p>
+                Lançado para órbita, revolucionou a nossa compreensão do
+                universo com imagens espetaculares de galáxias distantes.
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2021</div>
+              <h4>Telescópio James Webb</h4>
+              <p>
+                O telescópio mais poderoso já construído, capaz de ver as
+                primeiras galáxias formadas após o Big Bang.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fa-solid fa-star"></i></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <section class="reveal">
+        <div class="section-header">
+          <div class="section-badge">
+            <i class="fa-solid fa-star-half-stroke"></i> Cartografia Celeste
+          </div>
+          <h2 class="section-title">Constelações Famosas</h2>
+          <p class="section-subtitle">
+            Padrões estelares que guiaram navegadores e inspiraram lendas por
+            milénios.
+          </p>
+        </div>
+
+        <div class="constellation-showcase">
+          <div class="constellation-card">
+            <div class="constellation-icon">♈</div>
+            <h4>Orion</h4>
+            <p>
+              O caçador, visível em todo o mundo. Contém Betelgeuse, uma
+              supergigante vermelha.
+            </p>
+          </div>
+          <div class="constellation-card">
+            <div class="constellation-icon">🐻</div>
+            <h4>Ursa Maior</h4>
+            <p>
+              A grande ursa, contém a famosa "Concha" ou "Arado" que aponta para
+              a Estrela Polar.
+            </p>
+          </div>
+          <div class="constellation-card">
+            <div class="constellation-icon">🦂</div>
+            <h4>Escorpião</h4>
+            <p>
+              Com a brilhante Antares no seu coração, uma supergigante vermelha
+              700x maior que o Sol.
+            </p>
+          </div>
+          <div class="constellation-card">
+            <div class="constellation-icon">✝️</div>
+            <h4>Cruzeiro do Sul</h4>
+            <p>
+              A mais pequena das 88 constelações, mas uma das mais famosas do
+              hemisfério sul.
+            </p>
+          </div>
+          <div class="constellation-card">
+            <div class="constellation-icon">👸</div>
+            <h4>Cassiopeia</h4>
+            <p>
+              A rainha vaidosa em forma de W, visível todo o ano no hemisfério
+              norte.
+            </p>
+          </div>
+          <div class="constellation-card">
+            <div class="constellation-icon">🦁</div>
+            <h4>Leão</h4>
+            <p>
+              O leão celeste com Regulus, uma estrela 4x maior e 288x mais
+              brilhante que o Sol.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <section id="facts" class="reveal">
+        <div class="section-header">
+          <div class="section-badge">
+            <i class="fa-solid fa-brain"></i> Factos Surpreendentes
+          </div>
+          <h2 class="section-title">Sabias Que...</h2>
+          <p class="section-subtitle">
+            Curiosidades cósmicas que vão expandir a tua mente!
+          </p>
+        </div>
+
+        <div class="quick-facts-grid">
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-sun"></i>
+            </div>
+            <h4>Luz do Sol</h4>
+            <p>
+              A luz demora 8 minutos e 20 segundos a chegar do Sol à Terra.
+              Quando vês o pôr do sol, o Sol já se pôs há mais de 8 minutos!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-diamond"></i>
+            </div>
+            <h4>Chuva de Diamantes</h4>
+            <p>
+              Em Neptuno e Úrano, a pressão extrema transforma metano em
+              diamantes que caem como chuva. Literalmente chove diamantes!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-volume-xmark"></i>
+            </div>
+            <h4>Silêncio Espacial</h4>
+            <p>
+              No espaço, ninguém te ouve gritar. Sem ar, não há som. As
+              explosões de supernovas são completamente silenciosas!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+            <h4>Cresces no Espaço</h4>
+            <p>
+              Sem gravidade, a coluna vertebral expande. Astronautas podem
+              crescer até 5 cm! Mas voltam ao normal na Terra.
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-shoe-prints"></i>
+            </div>
+            <h4>Pegadas Eternas</h4>
+            <p>
+              As pegadas na Lua podem durar 100 milhões de anos. Sem vento nem
+              chuva, nada as pode apagar!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-atom"></i>
+            </div>
+            <h4>Somos Poeira de Estrelas</h4>
+            <p>
+              Todos os elementos do teu corpo foram criados em estrelas antigas.
+              O carbono, oxigénio, ferro - tudo nasceu em supernovas!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-stopwatch"></i>
+            </div>
+            <h4>Um Dia em Júpiter</h4>
+            <p>
+              Apesar do seu tamanho gigantesco, Júpiter tem o dia mais curto do
+              sistema solar: apenas 10 horas!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h4>Voyager 1</h4>
+            <p>
+              Lançada em 1977, está a mais de 24 mil milhões de km da Terra.
+              Demora 22 horas para um sinal de rádio chegar!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <h4>O Sol é uma Estrela Média</h4>
+            <p>
+              Existem estrelas 1.700 vezes maiores que o Sol! UY Scuti poderia
+              conter 5 mil milhões de sóis dentro dela.
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-binoculars"></i>
+            </div>
+            <h4>Galáxia Vizinha</h4>
+            <p>
+              Andrómeda está a 2.5 milhões de anos-luz, mas está a aproximar-se!
+              Daqui a 4.5 mil milhões de anos, vai colidir com a Via Láctea.
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-temperature-low"></i>
+            </div>
+            <h4>Frio Absoluto</h4>
+            <p>
+              A temperatura média do espaço é -270.45°C, apenas 2.7 graus acima
+              do zero absoluto. A Nebulosa Bumerangue é mais fria!
+            </p>
+          </div>
+          <div class="quick-fact-card">
+            <div class="quick-fact-icon">
+              <i class="fa-solid fa-meteor"></i>
+            </div>
+            <h4>Chuva de Meteoros</h4>
+            <p>
+              Todos os dias, cerca de 48 toneladas de material meteorítico caem
+              na Terra. A maioria queima na atmosfera!
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h3><i class="fa-solid fa-satellite"></i> Cosmos Explorer</h3>
+            <p>
+              Uma jornada educativa pelos mistérios do universo. Explora,
+              aprende e maravilha-te com a imensidão do cosmos.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-youtube"></i></a>
+              <a href="#"><i class="fa-brands fa-discord"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Explorar</h4>
+            <a href="#planets">Sistema Solar</a>
+            <a href="#galaxies">Galáxias</a>
+            <a href="#phenomena">Fenómenos</a>
+            <a href="#facts">Curiosidades</a>
+          </div>
+          <div class="footer-links">
+            <h4>Recursos</h4>
+            <a href="#">NASA</a>
+            <a href="#">ESA</a>
+            <a href="#">Hubble</a>
+            <a href="#">James Webb</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2024 Cosmos Explorer. Feito com ❤️ e poeira de estrelas.
+            Todos os direitos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/ui-core.js"></script>
+    <script>
+      // Create Stars
+      function createStars() {
+        const container = document.getElementById("star-container");
+        const starCount = 200;
+
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+          star.style.left = Math.random() * 100 + "%";
+          star.style.top = Math.random() * 100 + "%";
+          star.style.width = Math.random() * 3 + 1 + "px";
+          star.style.height = star.style.width;
+          star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
+          star.style.animationDelay = Math.random() * 5 + "s";
+          container.appendChild(star);
+        }
+
+        // Add shooting stars
+        for (let i = 0; i < 3; i++) {
+          const shootingStar = document.createElement("div");
+          shootingStar.className = "shooting-star";
+          shootingStar.style.left = Math.random() * 50 + 50 + "%";
+          shootingStar.style.top = Math.random() * 30 + "%";
+          shootingStar.style.animationDelay = Math.random() * 10 + i * 5 + "s";
+          container.appendChild(shootingStar);
+        }
+      }
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // Mobile menu toggle
+      document.getElementById("mobileMenuBtn").addEventListener("click", () => {
+        document.getElementById("navLinks").classList.toggle("active");
+      });
+
+      // Fact box toggle
+      document
+        .getElementById("toggle-fact")
+        .addEventListener("click", function () {
+          const factBox = document.getElementById("fact-box");
+          factBox.classList.toggle("show");
+          this.classList.toggle("active");
+          this.querySelector("span").textContent = factBox.classList.contains(
+            "show"
+          )
+            ? "Ocultar Análise"
+            : "Ler Análise Completa";
+        });
+
+      // Scroll reveal animations
+      function reveal() {
+        const reveals = document.querySelectorAll(".reveal");
+        reveals.forEach((element) => {
+          const windowHeight = window.innerHeight;
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < windowHeight - elementVisible) {
+            element.classList.add("active");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", reveal);
+
+      // Counter animation
+      function animateCounters() {
+        const counters = document.querySelectorAll(".stat-number");
+        counters.forEach((counter) => {
+          const target = parseInt(counter.getAttribute("data-count"));
+          const duration = 2000;
+          const step = target / (duration / 16);
+          let current = 0;
+
+          const updateCounter = () => {
+            current += step;
+            if (current < target) {
+              counter.textContent = Math.floor(current);
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.textContent = target;
+            }
+          };
+
+          // Only animate when in view
+          const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              updateCounter();
+              observer.disconnect();
+            }
+          });
+          observer.observe(counter);
+        });
+      }
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            // Close mobile menu if open
+            document.getElementById("navLinks").classList.remove("active");
+          }
+        });
+      });
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        createStars();
+        reveal();
+        animateCounters();
+      });
+    </script>
+  </body>
 </html>
