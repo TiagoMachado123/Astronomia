@@ -16,8 +16,8 @@ const port = 3000;
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "h4dk3M,^D0%hLy12}]", 
-  database: "astronomia_registos", 
+  password: "h4dk3M,^D0%hLy12}]",
+  database: "astronomia_registos",
 });
 
 db.connect((err) => {
@@ -35,10 +35,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
   session({
-    secret: "segredo_cosmico_super_seguro", 
+    secret: "segredo_cosmico_super_seguro",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, 
+    cookie: { secure: false },
   })
 );
 
@@ -83,7 +83,7 @@ app.get("/", (req, res) => {
 // 2. DASHBOARD (ANTIGA LANDING PAGE) - NOVA ROTA
 // Protegida pelo middleware 'isAuthenticated'
 app.get("/dashboard.html", isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+  res.sendFile(path.join(__dirname, "private", "dashboard.html"));
 });
 
 // 3. PÁGINA DE REGISTO
@@ -98,7 +98,7 @@ app.get("/registo.html", (req, res) => {
 app.get("/check-session", (req, res) => {
   res.json({
     loggedin: req.session.loggedin || false,
-    email: req.session.email || null // <--- ADICIONA ESTA LINHA
+    email: req.session.email || null, // <--- ADICIONA ESTA LINHA
   });
 });
 
@@ -119,13 +119,21 @@ app.post(
     } = req.body;
 
     // Atribuição de cargo aleatório (mantido do teu código original)
-    const cargos = ["Cadete", "Engenheiro", "Piloto", "Cientista", "Comandante"]; // [cite: 8]
+    const cargos = [
+      "Cadete",
+      "Engenheiro",
+      "Piloto",
+      "Cientista",
+      "Comandante",
+    ]; // [cite: 8]
     const cargoAtribuido = cargos[Math.floor(Math.random() * cargos.length)];
 
     const fotoPath = req.files["fotografia"]
       ? req.files["fotografia"][0].path
       : "uploads/default-avatar.png";
-    const docPath = req.files["documento"] ? req.files["documento"][0].path : null;
+    const docPath = req.files["documento"]
+      ? req.files["documento"][0].path
+      : null;
 
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -223,11 +231,15 @@ app.get("/getutilizadores", isAuthenticated, (req, res) => {
 
 // 9. OUTRAS PÁGINAS PROTEGIDAS
 app.get("/visualizacao.html", isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "visualizacao.html"));
+  res.sendFile(path.join(__dirname, "private", "visualizacao.html"));
+});
+
+app.get("/perfil.html", isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "private", "perfil.html"));
 });
 
 app.get("/astronomia.html", isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "astronomia.html"));
+  res.sendFile(path.join(__dirname, "private", "astronomia.html"));
 });
 
 // INICIAR SERVIDOR
@@ -235,53 +247,78 @@ app.get("/astronomia.html", isAuthenticated, (req, res) => {
 app.get("/api/me", isAuthenticated, (req, res) => {
   const email = req.session.email;
 
-  db.query("SELECT * FROM utilizadores WHERE email = ?", [email], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Erro ao buscar dados." });
+  db.query(
+    "SELECT * FROM utilizadores WHERE email = ?",
+    [email],
+    (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Erro ao buscar dados." });
+      }
+      if (results.length > 0) {
+        // Removemos a password antes de enviar para o frontend por segurança
+        const user = results[0];
+        delete user.password;
+        res.json(user);
+      } else {
+        res.status(404).json({ error: "Utilizador não encontrado." });
+      }
     }
-    if (results.length > 0) {
-      // Removemos a password antes de enviar para o frontend por segurança
-      const user = results[0];
-      delete user.password;
-      res.json(user);
-    } else {
-      res.status(404).json({ error: "Utilizador não encontrado." });
-    }
-  });
+  );
 });
 
 // --- NOVO: ROTA PARA ATUALIZAR PERFIL ---
-app.post("/update-profile", isAuthenticated, upload.fields([{ name: "fotografia" }, { name: "documento" }]), async (req, res) => {
-  const { nome, telefone, morada, biografia } = req.body;
-  const email = req.session.email; // Usamos o email da sessão para garantir que alteramos o user certo
+app.post(
+  "/update-profile",
+  isAuthenticated,
+  upload.fields([{ name: "fotografia" }, { name: "documento" }]),
+  async (req, res) => {
+    const { nome, telefone, morada, biografia } = req.body;
+    const email = req.session.email; // Usamos o email da sessão para garantir que alteramos o user certo
 
-  // Lógica para manter a imagem antiga se não for feito upload de uma nova
-  // Primeiro buscamos os dados atuais para saber os caminhos antigos
-  db.query("SELECT fotografia, documento FROM utilizadores WHERE email = ?", [email], (err, results) => {
-    if (err) throw err;
-    // 8. API: DADOS DOS UTILIZADORES
-    const currentUser = results[0];
+    // Lógica para manter a imagem antiga se não for feito upload de uma nova
+    // Primeiro buscamos os dados atuais para saber os caminhos antigos
+    db.query(
+      "SELECT fotografia, documento FROM utilizadores WHERE email = ?",
+      [email],
+      (err, results) => {
+        if (err) throw err;
+        // 8. API: DADOS DOS UTILIZADORES
+        const currentUser = results[0];
 
-    // Se houver novo ficheiro, usa o novo path. Se não, mantém o antigo.
-    const fotoPath = req.files["fotografia"] ? req.files["fotografia"][0].path : currentUser.fotografia;
-    const docPath = req.files["documento"] ? req.files["documento"][0].path : currentUser.documento;
+        // Se houver novo ficheiro, usa o novo path. Se não, mantém o antigo.
+        const fotoPath = req.files["fotografia"]
+          ? req.files["fotografia"][0].path
+          : currentUser.fotografia;
+        const docPath = req.files["documento"]
+          ? req.files["documento"][0].path
+          : currentUser.documento;
 
-    const query = `
+        const query = `
             UPDATE utilizadores 
             SET nome = ?, telefone = ?, morada = ?, biografia = ?, fotografia = ?, documento = ?
             WHERE email = ?
         `;
 
-    db.query(query, [nome, telefone, morada, biografia, fotoPath, docPath, email], (err, result) => {
-      if (err) {
-        console.error(err);
-        return res.send('<script>alert("Erro ao atualizar."); window.location.href="/perfil.html";</script>');
+        db.query(
+          query,
+          [nome, telefone, morada, biografia, fotoPath, docPath, email],
+          (err, result) => {
+            if (err) {
+              console.error(err);
+              return res.send(
+                '<script>alert("Erro ao atualizar."); window.location.href="/perfil.html";</script>'
+              );
+            }
+            res.send(
+              '<script>alert("Perfil atualizado com sucesso!"); window.location.href="/perfil.html";</script>'
+            );
+          }
+        );
       }
-      res.send('<script>alert("Perfil atualizado com sucesso!"); window.location.href="/perfil.html";</script>');
-    });
-  });
-});
+    );
+  }
+);
 app.listen(port, () => {
   console.log(`Servidor a rodar em http://localhost:${port}`);
 });
