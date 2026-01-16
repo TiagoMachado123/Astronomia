@@ -15,16 +15,16 @@
 
     <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/comunidade.css" />
+
 </head>
 
 <body>
     <div id="star-container"></div>
     <div class="nebula"></div>
 
-    <!-- Navbar será injetada pelo ui-core.js -->
+    <div id="navbar-container"></div>
 
     <main class="page-container container">
-        <!-- Header da Página -->
         <div class="page-header">
             <div class="section-badge">
                 <i class="fa-solid fa-satellite-dish"></i> Centro de Comunicações
@@ -33,8 +33,19 @@
             <p>Partilha as tuas descobertas e experiências astronómicas com outros exploradores.</p>
         </div>
 
-        <!-- Formulário de Novo Post -->
-        <section class="new-post-section">
+        <div class="actions-bar">
+            <button id="btn-toggle-form" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nova Descoberta
+            </button>
+
+            <div class="quick-filters filter-group">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="mine">Os Meus Posts</button>
+                <button class="filter-btn" data-filter="liked">Gostos</button>
+            </div>
+        </div>
+
+        <section class="new-post-section hidden" id="create-post-section">
             <div class="new-post-card">
                 <div class="new-post-header">
                     <div class="user-indicator">
@@ -43,9 +54,15 @@
                         </div>
                         <span id="current-user-name">Carregando...</span>
                     </div>
-                    <span class="post-type-label">
-                        <i class="fa-solid fa-rocket"></i> Nova Transmissão
-                    </span>
+                    <div class="header-actions">
+                        <span class="post-type-label">
+                            <i class="fa-solid fa-rocket"></i> Nova Transmissão
+                        </span>
+                        <button type="button" id="btn-close-form" class="btn-close-icon"
+                            style="background:none; border:none; color:white; cursor:pointer; margin-left: 10px;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <form id="new-post-form" enctype="multipart/form-data">
@@ -53,14 +70,16 @@
                         <label for="post-title">
                             <i class="fa-solid fa-heading"></i> Título da Descoberta
                         </label>
-                        <input type="text" id="post-title" name="titulo" placeholder="Ex: Observei a Nebulosa de Órion!" required />
+                        <input type="text" id="post-title" name="titulo" placeholder="Ex: Observei a Nebulosa de Órion!"
+                            required maxlength="100" />
                     </div>
 
                     <div class="form-group">
                         <label for="post-content">
                             <i class="fa-solid fa-align-left"></i> Descrição
                         </label>
-                        <textarea id="post-content" name="conteudo" rows="4" placeholder="Descreve a tua experiência ou descoberta..." required></textarea>
+                        <textarea id="post-content" name="conteudo" rows="4"
+                            placeholder="Descreve a tua experiência ou descoberta..." required></textarea>
                     </div>
 
                     <div class="form-group">
@@ -82,7 +101,10 @@
                             <i class="fa-solid fa-image"></i> Imagem (opcional)
                         </label>
                         <div class="image-upload-area" id="image-upload-area">
-                            <input type="file" id="post-image" name="imagem" accept="image/*" />
+                            <input type="file" id="post-image-file" name="imagem" accept="image/*" />
+                            <input type="text" id="post-image" placeholder="Ou cola o URL da imagem aqui"
+                                style="margin-top:10px; width:100%; background:rgba(0,0,0,0.3); border:1px solid #444; color:white; padding:8px; display:none;" />
+
                             <div class="upload-placeholder">
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                 <span>Clica ou arrasta uma imagem</span>
@@ -96,7 +118,7 @@
                         <button type="button" class="btn btn-outline" id="btn-clear-post">
                             <i class="fa-solid fa-eraser"></i> Limpar
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-submit btn-primary">
                             <i class="fa-solid fa-paper-plane"></i> Publicar
                         </button>
                     </div>
@@ -104,12 +126,11 @@
             </div>
         </section>
 
-        <!-- Filtros e Ordenação -->
         <section class="filters-section">
             <div class="filters-wrapper">
                 <div class="filter-group">
                     <label for="filter-category">
-                        <i class="fa-solid fa-filter"></i> Filtrar:
+                        <i class="fa-solid fa-filter"></i> Categoria:
                     </label>
                     <select id="filter-category">
                         <option value="">Todas as Categorias</option>
@@ -140,16 +161,15 @@
             </div>
         </section>
 
-        <!-- Feed de Posts -->
         <section class="posts-feed" id="posts-feed">
-            <!-- Posts serão carregados via JavaScript -->
-            <div class="loading-indicator" id="loading-indicator">
-                <div class="loading-spinner"></div>
-                <span>A sincronizar com a estação espacial...</span>
+            <div id="feed-container" style="display: contents;">
+                <div class="loading-indicator" id="loading-indicator">
+                    <div class="loading-spinner"></div>
+                    <span>A sincronizar com a estação espacial...</span>
+                </div>
             </div>
         </section>
 
-        <!-- Estado Vazio -->
         <div class="empty-state hidden" id="empty-state">
             <i class="fa-solid fa-satellite"></i>
             <h3>Nenhuma transmissão encontrada</h3>
@@ -179,7 +199,6 @@
         </div>
     </footer>
 
-    <!-- Modal de Visualização de Imagem -->
     <div class="image-modal" id="image-modal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -190,7 +209,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="/js/utils.js"></script>
     <script src="/js/ui-core.js"></script>
     <script src="/js/comunidade.js"></script>

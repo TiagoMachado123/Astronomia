@@ -6,22 +6,30 @@
 
 let allPosts = [];
 let currentUser = null;
+let currentFilter = 'all'; // 'all', 'mine', 'liked'
 
 // ==========================================
 // INICIALIZAÇÃO
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Inicializar Navbar Global (se existir)
+    if (typeof loadNavbar === "function") loadNavbar();
+
     // Verificar se estamos na página de comunidade
-    if (!window.location.pathname.includes("comunidade.html")) return;
+    // (Verificação simplificada para funcionar mesmo que o URL mude ligeiramente)
+    const feedElement = document.getElementById("posts-feed");
+    if (!feedElement) return;
 
     // Carregar dados iniciais
     loadCurrentUser();
     loadPosts();
 
     // Configurar event listeners
+    setupToggleForm();      // Novo (Integração Cód 1)
+    setupQuickFilters();    // Novo (Integração Cód 1)
     setupFormListeners();
-    setupFilterListeners();
+    setupFilterListeners(); // Filtros de categoria/ordenação
     setupImageUpload();
     setupModal();
 
@@ -30,20 +38,67 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ==========================================
+// 1. LÓGICA DE TOGGLE E FILTROS RÁPIDOS (INTEGRAÇÃO)
+// ==========================================
+
+function setupToggleForm() {
+    const btnToggle = document.getElementById('btn-toggle-form');
+    const btnClose = document.getElementById('btn-close-form'); // Botão no topo do form
+    const createSection = document.getElementById('create-post-section');
+
+    if (btnToggle && createSection) {
+        btnToggle.addEventListener('click', () => {
+            createSection.classList.remove('hidden');
+            btnToggle.classList.add('hidden'); // Esconde o botão de abrir
+            // Scroll suave até ao formulário
+            createSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    // Função para fechar o formulário
+    const closeForm = () => {
+        if (createSection && btnToggle) {
+            createSection.classList.add('hidden');
+            btnToggle.classList.remove('hidden'); // Mostra o botão de abrir novamente
+        }
+    };
+
+    if (btnClose) btnClose.addEventListener('click', closeForm);
+
+    // Tornar a função acessível globalmente caso o HTML use onclick noutro sítio
+    window.closePostForm = closeForm;
+}
+
+function setupQuickFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // UI: Remove active de todos e adiciona ao clicado
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Lógica: Atualiza filtro global e recarrega
+            currentFilter = btn.dataset.filter;
+            loadPosts();
+        });
+    });
+}
+
+// ==========================================
 // CARREGAR UTILIZADOR ATUAL
 // ==========================================
 
 async function loadCurrentUser() {
     try {
         const response = await fetch("/api/me");
-        if (!response.ok) {
-            window.location.href = "/";
-            return;
-        }
+        // Se falhar (401), não redirecionamos forçosamente para não bloquear visitantes,
+        // mas impedimos ações de postar.
+        if (!response.ok) return;
 
         currentUser = await response.json();
 
-        // Atualizar UI com dados do utilizador
+        // Atualizar UI com dados do utilizador no form
         const nameEl = document.getElementById("current-user-name");
         const avatarEl = document.getElementById("current-user-avatar");
 
@@ -56,7 +111,6 @@ async function loadCurrentUser() {
 
     } catch (error) {
         console.error("Erro ao carregar utilizador:", error);
-        showToast("Erro ao carregar dados do utilizador", "error");
     }
 }
 
@@ -68,14 +122,19 @@ async function loadPosts() {
     const feedEl = document.getElementById("posts-feed");
     const loadingEl = document.getElementById("loading-indicator");
     const emptyEl = document.getElementById("empty-state");
+    const countEl = document.getElementById("posts-count");
 
     try {
         // Mostrar loading
         if (loadingEl) loadingEl.style.display = "flex";
         if (emptyEl) emptyEl.classList.add("hidden");
+        // Limpar feed visualmente enquanto carrega
+        feedEl.innerHTML = '';
+        if (feedEl.contains(loadingEl)) feedEl.appendChild(loadingEl);
 
-        const response = await fetch("/api/posts");
-        
+        // Fetch com o filtro atual (all, mine, liked)
+        const response = await fetch(`/api/posts?filter=${currentFilter}`);
+
         if (!response.ok) {
             throw new Error("Erro ao carregar posts");
         }
@@ -85,18 +144,21 @@ async function loadPosts() {
         // Esconder loading
         if (loadingEl) loadingEl.style.display = "none";
 
+        // Atualizar contador total
+        if (countEl) countEl.textContent = allPosts.length;
+
         // Renderizar posts
         renderPosts(allPosts);
 
     } catch (error) {
         console.error("Erro ao carregar posts:", error);
         if (loadingEl) loadingEl.style.display = "none";
-        
+
         feedEl.innerHTML = `
             <div class="empty-state">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <h3>Erro de Comunicação</h3>
-                <p>Não foi possível estabelecer ligação com a estação. Tenta novamente.</p>
+                <p>Não foi possível estabelecer ligação com a estação.</p>
                 <button class="btn btn-primary" onclick="loadPosts()">
                     <i class="fa-solid fa-rotate"></i> Tentar Novamente
                 </button>
@@ -112,15 +174,20 @@ async function loadPosts() {
 function renderPosts(posts) {
     const feedEl = document.getElementById("posts-feed");
     const emptyEl = document.getElementById("empty-state");
-    const countEl = document.getElementById("posts-count");
-
-    // Atualizar contador
-    if (countEl) countEl.textContent = posts.length;
 
     // Verificar se há posts
     if (posts.length === 0) {
         feedEl.innerHTML = "";
-        if (emptyEl) emptyEl.classList.remove("hidden");
+        if (emptyEl) {
+            emptyEl.classList.remove("hidden");
+            // Atualizar mensagem de vazio baseada no filtro
+            const msgP = emptyEl.querySelector('p');
+            if (msgP) {
+                if (currentFilter === 'mine') msgP.textContent = "Ainda não fizeste nenhuma descoberta.";
+                else if (currentFilter === 'liked') msgP.textContent = "Ainda não tens favoritos.";
+                else msgP.textContent = "Sê o primeiro a partilhar uma descoberta cósmica!";
+            }
+        }
         return;
     }
 
@@ -129,19 +196,22 @@ function renderPosts(posts) {
     // Gerar HTML dos posts
     feedEl.innerHTML = posts.map((post, index) => createPostHTML(post, index)).join("");
 
-    // Configurar event listeners dos botões de like
-    setupLikeButtons();
+    // Re-anexar o loading indicator escondido para uso futuro
+    const loadingHtml = `<div class="loading-indicator" id="loading-indicator" style="display:none;"><div class="loading-spinner"></div><span>A sincronizar...</span></div>`;
+    feedEl.insertAdjacentHTML('beforeend', loadingHtml);
 
-    // Configurar clique nas imagens
+    // Configurar event listeners dinâmicos
+    setupLikeButtons();
+    setupDeleteButtons(); // Novo: Botões de eliminar
     setupImageClicks();
 }
 
 function createPostHTML(post, index) {
-    const avatarPath = post.autor_foto 
+    const avatarPath = post.autor_foto
         ? "/" + post.autor_foto.replace(/\\/g, "/").replace(/^public\//, "")
         : null;
 
-    const postImagePath = post.imagem 
+    const postImagePath = post.imagem
         ? "/" + post.imagem.replace(/\\/g, "/").replace(/^public\//, "")
         : null;
 
@@ -154,37 +224,39 @@ function createPostHTML(post, index) {
         "duvida": "❓"
     };
 
-    const categoryNames = {
-        "observacao": "Observação",
-        "descoberta": "Descoberta",
-        "fotografia": "Astrofotografia",
-        "evento": "Evento",
-        "discussao": "Discussão",
-        "duvida": "Dúvida"
-    };
-
+    const categoryName = post.categoria.charAt(0).toUpperCase() + post.categoria.slice(1);
     const categoryIcon = categoryIcons[post.categoria] || "📡";
-    const categoryName = categoryNames[post.categoria] || post.categoria;
 
     const isLiked = post.user_liked ? "liked" : "";
     const likeIcon = post.user_liked ? "fa-solid" : "fa-regular";
 
     const timeAgo = formatTimeAgo(post.data_criacao);
 
+    // Lógica para mostrar botão de delete (Se for autor ou admin)
+    // Assumimos que a API envia 'is_author' ou comparamos IDs se disponíveis
+    let deleteBtnHtml = "";
+    if (post.is_author === true || (currentUser && post.autor_id === currentUser.id)) {
+        deleteBtnHtml = `
+            <button class="action-btn btn-delete" data-post-id="${post.id}" title="Eliminar Transmissão">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        `;
+    }
+
     return `
-        <article class="post-card" style="animation-delay: ${index * 0.1}s" data-post-id="${post.id}">
+        <article class="post-card" style="animation-delay: ${index * 0.1}s">
             <div class="post-header">
                 <div class="post-author">
                     <div class="author-avatar">
-                        ${avatarPath 
-                            ? `<img src="${avatarPath}" alt="${post.autor_nome}" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-user-astronaut\\'></i>'">`
-                            : `<i class="fa-solid fa-user-astronaut"></i>`
-                        }
+                        ${avatarPath
+            ? `<img src="${avatarPath}" alt="${post.autor_nome}" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-user-astronaut\\'></i>'">`
+            : `<i class="fa-solid fa-user-astronaut"></i>`
+        }
                     </div>
                     <div class="author-info">
                         <h4>${escapeHtml(post.autor_nome)}</h4>
                         <div class="author-meta">
-                            <span class="author-cargo">${escapeHtml(post.autor_cargo || "Cadete")}</span>
+                            <span class="author-cargo">${escapeHtml(post.autor_cargo || "Viajante")}</span>
                             <span><i class="fa-regular fa-clock"></i> ${timeAgo}</span>
                         </div>
                     </div>
@@ -212,15 +284,15 @@ function createPostHTML(post, index) {
                         <i class="${likeIcon} fa-heart"></i>
                         <span class="like-count">${post.likes || 0}</span>
                     </button>
-                    <button class="action-btn share-btn" data-post-id="${post.id}">
-                        <i class="fa-solid fa-share-nodes"></i>
-                        Partilhar
-                    </button>
+                    </div>
+                
+                <div style="display:flex; gap:10px; align-items:center;">
+                    ${deleteBtnHtml}
+                    <span class="post-timestamp">
+                        <i class="fa-regular fa-calendar"></i>
+                        ${formatDate(post.data_criacao)}
+                    </span>
                 </div>
-                <span class="post-timestamp">
-                    <i class="fa-regular fa-calendar"></i>
-                    ${formatDate(post.data_criacao)}
-                </span>
             </div>
         </article>
     `;
@@ -241,15 +313,22 @@ function setupFormListeners() {
     if (clearBtn) {
         clearBtn.addEventListener("click", () => {
             form.reset();
-            const preview = document.getElementById("image-preview");
-            const placeholder = document.querySelector(".upload-placeholder");
-            if (preview) {
-                preview.classList.remove("active");
-                preview.innerHTML = "";
-            }
-            if (placeholder) placeholder.style.display = "flex";
+            resetImagePreview();
         });
     }
+}
+
+function resetImagePreview() {
+    const preview = document.getElementById("image-preview");
+    const placeholder = document.querySelector(".upload-placeholder");
+    const fileInput = document.getElementById("post-image-file");
+
+    if (preview) {
+        preview.classList.remove("active");
+        preview.innerHTML = "";
+    }
+    if (placeholder) placeholder.style.display = "flex";
+    if (fileInput) fileInput.value = "";
 }
 
 async function handlePostSubmit(e) {
@@ -269,11 +348,16 @@ async function handlePostSubmit(e) {
     }
 
     try {
-        // Mostrar loading no botão
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> A publicar...';
 
         const formData = new FormData(form);
+
+        // Tratamento especial se houver input de URL de imagem (fallback)
+        const urlInput = document.getElementById('post-image');
+        if (urlInput && urlInput.value) {
+            formData.append('imagem_url', urlInput.value);
+        }
 
         const response = await fetch("/api/posts", {
             method: "POST",
@@ -286,23 +370,22 @@ async function handlePostSubmit(e) {
             throw new Error(result.error || "Erro ao criar post");
         }
 
-        // Sucesso!
         showToast("Transmissão enviada com sucesso! 🚀", "success");
 
-        // Limpar formulário
+        // Limpar e fechar
         form.reset();
-        const preview = document.getElementById("image-preview");
-        const placeholder = document.querySelector(".upload-placeholder");
-        if (preview) {
-            preview.classList.remove("active");
-            preview.innerHTML = "";
-        }
-        if (placeholder) placeholder.style.display = "flex";
+        resetImagePreview();
 
-        // Recarregar posts
-        await loadPosts();
+        // Fechar o form (Comportamento do Cód 1)
+        const createSection = document.getElementById('create-post-section');
+        const btnToggle = document.getElementById('btn-toggle-form');
+        if (createSection) createSection.classList.add('hidden');
+        if (btnToggle) btnToggle.classList.remove('hidden');
 
-        // Scroll para o topo do feed
+        // Resetar filtro para "Todos" ou "Meus" e recarregar
+        loadPosts();
+
+        // Scroll para o topo
         document.getElementById("posts-feed").scrollIntoView({ behavior: "smooth" });
 
     } catch (error) {
@@ -312,6 +395,45 @@ async function handlePostSubmit(e) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
     }
+}
+
+// ==========================================
+// ELIMINAR POST (Novo)
+// ==========================================
+
+function setupDeleteButtons() {
+    const deleteButtons = document.querySelectorAll(".btn-delete");
+
+    deleteButtons.forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            if (!confirm("Tem a certeza que deseja eliminar esta transmissão do registo?")) return;
+
+            const postId = btn.dataset.postId;
+            const card = btn.closest('.post-card');
+
+            try {
+                const res = await fetch(`/api/posts/${postId}`, { method: 'DELETE' });
+                if (res.ok) {
+                    showToast("Post eliminado com sucesso.", "success");
+                    // Animação de saída
+                    card.style.transition = "all 0.5s ease";
+                    card.style.opacity = "0";
+                    card.style.transform = "translateX(50px)";
+                    setTimeout(() => {
+                        card.remove();
+                        // Se não sobrarem posts, recarregar para mostrar estado vazio
+                        if (document.querySelectorAll('.post-card').length === 0) loadPosts();
+                    }, 500);
+                } else {
+                    const data = await res.json();
+                    throw new Error(data.error || "Não foi possível eliminar.");
+                }
+            } catch (err) {
+                console.error(err);
+                showToast(err.message, "error");
+            }
+        });
+    });
 }
 
 // ==========================================
@@ -332,18 +454,25 @@ async function handleLike(e) {
     const countEl = btn.querySelector(".like-count");
     const iconEl = btn.querySelector("i");
 
+    // Feedback Imediato (Otimista)
+    const isLiked = btn.classList.contains('liked');
+    let currentCount = parseInt(countEl.textContent);
+
+    // Toggle visual provisório
+    btn.classList.toggle('liked');
+    iconEl.className = isLiked ? "fa-regular fa-heart" : "fa-solid fa-heart";
+    countEl.textContent = isLiked ? Math.max(0, currentCount - 1) : currentCount + 1;
+
     try {
-        const response = await fetch(`/api/posts/${postId}/like`, {
-            method: "POST"
-        });
+        const response = await fetch(`/api/posts/${postId}/like`, { method: "POST" });
+
+        if (!response.ok) {
+            throw new Error("Erro na rede");
+        }
 
         const result = await response.json();
 
-        if (!response.ok) {
-            throw new Error(result.error || "Erro ao dar like");
-        }
-
-        // Atualizar UI
+        // Atualizar com dados reais do servidor
         if (result.liked) {
             btn.classList.add("liked");
             iconEl.className = "fa-solid fa-heart";
@@ -351,33 +480,37 @@ async function handleLike(e) {
             btn.classList.remove("liked");
             iconEl.className = "fa-regular fa-heart";
         }
-
         countEl.textContent = result.totalLikes;
 
     } catch (error) {
+        // Reverter em caso de erro
         console.error("Erro ao dar like:", error);
-        showToast("Erro ao registar o teu voto", "error");
+        showToast("Erro ao comunicar com o servidor", "error");
+
+        // Reverter UI
+        btn.classList.toggle('liked');
+        iconEl.className = isLiked ? "fa-solid fa-heart" : "fa-regular fa-heart";
+        countEl.textContent = currentCount;
     }
 }
 
 // ==========================================
-// FILTROS E ORDENAÇÃO
+// FILTROS COMBINADOS (Categoria / Ordenação)
 // ==========================================
 
 function setupFilterListeners() {
     const categoryFilter = document.getElementById("filter-category");
     const sortOrder = document.getElementById("sort-order");
 
-    if (categoryFilter) {
-        categoryFilter.addEventListener("change", applyFilters);
-    }
-
-    if (sortOrder) {
-        sortOrder.addEventListener("change", applyFilters);
-    }
+    if (categoryFilter) categoryFilter.addEventListener("change", applyLocalFilters);
+    if (sortOrder) sortOrder.addEventListener("change", applyLocalFilters);
 }
 
-function applyFilters() {
+function applyLocalFilters() {
+    // Esta função filtra os posts JÁ carregados (allPosts)
+    // Útil para filtrar por categoria sem bater na API novamente,
+    // mas respeitando o "Setor" atual (Todos/Meus/Liked)
+
     const categoryFilter = document.getElementById("filter-category").value;
     const sortOrder = document.getElementById("sort-order").value;
 
@@ -410,7 +543,8 @@ function applyFilters() {
 
 function setupImageUpload() {
     const uploadArea = document.getElementById("image-upload-area");
-    const fileInput = document.getElementById("post-image");
+    // Atenção: Usei "post-image-file" no HTML integrado para diferenciar do ID de URL
+    const fileInput = document.getElementById("post-image-file") || document.getElementById("post-image");
     const preview = document.getElementById("image-preview");
     const placeholder = document.querySelector(".upload-placeholder");
 
@@ -429,7 +563,7 @@ function setupImageUpload() {
     uploadArea.addEventListener("drop", (e) => {
         e.preventDefault();
         uploadArea.classList.remove("dragover");
-        
+
         const files = e.dataTransfer.files;
         if (files.length > 0) {
             fileInput.files = files;
@@ -468,15 +602,12 @@ function setupImageUpload() {
                 </button>
             `;
             preview.classList.add("active");
-            placeholder.style.display = "none";
+            if (placeholder) placeholder.style.display = "none";
 
             // Botão de remover
             preview.querySelector(".remove-image").addEventListener("click", (e) => {
                 e.stopPropagation();
-                fileInput.value = "";
-                preview.classList.remove("active");
-                preview.innerHTML = "";
-                placeholder.style.display = "flex";
+                resetImagePreview();
             });
         };
         reader.readAsDataURL(file);
@@ -493,13 +624,8 @@ function setupModal() {
     const closeBtn = document.getElementById("modal-close");
     const overlay = modal?.querySelector(".modal-overlay");
 
-    if (closeBtn) {
-        closeBtn.addEventListener("click", closeModal);
-    }
-
-    if (overlay) {
-        overlay.addEventListener("click", closeModal);
-    }
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (overlay) overlay.addEventListener("click", closeModal);
 
     // Fechar com ESC
     document.addEventListener("keydown", (e) => {
@@ -530,7 +656,7 @@ function setupImageClicks() {
 }
 
 // ==========================================
-// FUNÇÕES AUXILIARES
+// FUNÇÕES AUXILIARES (UTILS)
 // ==========================================
 
 function escapeHtml(text) {
