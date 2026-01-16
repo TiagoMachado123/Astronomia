@@ -230,16 +230,16 @@ app.get("/getutilizadores", isAuthenticated, (req, res) => {
 });
 
 // 9. OUTRAS PÁGINAS PROTEGIDAS
-app.get("/visualizacao.html", isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, "private", "visualizacao.html"));
+app.get("/tripulacao.html", isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "private", "tripulacao.html"));
 });
 
 app.get("/perfil.html", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "perfil.html"));
 });
 
-app.get("/astronomia.html", isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, "private", "astronomia.html"));
+app.get("/explorar.html", isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "private", "explorar.html"));
 });
 
 // INICIAR SERVIDOR

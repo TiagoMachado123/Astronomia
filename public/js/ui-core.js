@@ -81,11 +81,11 @@ function setupDynamicNav(path) {
       <a href="/dashboard.html" class="nav-item ${isActive(
         "dashboard.html"
       )}">Início</a>
-      <a href="/astronomia.html" class="nav-item ${isActive(
-        "astronomia.html"
+      <a href="/explorar.html" class="nav-item ${isActive(
+        "explorar.html"
       )}">Curiosidades</a>
-      <a href="/visualizacao.html" class="nav-item ${isActive(
-        "visualizacao.html"
+      <a href="/tripulacao.html" class="nav-item ${isActive(
+        "tripulacao.html"
       )}">Tripulação</a>
       
       <div class="user-menu-container">
