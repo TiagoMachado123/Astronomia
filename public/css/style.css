@@ -1,9 +1,6 @@
 /* --- /public/css/style.css --- */
 
-/* 1. IMPORTAÇÃO DE FONTES */
-@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&display=swap");
-
-/* 2. VARIÁVEIS GLOBAIS (:root) */
+/* 1. VARIÁVEIS GLOBAIS (:root) */
 :root {
   /* Paleta Espacial */
   --bg-space: #0a0a1a;
@@ -372,7 +369,8 @@ nav.scrolled {
 .user-avatar-btn img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Garante que a imagem não fica esticada */
+  border-radius: 50%; /* Garante que a imagem é redonda */
 }
 
 .profile-dropdown {

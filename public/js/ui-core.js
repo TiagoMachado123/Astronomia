@@ -111,39 +111,36 @@ function initStars() {
   const container = document.getElementById("star-container");
   if (!container) return;
 
-  // 1. Criar Estrelas Estáticas (Usa DIVs para performance e estilo correto)
+  // Cria um fragmento de memória (muito mais rápido)
+  const fragment = document.createDocumentFragment();
+
   const starCount = 150;
   for (let i = 0; i < starCount; i++) {
     const star = document.createElement("div");
     star.className = "star";
-
-    // Posição aleatória
     star.style.left = Math.random() * 100 + "%";
     star.style.top = Math.random() * 100 + "%";
-
-    // Tamanho aleatório
     const size = Math.random() * 3 + 1;
     star.style.width = size + "px";
     star.style.height = size + "px";
-
-    // Duração da animação aleatória (twinkle)
     star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
 
-    container.appendChild(star);
+    // Adiciona ao fragmento, não ao HTML diretamente
+    fragment.appendChild(star);
   }
 
-  // 2. Criar Cometas / Estrelas Cadentes
+  // Mesma lógica para os cometas
   for (let i = 0; i < 3; i++) {
     const shootingStar = document.createElement("div");
     shootingStar.className = "shooting-star";
-
-    // Começam em posições variadas e tempos diferentes
     shootingStar.style.left = Math.random() * 50 + 50 + "%";
     shootingStar.style.top = Math.random() * 30 + "%";
     shootingStar.style.animationDelay = Math.random() * 10 + i * 5 + "s";
-
-    container.appendChild(shootingStar);
+    fragment.appendChild(shootingStar);
   }
+
+  // Injuta tudo no DOM de uma só vez
+  container.appendChild(fragment);
 }
 
 // --- D. INTERATIVIDADE ---
