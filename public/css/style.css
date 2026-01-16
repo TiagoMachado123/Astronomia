@@ -14,7 +14,7 @@
   --accent-purple: #8b5cf6;
   --accent-cyan: #06b6d4;
   --accent-beige: #ffedaa;
-  --accent-gold: #fbbf24; /* Trazido do CSS antigo */
+  --accent-gold: #fbbf24;
 
   /* Texto */
   --text-white: #ffffff;
@@ -44,7 +44,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Essencial para o footer ficar no fundo */
+  flex-direction: column;
 }
 
 a {
@@ -66,7 +66,7 @@ a {
 
 .star {
   position: absolute;
-  background: white; /* ou var(--accent-beige) se preferir mais quente */
+  background: white;
   border-radius: 50%;
   animation: twinkle var(--duration, 3s) infinite ease-in-out alternate;
 }
@@ -119,7 +119,7 @@ a {
   }
 }
 
-/* Animações utilitárias trazidas do CSS antigo */
+/* Animações Utilitárias Extras */
 @keyframes float {
   0% {
     transform: translateY(0) rotate(-2deg);
@@ -154,14 +154,13 @@ a {
 
 /* 5. LAYOUT E UTILITÁRIOS */
 .container {
-  max-width: 1400px; /* Mais largo para telas modernas */
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
   position: relative;
   z-index: 1;
 }
 
-/* Utilitários de visibilidade (do CSS antigo) */
 .hidden {
   opacity: 0;
   transform: translateY(30px);
@@ -173,7 +172,7 @@ a {
   transform: translateY(0);
 }
 
-/* 6. NAVBAR (Estilo Cosmos Explorer) */
+/* 6. NAVBAR */
 nav {
   position: fixed;
   top: 0;
@@ -217,7 +216,7 @@ nav.scrolled {
 
 .nav-links {
   display: flex;
-  align-items: center; /* Garante alinhamento vertical */
+  align-items: center;
   gap: 30px;
 }
 
@@ -326,6 +325,7 @@ nav.scrolled {
 .btn-outline {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
 }
 
 .btn-outline:hover {
@@ -340,13 +340,13 @@ nav.scrolled {
 }
 
 /* 8. FUNCIONALIDADES ESPECÍFICAS (User Profile & Docs) */
+
 /* --- USER PROFILE DROPDOWN --- */
 .user-menu-container {
   position: relative;
   margin-left: 20px;
 }
 
-/* O Ícone/Avatar do User */
 .user-avatar-btn {
   width: 45px;
   height: 45px;
@@ -375,7 +375,6 @@ nav.scrolled {
   object-fit: cover;
 }
 
-/* O Menu Flutuante */
 .profile-dropdown {
   position: absolute;
   top: 60px;
@@ -386,12 +385,11 @@ nav.scrolled {
   border-radius: 12px;
   padding: 10px 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  z-index: 1001; /* Maior que a nav */
+  z-index: 1001;
 }
 
 .profile-dropdown.active {
@@ -400,7 +398,6 @@ nav.scrolled {
   transform: translateY(0);
 }
 
-/* Seta decorativa no topo do menu */
 .profile-dropdown::before {
   content: "";
   position: absolute;

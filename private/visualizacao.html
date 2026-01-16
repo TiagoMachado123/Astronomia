@@ -1,97 +1,146 @@
 <!-- /private/visualizacao.html -->
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tripulação - Cosmos Explorer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/visualizacao.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tripulação - Astronomia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <link rel="stylesheet" href="css/visualizacao.css" />
+  <body>
+    <div id="star-container"></div>
 
-</head>
-
-<body>
-  <div id="star-container"></div>
-  <div class="container page-container">
-    <!-- Header da Página -->
-    <div class="page-header fade-in">
-      <h2><i class="fa-solid fa-user-astronaut"></i>Tripulação da Missão</h2>
-      <p>Lista oficial de exploradores registados na base de dados intergaláctica.</p>
-    </div>
-    <!-- Painel de Pesquisa e Filtros -->
-    <div class="search-container">
-      <div class="search-panel">
-        <div class="search-title">
-          <i class="fa-solid fa-sliders"></i>
-          <span>Filtrar Tripulação</span>
-        </div>
-        <div class="search-grid">
-          <!-- Campo de Pesquisa por Nome -->
-          <div class="search-field">
-            <label>Pesquisar por Nome</label>
-            <div class="search-input-wrapper">
-              <input type="text" id="crew-search" class="search-input" placeholder="Digite o nome do tripulante..." />
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+    <nav id="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <a href="/dashboard.html" class="logo">
+            <i class="fa-solid fa-satellite"></i>
+            Cosmos Explorer
+          </a>
+          <div class="nav-links" id="navLinks">
+            <a href="/dashboard.html">Início</a>
+            <a href="/visualizacao.html" class="active">Tripulação</a>
+            <a href="/astronomia.html">Base de Dados</a>
+            <a href="/perfil.html">Perfil</a>
+            <a href="/logout" style="color: var(--accent-pink)">Sair</a>
           </div>
-          <!-- Filtro por Cargo -->
-          <div class="search-field">
-            <label>Filtrar por Cargo</label>
-            <div class="select-wrapper search-input-wrapper">
-              <i class="fa-solid fa-id-badge"></i>
-              <select id="crew-role-filter" class="search-select">
-                <option value="">Todos os Cargos</option>
-                <option value="Comandante">🎖️ Comandante</option>
-                <option value="Piloto">✈️ Piloto</option>
-                <option value="Cientista">🔬 Cientista</option>
-                <option value="Engenheiro">⚙️ Engenheiro</option>
-                <option value="Cadete">🚀 Cadete</option>
-              </select>
-            </div>
-          </div>
-          <!-- Botão Limpar -->
-          <div class="search-field">
-            <label>&nbsp;</label>
-            <button type="button" id="btn-clear-filters" class="btn-clear">
-              <i class="fa-solid fa-rotate-left"></i>
-              Limpar Filtros
-            </button>
-          </div>
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
       </div>
-    </div>
-    <!-- Info de Resultados -->
-    <div class="results-info" id="results-info" style="display: none;">
-      <span class="results-count">
-        A mostrar <strong id="results-count-number">0</strong> tripulante(s)
-      </span>
-      <div class="view-toggle">
-        <button class="active" title="Vista em grelha">
-          <i class="fa-solid fa-grip"></i>
-        </button>
-        <button title="Vista em lista">
-          <i class="fa-solid fa-list"></i>
-        </button>
-      </div>
-    </div>
-    <!-- Grelha de Utilizadores -->
-    <div id="user-grid-container" class="user-grid">
-      <div class="loading-message">
-        <i class="fa-solid fa-circle-notch fa-spin"></i>
-        <p>A estabelecer comunicação com a base de dados...</p>
-      </div>
-    </div>
-  </div>
-  <footer>
-    <p>&copy; 2024 Astronomia Explorer. Todos os direitos reservados.</p>
-  </footer>
-  <script src="js/utils.js"></script>
-  <script src="js/ui-core.js"></script>
-  <script src="js/crew.js"></script>
-</body>
+    </nav>
 
+    <div class="container page-container">
+      <div class="page-header fade-in">
+        <h2><i class="fa-solid fa-user-astronaut"></i> Tripulação da Missão</h2>
+        <p>
+          Lista oficial de exploradores registados na base de dados
+          intergaláctica.
+        </p>
+      </div>
+
+      <div class="search-container">
+        <div class="search-panel">
+          <div class="search-title">
+            <i class="fa-solid fa-sliders"></i>
+            <span>Filtrar Tripulação</span>
+          </div>
+          <div class="search-grid">
+            <div class="search-field">
+              <label>Pesquisar por Nome</label>
+              <div class="search-input-wrapper">
+                <input
+                  type="text"
+                  id="crew-search"
+                  class="search-input"
+                  placeholder="Digite o nome..."
+                />
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+            </div>
+            <div class="search-field">
+              <label>Filtrar por Cargo</label>
+              <div class="select-wrapper search-input-wrapper">
+                <i class="fa-solid fa-id-badge"></i>
+                <select id="crew-role-filter" class="search-select">
+                  <option value="">Todos os Cargos</option>
+                  <option value="Comandante">🎖️ Comandante</option>
+                  <option value="Piloto">✈️ Piloto</option>
+                  <option value="Cientista">🔬 Cientista</option>
+                  <option value="Engenheiro">⚙️ Engenheiro</option>
+                  <option value="Cadete">🚀 Cadete</option>
+                </select>
+              </div>
+            </div>
+            <div class="search-field">
+              <label>&nbsp;</label>
+              <button type="button" id="btn-clear-filters" class="btn-clear">
+                <i class="fa-solid fa-rotate-left"></i> Limpar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-info" id="results-info" style="display: none">
+        <span class="results-count"
+          >A mostrar
+          <strong id="results-count-number">0</strong> tripulante(s)</span
+        >
+        <div class="view-toggle">
+          <button class="active" title="Vista em grelha">
+            <i class="fa-solid fa-grip"></i>
+          </button>
+          <button title="Vista em lista">
+            <i class="fa-solid fa-list"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="user-grid-container" class="user-grid">
+        <div class="loading-message">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <p>A estabelecer comunicação com a base de dados...</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h3><i class="fa-solid fa-satellite"></i> Cosmos Explorer</h3>
+            <p>Uma jornada educativa pelos mistérios do universo.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Explorar</h4>
+            <a href="/dashboard.html">Início</a>
+            <a href="/visualizacao.html">Tripulação</a>
+            <a href="/astronomia.html">Dados Cósmicos</a>
+            <a href="/perfil.html">Meu Perfil</a>
+          </div>
+          <div class="footer-links">
+            <h4>Recursos</h4>
+            <a href="#">NASA</a>
+            <a href="#">ESA</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 Cosmos Explorer. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/ui-core.js"></script>
+    <script src="js/crew.js"></script>
+  </body>
 </html>

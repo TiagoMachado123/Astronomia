@@ -33,15 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
     initMobileMenu(); // Ativa o menu mobile
     initNavbarScroll(); // Ativa o efeito de scroll
   }
-  // Caso especial para página de registo (apenas botão voltar)
+  // Caso especial para página de registo
   else if (path.includes("registo.html")) {
-    // Opcional: Injetar um header simples ou deixar o HTML tratar disso
+    // Lógica opcional para registo
   }
 
   // --- 3. INICIAR EFEITOS VISUAIS ---
-  initStars(); // Estrelas e Cometas
-  initObservers(); // Animações de scroll
-  initSmoothScroll(); // Links âncora
+  initStars(); // Estrelas (Divs) e Cometas
+  initObservers(); // Animações de scroll "Fade In"
+  initSmoothScroll(); // Links âncora suaves
 });
 
 /* =========================================
@@ -50,9 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- A. INJEÇÃO DA NAVBAR ---
 function injectNavbar() {
-  // Cria o elemento <nav> em vez de <header> para bater certo com o CSS novo
   const nav = document.createElement("nav");
-  nav.id = "main-navbar"; // ID para referência
+  nav.id = "main-navbar";
 
   nav.innerHTML = `
       <div class="container nav-wrapper">
@@ -68,7 +67,6 @@ function injectNavbar() {
       </div>
     `;
 
-  // Insere no topo do body
   document.body.prepend(nav);
 }
 
@@ -111,33 +109,39 @@ function setupDynamicNav(path) {
 // --- C. EFEITOS VISUAIS (ESTRELAS & COMETAS) ---
 function initStars() {
   const container = document.getElementById("star-container");
-  if (!container) return; // Se não houver container no HTML, sai.
+  if (!container) return;
 
-  // 1. Estrelas Estáticas
+  // 1. Criar Estrelas Estáticas (Usa DIVs para performance e estilo correto)
   const starCount = 150;
   for (let i = 0; i < starCount; i++) {
     const star = document.createElement("div");
     star.className = "star";
+
     // Posição aleatória
     star.style.left = Math.random() * 100 + "%";
     star.style.top = Math.random() * 100 + "%";
+
     // Tamanho aleatório
     const size = Math.random() * 3 + 1;
     star.style.width = size + "px";
     star.style.height = size + "px";
-    // Duração da animação aleatória
+
+    // Duração da animação aleatória (twinkle)
     star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
+
     container.appendChild(star);
   }
 
-  // 2. Cometas / Estrelas Cadentes
+  // 2. Criar Cometas / Estrelas Cadentes
   for (let i = 0; i < 3; i++) {
     const shootingStar = document.createElement("div");
     shootingStar.className = "shooting-star";
-    // Começam mais à direita para cruzar a tela
+
+    // Começam em posições variadas e tempos diferentes
     shootingStar.style.left = Math.random() * 50 + 50 + "%";
     shootingStar.style.top = Math.random() * 30 + "%";
     shootingStar.style.animationDelay = Math.random() * 10 + i * 5 + "s";
+
     container.appendChild(shootingStar);
   }
 }
@@ -145,7 +149,7 @@ function initStars() {
 // --- D. INTERATIVIDADE ---
 
 function setupDropdownLogic() {
-  // Pequeno timeout para garantir que o DOM foi injetado
+  // Timeout para garantir que o DOM injetado existe
   setTimeout(() => {
     const trigger = document.getElementById("profile-trigger");
     const dropdown = document.getElementById("profile-dropdown");
@@ -164,14 +168,13 @@ function setupDropdownLogic() {
 }
 
 function initMobileMenu() {
-  // Timeout para esperar a injeção da navbar
   setTimeout(() => {
     const btn = document.getElementById("mobileMenuBtn");
-    const links = document.getElementById("dynamic-nav"); // O container dos links
+    const links = document.getElementById("dynamic-nav"); // Container dos links
 
     if (btn && links) {
       btn.addEventListener("click", () => {
-        links.classList.toggle("active"); // O CSS usa .active para mostrar o menu mobile
+        links.classList.toggle("active");
       });
     }
   }, 100);
@@ -179,7 +182,7 @@ function initMobileMenu() {
 
 function initNavbarScroll() {
   window.addEventListener("scroll", () => {
-    const navbar = document.querySelector("nav");
+    const navbar = document.getElementById("main-navbar"); // Seleciona pelo ID criado
     if (navbar) {
       if (window.scrollY > 50) {
         navbar.classList.add("scrolled");

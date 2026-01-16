@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Tiago Machado</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* --- CONFIGURAÇÕES GERAIS --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      /* --- A FOLHA A4 --- */
+      .cv-container {
+        width: 210mm;
+        height: 297mm; /* Altura fixa A4 */
+        background-color: white;
+        display: flex;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden; /* Garante que nada sai da folha */
+      }
+
+      /* --- COLUNA ESQUERDA (SIDEBAR) --- */
+      .left-col {
+        width: 32%;
+        background-color: #333333;
+        color: white;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px; /* Espaço entre secções reduzido */
+      }
+
+      /* Foto de Perfil */
+      .profile-img-container {
+        width: 130px; /* Foto ligeiramente menor */
+        height: 130px;
+        margin: 0 auto 5px auto;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        overflow: hidden;
+        background-color: #ddd;
+      }
+
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Títulos da Sidebar */
+      .sidebar-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #666;
+        padding-bottom: 6px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+      }
+
+      .sidebar-title i {
+        background-color: white;
+        color: #333;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.7rem;
+      }
+
+      /* Contactos */
+      .contact-item {
+        margin-bottom: 10px;
+        font-size: 0.75rem;
+      }
+
+      .contact-label {
+        display: block;
+        color: #aaa;
+        font-size: 0.65rem;
+        margin-bottom: 1px;
+      }
+
+      /* Nuvem de Tags (Skills) */
+      .skill-list {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .skill-item {
+        background-color: #444;
+        padding: 5px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        white-space: nowrap;
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      /* Idiomas */
+      .lang-list {
+        list-style: none;
+      }
+      .lang-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        font-size: 0.8rem;
+        border-bottom: 1px solid #444;
+        padding-bottom: 2px;
+      }
+      .lang-level {
+        color: #aaa;
+        font-size: 0.75rem;
+      }
+
+      /* --- COLUNA DIREITA (CONTEÚDO) --- */
+      .right-col {
+        width: 68%;
+        padding: 35px 30px; /* Margens reduzidas para ganhar espaço */
+        color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Cabeçalho */
+      .header {
+        margin-bottom: 20px;
+      } /* Menos espaço após o header */
+
+      .header h1 {
+        font-size: 2.6rem;
+        line-height: 0.9;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .job-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #666;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .summary {
+        font-size: 0.8rem; /* Letra mais pequena */
+        color: #666;
+        line-height: 1.35;
+        text-align: justify;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        color: #444;
+        margin-bottom: 10px; /* Menos espaço */
+        font-weight: 600;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 3px;
+        text-transform: uppercase;
+        margin-top: 5px;
+      }
+
+      /* Timeline Compacta */
+      .timeline-item {
+        margin-bottom: 15px; /* Compactado */
+        padding-left: 15px;
+        border-left: 2px solid #eee;
+      }
+
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 2px;
+      }
+
+      .role {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #222;
+      }
+      .date {
+        font-size: 0.75rem;
+        color: #999;
+      }
+      .company {
+        font-size: 0.85rem;
+        color: #555;
+        margin-bottom: 4px;
+        font-weight: 500;
+        display: block;
+      }
+
+      .description {
+        font-size: 0.78rem; /* Letra ajustada para caber */
+        color: #666;
+        line-height: 1.35;
+        text-align: justify;
+      }
+
+      .description ul {
+        margin-left: 15px;
+        margin-top: 2px;
+      }
+      .description li {
+        margin-bottom: 2px;
+      }
+
+      /* --- PRINT --- */
+      @media print {
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .cv-container {
+          margin: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        .left-col {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cv-container">
+      <aside class="left-col">
+        <div class="profile-img-container">
+          <img
+            src="https://placehold.co/200x200/555/white?text=Foto"
+            alt="Tiago Machado"
+            class="profile-img"
+          />
+        </div>
+
+        <div class="section-left">
+          <h3 class="sidebar-title">
+            <i class="fas fa-address-book"></i> Contactos
+          </h3>
+          <div class="contact-item">
+            <span class="contact-label">Localidade:</span> Guimarães, Portugal
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Telemóvel:</span> 964 022 968
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Email:</span>
+            tiagoleitemachado27@gmail.com
+          </div>
+        </div>
+
+        <div class="section-left">
+          <h3 class="sidebar-title">
+            <i class="fas fa-code"></i> Desenvolvimento
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item">C# / .NET</span>
+            <span class="skill-item">SvelteKit</span>
+            <span class="skill-item">HTML / CSS</span>
+            <span class="skill-item">JavaScript</span>
+            <span class="skill-item">Node.js</span>
+            <span class="skill-item">SQL / Supabase</span>
+            <span class="skill-item">Git / GitHub</span>
+            <span class="skill-item">Angular (Iniciação)</span>
+          </div>
+        </div>
+
+        <div class="section-left">
+          <h3 class="sidebar-title">
+            <i class="fas fa-layer-group"></i> Competências
+          </h3>
+          <div class="skill-list">
+            <span class="skill-item">FlutterFlow</span>
+            <span class="skill-item">Figma</span>
+            <span class="skill-item">Microsoft Office</span>
+            <span class="skill-item">Hardware (Básico)</span>
+          </div>
+        </div>
+
+        <div class="section-left">
+          <h3 class="sidebar-title"><i class="fas fa-language"></i> Idiomas</h3>
+          <ul class="lang-list">
+            <li class="lang-item">
+              <span>Português</span><span class="lang-level">Nativo</span>
+            </li>
+            <li class="lang-item">
+              <span>Inglês</span><span class="lang-level">B2</span>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="right-col">
+        <header class="header">
+          <h1>Tiago<br />Machado</h1>
+          <div class="job-title">
+            Estudante de Desenvolvimento Web e Multimédia
+          </div>
+          <div class="summary">
+            <p>
+              Estudante do CTeSP em Desenvolvimento Web e Multimédia no IPCA,
+              com sólida base técnica adquirida no Curso Profissional de Gestão
+              e Programação de Sistemas Informáticos. Possuo experiência prática
+              em desenvolvimento web, bases de dados e configuração de sistemas,
+              consolidada através de projetos académicos.
+            </p>
+          </div>
+        </header>
+
+        <section>
+          <h2 class="section-title">Educação</h2>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="role">CTeSP em Desenv. Web e Multimédia</span>
+              <span class="date">2024 - Presente</span>
+            </div>
+            <span class="company"
+              >IPCA - Instituto Politécnico do Cávado e do Ave</span
+            >
+            <div class="description">
+              <p>
+                1º Ano concluído com <strong>mérito académico</strong> nas
+                áreas:
+              </p>
+              <ul>
+                <li>Programação Web I e II (Elevado aproveitamento)</li>
+                <li>Linguagens de Programação I</li>
+                <li>
+                  Matemática Discreta e Álgebra / Fundamentos de Matemática
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="role">Técnico de GPSI</span>
+              <span class="date">Concluído em 2024</span>
+            </div>
+            <span class="company">Escola Padre Benjamim Salgado</span>
+            <div class="description">
+              <p>Percurso de excelência técnica com foco em:</p>
+              <ul>
+                <li>Mecanismos de Controlo de Execução</li>
+                <li>Programação Estruturada e Bases de Dados</li>
+              </ul>
+              <p style="margin-top: 3px">
+                <strong>PAP:</strong> Desenvolvimento de plataforma interativa
+                para ensino.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Experiência Profissional</h2>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="role">Formação em contexto de trabalho</span>
+              <span class="date">600 Horas</span>
+            </div>
+            <span class="company">Primariu</span>
+            <div class="description">
+              <p>
+                Colaboração autónoma no desenvolvimento de side projects para
+                análise de viabilidade tecnológica.
+              </p>
+              <ul>
+                <li>
+                  Exploração e implementação de soluções com ferramentas
+                  Low-Code (FlutterFlow).
+                </li>
+                <li>Integração com Backend-as-a-Service (Supabase).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="item-header">
+              <span class="role">Programa Erasmus+</span>
+              <span class="date">Maio 2024 - Junho 2024</span>
+            </div>
+            <span class="company">Trnava, Eslováquia</span>
+            <div class="description">
+              <p>
+                Mobilidade internacional. Desenvolvimento de soft skills,
+                adaptabilidade e comunicação técnica em inglês.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
