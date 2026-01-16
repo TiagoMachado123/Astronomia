@@ -446,6 +446,24 @@ nav.scrolled {
   margin: 8px 0;
 }
 
+.profile-dropdown a.active {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Fundo subtil em vez de texto colorido */
+  color: var(--text-white); /* Mantém o texto branco para ler bem */
+  border-left: 3px solid var(--accent-pink); /* Indicador discreto à esquerda */
+  font-weight: 600;
+}
+
+/* Garante que o hover no item ativo não estrague o visual */
+.profile-dropdown a.active:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  cursor: default; /* Opcional: indica que já estás nesta página */
+}
+
 /* --- PREVIEW DE DOCUMENTOS --- */
 .doc-preview-container {
   margin-top: 15px;
