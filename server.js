@@ -177,6 +177,10 @@ app.get("/comunidade.html", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "private", "comunidade.html"));
 });
 
+app.get("/explorar.html", isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "private", "explorar.html"));
+});
+
 // API: DADOS DOS UTILIZADORES
 app.get("/getutilizadores", isAuthenticated, (req, res) => {
   db.query("SELECT id, nome, data_nascimento, morada, email, telefone, genero, fotografia, documento, cargo, biografia FROM utilizadores", (err, results) => {
