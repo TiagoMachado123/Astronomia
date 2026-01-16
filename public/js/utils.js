@@ -1,3 +1,4 @@
+// --- /public/js/utils.js ---
 // --- FUNÇÕES AUXILIARES (UTILS) ---
 
 // Gera o HTML para pré-visualização de documentos (PDF ou Imagem)

@@ -94,6 +94,10 @@ app.get("/registo.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "registo.html"));
 });
 
+app.get("/comunidade.html", isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "private", "comunidade.html"));
+});
+
 // 4. VERIFICAR SESSÃO (API para o Frontend)
 app.get("/check-session", (req, res) => {
   res.json({
@@ -319,6 +323,259 @@ app.post(
     );
   }
 );
+
+// ==========================================
+// 2. API: OBTER TODOS OS POSTS
+// ==========================================
+
+app.get("/api/posts", isAuthenticated, (req, res) => {
+  const userEmail = req.session.email;
+
+  // Query que busca posts com info do autor e verifica se o user atual deu like
+  const query = `
+        SELECT 
+            p.id,
+            p.titulo,
+            p.conteudo,
+            p.categoria,
+            p.imagem,
+            p.data_criacao,
+            p.autor_id,
+            u.nome AS autor_nome,
+            u.cargo AS autor_cargo,
+            u.fotografia AS autor_foto,
+            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) AS likes,
+            (SELECT COUNT(*) FROM post_likes pl 
+             INNER JOIN utilizadores ul ON pl.user_id = ul.id 
+             WHERE pl.post_id = p.id AND ul.email = ?) AS user_liked
+        FROM posts p
+        INNER JOIN utilizadores u ON p.autor_id = u.id
+        ORDER BY p.data_criacao DESC
+    `;
+
+  db.query(query, [userEmail], (err, results) => {
+    if (err) {
+      console.error("Erro ao buscar posts:", err);
+      return res.status(500).json({ error: "Erro ao buscar posts" });
+    }
+
+    // Converter user_liked para boolean
+    const posts = results.map(post => ({
+      ...post,
+      user_liked: post.user_liked > 0
+    }));
+
+    res.json(posts);
+  });
+});
+
+// ==========================================
+// 3. API: CRIAR NOVO POST
+// ==========================================
+
+app.post("/api/posts", isAuthenticated, upload.single("imagem"), (req, res) => {
+  const { titulo, conteudo, categoria } = req.body;
+  const userEmail = req.session.email;
+  const imagemPath = req.file ? req.file.path : null;
+
+  // Validação
+  if (!titulo || !conteudo) {
+    return res.status(400).json({ error: "Título e conteúdo são obrigatórios" });
+  }
+
+  // Primeiro, buscar o ID do utilizador pelo email
+  db.query("SELECT id FROM utilizadores WHERE email = ?", [userEmail], (err, users) => {
+    if (err || users.length === 0) {
+      console.error("Erro ao buscar utilizador:", err);
+      return res.status(500).json({ error: "Erro ao identificar utilizador" });
+    }
+
+    const autorId = users[0].id;
+
+    const query = `
+            INSERT INTO posts (titulo, conteudo, categoria, imagem, autor_id, data_criacao)
+            VALUES (?, ?, ?, ?, ?, NOW())
+        `;
+
+    db.query(query, [titulo, conteudo, categoria || "discussao", imagemPath, autorId], (err, result) => {
+      if (err) {
+        console.error("Erro ao criar post:", err);
+        return res.status(500).json({ error: "Erro ao criar post" });
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Post criado com sucesso",
+        postId: result.insertId
+      });
+    });
+  });
+});
+
+
+// ==========================================
+// 4. API: DAR/REMOVER LIKE NUM POST (Toggle)
+// ==========================================
+
+app.post("/api/posts/:id/like", isAuthenticated, (req, res) => {
+  const postId = req.params.id;
+  const userEmail = req.session.email;
+
+  // Buscar ID do utilizador
+  db.query("SELECT id FROM utilizadores WHERE email = ?", [userEmail], (err, users) => {
+    if (err || users.length === 0) {
+      return res.status(500).json({ error: "Erro ao identificar utilizador" });
+    }
+
+    const userId = users[0].id;
+
+    // Verificar se já deu like
+    db.query(
+      "SELECT * FROM post_likes WHERE post_id = ? AND user_id = ?",
+      [postId, userId],
+      (err, likes) => {
+        if (err) {
+          console.error("Erro ao verificar like:", err);
+          return res.status(500).json({ error: "Erro ao processar" });
+        }
+
+        if (likes.length > 0) {
+          // Já tem like - REMOVER
+          db.query(
+            "DELETE FROM post_likes WHERE post_id = ? AND user_id = ?",
+            [postId, userId],
+            (err) => {
+              if (err) {
+                return res.status(500).json({ error: "Erro ao remover like" });
+              }
+
+              // Contar total de likes
+              db.query(
+                "SELECT COUNT(*) AS total FROM post_likes WHERE post_id = ?",
+                [postId],
+                (err, result) => {
+                  res.json({
+                    liked: false,
+                    totalLikes: result[0].total
+                  });
+                }
+              );
+            }
+          );
+        } else {
+          // Não tem like - ADICIONAR
+          db.query(
+            "INSERT INTO post_likes (post_id, user_id, data_like) VALUES (?, ?, NOW())",
+            [postId, userId],
+            (err) => {
+              if (err) {
+                console.error("Erro ao adicionar like:", err);
+                return res.status(500).json({ error: "Erro ao adicionar like" });
+              }
+
+              // Contar total de likes
+              db.query(
+                "SELECT COUNT(*) AS total FROM post_likes WHERE post_id = ?",
+                [postId],
+                (err, result) => {
+                  res.json({
+                    liked: true,
+                    totalLikes: result[0].total
+                  });
+                }
+              );
+            }
+          );
+        }
+      }
+    );
+  });
+});
+
+
+// ==========================================
+// 5. API: OBTER UM POST ESPECÍFICO (Opcional)
+// ==========================================
+
+app.get("/api/posts/:id", isAuthenticated, (req, res) => {
+  const postId = req.params.id;
+  const userEmail = req.session.email;
+
+  const query = `
+        SELECT 
+            p.*,
+            u.nome AS autor_nome,
+            u.cargo AS autor_cargo,
+            u.fotografia AS autor_foto,
+            (SELECT COUNT(*) FROM post_likes WHERE post_id = p.id) AS likes,
+            (SELECT COUNT(*) FROM post_likes pl 
+             INNER JOIN utilizadores ul ON pl.user_id = ul.id 
+             WHERE pl.post_id = p.id AND ul.email = ?) AS user_liked
+        FROM posts p
+        INNER JOIN utilizadores u ON p.autor_id = u.id
+        WHERE p.id = ?
+    `;
+
+  db.query(query, [userEmail, postId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao buscar post" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Post não encontrado" });
+    }
+
+    const post = {
+      ...results[0],
+      user_liked: results[0].user_liked > 0
+    };
+
+    res.json(post);
+  });
+});
+
+
+// ==========================================
+// 6. API: ELIMINAR POST (Apenas o autor)
+// ==========================================
+
+app.delete("/api/posts/:id", isAuthenticated, (req, res) => {
+  const postId = req.params.id;
+  const userEmail = req.session.email;
+
+  // Verificar se o utilizador é o autor
+  const checkQuery = `
+        SELECT p.id FROM posts p
+        INNER JOIN utilizadores u ON p.autor_id = u.id
+        WHERE p.id = ? AND u.email = ?
+    `;
+
+  db.query(checkQuery, [postId, userEmail], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao verificar permissões" });
+    }
+    if (results.length === 0) {
+      return res.status(403).json({ error: "Não tens permissão para eliminar este post" });
+    }
+
+    // Eliminar likes primeiro (integridade referencial)
+    db.query("DELETE FROM post_likes WHERE post_id = ?", [postId], (err) => {
+      if (err) {
+        return res.status(500).json({ error: "Erro ao eliminar" });
+      }
+
+      // Eliminar o post
+      db.query("DELETE FROM posts WHERE id = ?", [postId], (err) => {
+        if (err) {
+          return res.status(500).json({ error: "Erro ao eliminar post" });
+        }
+        res.json({ success: true, message: "Post eliminado" });
+      });
+    });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Servidor a rodar em http://localhost:${port}`);
 });
+
+

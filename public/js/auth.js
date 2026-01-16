@@ -1,3 +1,4 @@
+// --- /public/js/auth.js ---
 document.addEventListener("DOMContentLoaded", () => {
     const regForm = document.querySelector('form[action="/registo"]');
 

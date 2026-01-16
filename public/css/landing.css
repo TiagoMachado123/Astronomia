@@ -275,7 +275,6 @@
 /* Adiciona este ID ou classe ao CSS para controlar o grupo do fogo */
 #Flame {
   animation: flame-flicker 0.15s infinite alternate;
-  /* O segredo está nestas duas linhas abaixo: */
   transform-box: fill-box; /* Define a caixa de referência como o próprio elemento */
   transform-origin: top center; /* "Cola" a animação ao topo (onde toca no foguete) */
 }

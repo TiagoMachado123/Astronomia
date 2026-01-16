@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comunidade - Astronomia Explorer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/comunidade.css" />
+</head>
+
+<body>
+    <div id="star-container"></div>
+    <div class="nebula"></div>
+
+    <!-- Navbar será injetada pelo ui-core.js -->
+
+    <main class="page-container container">
+        <!-- Header da Página -->
+        <div class="page-header">
+            <div class="section-badge">
+                <i class="fa-solid fa-satellite-dish"></i> Centro de Comunicações
+            </div>
+            <h1>Comunidade Estelar</h1>
+            <p>Partilha as tuas descobertas e experiências astronómicas com outros exploradores.</p>
+        </div>
+
+        <!-- Formulário de Novo Post -->
+        <section class="new-post-section">
+            <div class="new-post-card">
+                <div class="new-post-header">
+                    <div class="user-indicator">
+                        <div class="user-avatar-small" id="current-user-avatar">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                        </div>
+                        <span id="current-user-name">Carregando...</span>
+                    </div>
+                    <span class="post-type-label">
+                        <i class="fa-solid fa-rocket"></i> Nova Transmissão
+                    </span>
+                </div>
+
+                <form id="new-post-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="post-title">
+                            <i class="fa-solid fa-heading"></i> Título da Descoberta
+                        </label>
+                        <input type="text" id="post-title" name="titulo" placeholder="Ex: Observei a Nebulosa de Órion!" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-content">
+                            <i class="fa-solid fa-align-left"></i> Descrição
+                        </label>
+                        <textarea id="post-content" name="conteudo" rows="4" placeholder="Descreve a tua experiência ou descoberta..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-category">
+                            <i class="fa-solid fa-tags"></i> Categoria
+                        </label>
+                        <select id="post-category" name="categoria">
+                            <option value="observacao">🔭 Observação</option>
+                            <option value="descoberta">🌟 Descoberta</option>
+                            <option value="fotografia">📷 Astrofotografia</option>
+                            <option value="evento">🌑 Evento Astronómico</option>
+                            <option value="discussao">💬 Discussão</option>
+                            <option value="duvida">❓ Dúvida</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="post-image">
+                            <i class="fa-solid fa-image"></i> Imagem (opcional)
+                        </label>
+                        <div class="image-upload-area" id="image-upload-area">
+                            <input type="file" id="post-image" name="imagem" accept="image/*" />
+                            <div class="upload-placeholder">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>Clica ou arrasta uma imagem</span>
+                                <small>PNG, JPG, GIF até 5MB</small>
+                            </div>
+                            <div class="image-preview" id="image-preview"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="btn-clear-post">
+                            <i class="fa-solid fa-eraser"></i> Limpar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-paper-plane"></i> Publicar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Filtros e Ordenação -->
+        <section class="filters-section">
+            <div class="filters-wrapper">
+                <div class="filter-group">
+                    <label for="filter-category">
+                        <i class="fa-solid fa-filter"></i> Filtrar:
+                    </label>
+                    <select id="filter-category">
+                        <option value="">Todas as Categorias</option>
+                        <option value="observacao">🔭 Observação</option>
+                        <option value="descoberta">🌟 Descoberta</option>
+                        <option value="fotografia">📷 Astrofotografia</option>
+                        <option value="evento">🌑 Evento Astronómico</option>
+                        <option value="discussao">💬 Discussão</option>
+                        <option value="duvida">❓ Dúvida</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="sort-order">
+                        <i class="fa-solid fa-arrow-down-wide-short"></i> Ordenar:
+                    </label>
+                    <select id="sort-order">
+                        <option value="recentes">Mais Recentes</option>
+                        <option value="populares">Mais Populares</option>
+                        <option value="antigos">Mais Antigos</option>
+                    </select>
+                </div>
+
+                <div class="results-info" id="results-info">
+                    <i class="fa-solid fa-signal"></i>
+                    <span id="posts-count">0</span> transmissões encontradas
+                </div>
+            </div>
+        </section>
+
+        <!-- Feed de Posts -->
+        <section class="posts-feed" id="posts-feed">
+            <!-- Posts serão carregados via JavaScript -->
+            <div class="loading-indicator" id="loading-indicator">
+                <div class="loading-spinner"></div>
+                <span>A sincronizar com a estação espacial...</span>
+            </div>
+        </section>
+
+        <!-- Estado Vazio -->
+        <div class="empty-state hidden" id="empty-state">
+            <i class="fa-solid fa-satellite"></i>
+            <h3>Nenhuma transmissão encontrada</h3>
+            <p>Sê o primeiro a partilhar uma descoberta cósmica!</p>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3><i class="fa-solid fa-rocket"></i> Astronomia Explorer</h3>
+                    <p>Uma jornada educativa pelos mistérios do universo.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegação</h4>
+                    <a href="/dashboard.html">Início</a>
+                    <a href="/tripulacao.html">Tripulação</a>
+                    <a href="/comunidade.html">Comunidade</a>
+                    <a href="/perfil.html">Perfil</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Astronomia Explorer. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Visualização de Imagem -->
+    <div class="image-modal" id="image-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img src="" alt="Imagem ampliada" id="modal-image" />
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/utils.js"></script>
+    <script src="/js/ui-core.js"></script>
+    <script src="/js/comunidade.js"></script>
+</body>
+
+</html>

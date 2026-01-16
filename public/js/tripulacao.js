@@ -1,3 +1,4 @@
+// --- /public/js/tripulacao.js ---
 let allCrewMembers = []; // Variável local ao módulo/ficheiro
 
 document.addEventListener("DOMContentLoaded", () => {

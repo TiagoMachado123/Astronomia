@@ -78,32 +78,30 @@ function setupDynamicNav(path) {
   const isActive = (p) => (path.includes(p) ? "active" : "");
 
   navContainer.innerHTML = `
-      <a href="/dashboard.html" class="nav-item ${isActive(
-        "dashboard.html"
-      )}">Início</a>
-      <a href="/explorar.html" class="nav-item ${isActive(
-        "explorar.html"
-      )}">Curiosidades</a>
-      <a href="/tripulacao.html" class="nav-item ${isActive(
-        "tripulacao.html"
-      )}">Tripulação</a>
-      
-      <div class="user-menu-container">
-          <div class="user-avatar-btn" id="profile-trigger">
-               <i class="fa-solid fa-user-astronaut"></i>
-          </div>
-          
-          <div class="profile-dropdown" id="profile-dropdown">
-              <a href="/perfil.html" class="${isActive("perfil.html")}">
-                  <i class="fa-solid fa-id-card"></i> O meu Perfil
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="/logout" style="color: #ff6b6b;">
-                  <i class="fa-solid fa-power-off"></i> Terminar Missão
-              </a>
-          </div>
-      </div>
-  `;
+        <a href="/dashboard.html" class="nav-item ${isActive("dashboard.html")}">Início</a>
+        <a href="/explorar.html" class="nav-item ${isActive("explorar.html")}">Curiosidades</a>
+        <a href="/tripulacao.html" class="nav-item ${isActive("tripulacao.html")}">Tripulação</a>
+        <a href="/comunidade.html" class="nav-item ${isActive("comunidade.html")}">Comunidade</a>
+        
+        <div class="user-menu-container">
+            <div class="user-avatar-btn" id="profile-trigger">
+                <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+            
+            <div class="profile-dropdown" id="profile-dropdown">
+                <a href="/perfil.html" class="${isActive("perfil.html")}">
+                    <i class="fa-solid fa-id-card"></i> O meu Perfil
+                </a>
+                <a href="/comunidade.html" class="${isActive("comunidade.html")}">
+                    <i class="fa-solid fa-satellite-dish"></i> Comunidade
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="/logout" style="color: #ff6b6b;">
+                    <i class="fa-solid fa-power-off"></i> Terminar Missão
+                </a>
+            </div>
+        </div>
+    `;
 }
 
 // --- C. EFEITOS VISUAIS (ESTRELAS & COMETAS) ---

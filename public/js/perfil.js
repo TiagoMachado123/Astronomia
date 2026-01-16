@@ -1,3 +1,4 @@
+// --- /public/js/perfil.js ---
 document.addEventListener("DOMContentLoaded", () => {
     // Apenas corre se estiver na página de perfil
     if (window.location.pathname.includes("perfil.html")) {
