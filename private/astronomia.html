@@ -1,622 +1,578 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Astronomia Explorer - Viagem pelo Universo</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astronomia Explorer - Viagem pelo Universo</title>
 
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/dashboard.css" />
-    <link rel="stylesheet" href="css/astronomia.css" />
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <body>
-    <div id="star-container"></div>
-    <div class="nebula"></div>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/astronomia.css" />
+</head>
 
-    <section class="hero" id="home">
-      <div class="hero-planet"></div>
-      <div class="hero-content">
-        <div class="hero-badge">
-          <i class="fa-solid fa-rocket"></i>
-          Base de Conhecimento Cósmico
-        </div>
-        <h1>Explora os Segredos do Universo</h1>
-        <p>
-          Uma viagem fascinante pelos mistérios do cosmos, desde os confins do
-          nosso sistema solar até às galáxias mais distantes.
-        </p>
-        <div class="hero-buttons">
-          <a href="#planets" class="btn btn-primary">
-            <i class="fa-solid fa-globe"></i>
-            Explorar Planetas
-          </a>
-          <a href="#phenomena" class="btn btn-outline">
-            <i class="fa-solid fa-bolt"></i>
-            Fenómenos Extremos
-          </a>
+<body>
+  <div id="star-container"></div>
+  <div class="nebula"></div>
+
+  <section class="hero" id="home">
+    <div class="hero-planet"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-rocket"></i>
+        Base de Conhecimento Cósmico
+      </div>
+      <h1>Explora os Segredos do Universo</h1>
+      <p>
+        Uma viagem fascinante pelos mistérios do cosmos, desde os confins do
+        nosso sistema solar até às galáxias mais distantes.
+      </p>
+      <div class="hero-buttons">
+        <a href="#planets" class="btn btn-primary">
+          <i class="fa-solid fa-globe"></i>
+          Explorar Planetas
+        </a>
+        <a href="#phenomena" class="btn btn-outline">
+          <i class="fa-solid fa-bolt"></i>
+          Fenómenos Extremos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section id="fact" class="reveal">
+      <div class="fact-hero">
+        <div class="fact-hero-content">
+          <div class="fact-hero-image">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/800px-Crab_Nebula.jpg"
+              alt="Nebulosa do Caranguejo" loading="lazy" width="800" height="800" />
+            <div class="image-credit">
+              <i class="fa-solid fa-camera"></i> NASA/ESA Hubble Space
+              Telescope
+            </div>
+          </div>
+          <div class="fact-hero-text">
+            <div class="fact-label">
+              <i class="fa-solid fa-star"></i> Facto do Dia
+            </div>
+            <h3>A Nebulosa do Caranguejo</h3>
+            <p>
+              O que vês aqui é o remanescente de uma estrela que explodiu como
+              supernova. A luz da explosão chegou à Terra no ano
+              <strong>1054</strong> e foi tão brilhante que podia ser vista
+              durante o dia! Astrónomos chineses e árabes registaram este
+              evento histórico.
+            </p>
+            <button id="toggle-fact" class="btn-fact">
+              <i class="fa-solid fa-microscope"></i>
+              <span>Ler Análise Completa</span>
+            </button>
+
+            <div id="fact-box" class="fact-box">
+              <div class="fact-box-header">
+                <i class="fa-solid fa-flask"></i>
+                <span>Nota Científica</span>
+              </div>
+              <p>
+                No centro desta nebulosa existe um <strong>pulsar</strong>:
+                uma estrela de neutrões que gira
+                <strong>30 vezes por segundo</strong>! Este pulsar emite
+                radiação em forma de feixes, como um farol cósmico.
+              </p>
+              <div class="fact-tags">
+                <span class="tag"><i class="fa-solid fa-atom"></i> Supernova</span>
+                <span class="tag"><i class="fa-solid fa-circle-radiation"></i> Pulsar</span>
+                <span class="tag"><i class="fa-solid fa-calendar"></i> 1054 d.C.</span>
+                <span class="tag"><i class="fa-solid fa-ruler"></i> 6.500 anos-luz</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="container">
-      <section id="fact" class="reveal">
-        <div class="fact-hero">
-          <div class="fact-hero-content">
-            <div class="fact-hero-image">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/800px-Crab_Nebula.jpg"
-                alt="Nebulosa do Caranguejo"
-                loading="lazy"
-                width="800"
-                height="800"
-              />
-              <div class="image-credit">
-                <i class="fa-solid fa-camera"></i> NASA/ESA Hubble Space
-                Telescope
-              </div>
-            </div>
-            <div class="fact-hero-text">
-              <div class="fact-label">
-                <i class="fa-solid fa-star"></i> Facto do Dia
-              </div>
-              <h3>A Nebulosa do Caranguejo</h3>
-              <p>
-                O que vês aqui é o remanescente de uma estrela que explodiu como
-                supernova. A luz da explosão chegou à Terra no ano
-                <strong>1054</strong> e foi tão brilhante que podia ser vista
-                durante o dia! Astrónomos chineses e árabes registaram este
-                evento histórico.
-              </p>
-              <button id="toggle-fact" class="btn-fact">
-                <i class="fa-solid fa-microscope"></i>
-                <span>Ler Análise Completa</span>
-              </button>
-
-              <div id="fact-box" class="fact-box">
-                <div class="fact-box-header">
-                  <i class="fa-solid fa-flask"></i>
-                  <span>Nota Científica</span>
-                </div>
-                <p>
-                  No centro desta nebulosa existe um <strong>pulsar</strong>:
-                  uma estrela de neutrões que gira
-                  <strong>30 vezes por segundo</strong>! Este pulsar emite
-                  radiação em forma de feixes, como um farol cósmico.
-                </p>
-                <div class="fact-tags">
-                  <span class="tag"
-                    ><i class="fa-solid fa-atom"></i> Supernova</span
-                  >
-                  <span class="tag"
-                    ><i class="fa-solid fa-circle-radiation"></i> Pulsar</span
-                  >
-                  <span class="tag"
-                    ><i class="fa-solid fa-calendar"></i> 1054 d.C.</span
-                  >
-                  <span class="tag"
-                    ><i class="fa-solid fa-ruler"></i> 6.500 anos-luz</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
+    <section class="reveal">
+      <div class="stats-section">
+        <div class="stat-item">
+          <div class="stat-number" data-count="200">0</div>
+          <div class="stat-text">Mil Milhões de Galáxias</div>
         </div>
-      </section>
-
-      <section class="reveal">
-        <div class="stats-section">
-          <div class="stat-item">
-            <div class="stat-number" data-count="200">0</div>
-            <div class="stat-text">Mil Milhões de Galáxias</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-count="100">0</div>
-            <div class="stat-text">Mil Milhões de Estrelas na Via Láctea</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-count="8">0</div>
-            <div class="stat-text">Planetas no Sistema Solar</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-count="13">0</div>
-            <div class="stat-text">Mil Milhões de Anos do Universo</div>
-          </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="100">0</div>
+          <div class="stat-text">Mil Milhões de Estrelas na Via Láctea</div>
         </div>
-      </section>
-
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-icon"><i class="fa-solid fa-sun"></i></div>
-        <div class="divider-line"></div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="8">0</div>
+          <div class="stat-text">Planetas no Sistema Solar</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="13">0</div>
+          <div class="stat-text">Mil Milhões de Anos do Universo</div>
+        </div>
       </div>
+    </section>
 
-      <section id="planets" class="reveal">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fa-solid fa-globe"></i> Exploração Planetária
-          </div>
-          <h2 class="section-title">O Nosso Sistema Solar</h2>
-          <p class="section-subtitle">
-            Descobre os mundos fascinantes que orbitam a nossa estrela.
-          </p>
-        </div>
-
-        <div class="planets-grid">
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(255, 183, 77, 0.3)"
-          >
-            <div class="planet-visual p-sol">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Sol</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-temperature-high"></i>
-                <div class="stat-info">
-                  <div class="stat-value">5.500°C</div>
-                  <div class="stat-label">Superfície</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(150, 150, 150, 0.2)"
-          >
-            <div class="planet-visual p-mercurio">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Mercúrio</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-clock"></i>
-                <div class="stat-info">
-                  <div class="stat-value">88 dias</div>
-                  <div class="stat-label">Ano</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(230, 190, 120, 0.2)"
-          >
-            <div class="planet-visual p-venus">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Vénus</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-temperature-high"></i>
-                <div class="stat-info">
-                  <div class="stat-value">465°C</div>
-                  <div class="stat-label">Temp.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(75, 112, 221, 0.25)"
-          >
-            <div class="planet-visual p-terra">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Terra</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-users"></i>
-                <div class="stat-info">
-                  <div class="stat-value">8B+</div>
-                  <div class="stat-label">Habitantes</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(193, 68, 14, 0.25)"
-          >
-            <div class="planet-visual p-marte">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Marte</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-robot"></i>
-                <div class="stat-info">
-                  <div class="stat-value">6</div>
-                  <div class="stat-label">Rovers</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(212, 165, 116, 0.2)"
-          >
-            <div class="planet-visual p-jupiter">
-              <div class="planet-shine"></div>
-              <div class="jupiter-bands"></div>
-            </div>
-            <h3>Júpiter</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-moon"></i>
-                <div class="stat-info">
-                  <div class="stat-value">95</div>
-                  <div class="stat-label">Luas</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(201, 168, 108, 0.2)"
-          >
-            <div class="planet-visual p-saturno">
-              <div class="planet-shine"></div>
-              <div class="saturn-ring"></div>
-            </div>
-            <h3>Saturno</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-ring"></i>
-                <div class="stat-info">
-                  <div class="stat-value">Anéis</div>
-                  <div class="stat-label">Espetaculares</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(125, 216, 216, 0.25)"
-          >
-            <div class="planet-visual p-urano">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Úrano</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-rotate"></i>
-                <div class="stat-info">
-                  <div class="stat-value">98°</div>
-                  <div class="stat-label">Inclinação</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="planet-card"
-            style="--glow-color: rgba(58, 95, 217, 0.25)"
-          >
-            <div class="planet-visual p-neptuno">
-              <div class="planet-shine"></div>
-            </div>
-            <h3>Neptuno</h3>
-            <div class="planet-stats">
-              <div class="stat">
-                <i class="fa-solid fa-wind"></i>
-                <div class="stat-info">
-                  <div class="stat-value">2.1k km/h</div>
-                  <div class="stat-label">Ventos</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-icon"><i class="fa-solid fa-hurricane"></i></div>
-        <div class="divider-line"></div>
-      </div>
-
-      <section id="galaxies" class="reveal">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fa-solid fa-spinner"></i> Arquitetura Cósmica
-          </div>
-          <h2 class="section-title">Tipos de Galáxias</h2>
-        </div>
-        <div class="galaxy-grid">
-          <div class="galaxy-card">
-            <div class="galaxy-img">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/M101_hires_STScI-PRC2006-10a.jpg/640px-M101_hires_STScI-PRC2006-10a.jpg"
-                alt="Galáxia Espiral"
-              />
-              <div class="galaxy-overlay">
-                <i class="fa-solid fa-hurricane"></i>
-              </div>
-            </div>
-            <div class="galaxy-content">
-              <h4>Galáxias Espirais</h4>
-              <p>
-                Como a nossa Via Láctea e Andrómeda. Possuem braços majestosos
-                cheios de estrelas jovens.
-              </p>
-            </div>
-          </div>
-          <div class="galaxy-card">
-            <div class="galaxy-img">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ngc1316_hst.jpg/960px-Ngc1316_hst.jpg"
-                alt="Galáxia Elíptica"
-              />
-              <div class="galaxy-overlay">
-                <i class="fa-solid fa-circle"></i>
-              </div>
-            </div>
-            <div class="galaxy-content">
-              <h4>Galáxias Elípticas</h4>
-              <p>
-                As maiores galáxias conhecidas. Têm a forma de ovos cósmicos
-                gigantes com estrelas velhas.
-              </p>
-            </div>
-          </div>
-          <div class="galaxy-card">
-            <div class="galaxy-img">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Irregular_galaxy_NGC_1427A_%28captured_by_the_Hubble_Space_Telescope%29.jpg/960px-Irregular_galaxy_NGC_1427A_%28captured_by_the_Hubble_Space_Telescope%29.jpg"
-                alt="Galáxia Irregular"
-              />
-              <div class="galaxy-overlay">
-                <i class="fa-solid fa-shapes"></i>
-              </div>
-            </div>
-            <div class="galaxy-content">
-              <h4>Galáxias Irregulares</h4>
-              <p>
-                Caóticas e sem forma definida, muitas vezes resultado de
-                colisões galácticas.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="phenomena" class="reveal">
-        <div class="phenomena-container">
-          <div class="phenomena-text">
-            <div class="danger-badge">
-              <i class="fa-solid fa-triangle-exclamation"></i> Zona de Perigo
-              Cósmico
-            </div>
-            <h3>Fenómenos Extremos</h3>
-            <p>
-              O universo é violento e poderoso. Descobre os monstros cósmicos.
-            </p>
-            <div class="phenomena-list">
-              <div class="p-item">
-                <div class="p-icon">
-                  <i class="fa-solid fa-circle-notch"></i>
-                </div>
-                <div class="p-info">
-                  <strong>Buracos Negros</strong
-                  ><span>Gravidade extrema onde nem a luz escapa.</span>
-                </div>
-              </div>
-              <div class="p-item">
-                <div class="p-icon"><i class="fa-solid fa-bolt"></i></div>
-                <div class="p-info">
-                  <strong>Quasares</strong
-                  ><span>Os objetos mais brilhantes do universo.</span>
-                </div>
-              </div>
-              <div class="p-item">
-                <div class="p-icon"><i class="fa-solid fa-explosion"></i></div>
-                <div class="p-info">
-                  <strong>Raios Gama (GRBs)</strong
-                  ><span>As maiores explosões desde o Big Bang.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="phenomena-visual">
-            <div class="black-hole-visual">
-              <div class="gravitational-lens"></div>
-              <div class="accretion-disk"></div>
-              <div class="event-horizon"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="facts" class="reveal">
-        <div class="section-header">
-          <h2 class="section-title">Curiosidades Rápidas</h2>
-        </div>
-        <div class="quick-facts-grid">
-          <div class="quick-fact-card">
-            <div class="quick-fact-icon">
-              <i class="fa-solid fa-diamond"></i>
-            </div>
-            <h4>Chuva de Diamantes</h4>
-            <p>
-              Em Neptuno e Úrano, chove literalmente diamantes devido à pressão.
-            </p>
-          </div>
-          <div class="quick-fact-card">
-            <div class="quick-fact-icon">
-              <i class="fa-solid fa-volume-xmark"></i>
-            </div>
-            <h4>Silêncio Total</h4>
-            <p>No espaço não há ar para propagar o som.</p>
-          </div>
-          <div class="quick-fact-card">
-            <div class="quick-fact-icon">
-              <i class="fa-solid fa-shoe-prints"></i>
-            </div>
-            <h4>Pegadas Eternas</h4>
-            <p>As pegadas na Lua vão durar milhões de anos.</p>
-          </div>
-        </div>
-      </section>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon"><i class="fa-solid fa-sun"></i></div>
+      <div class="divider-line"></div>
     </div>
 
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-brand">
-            <h3><i class="fa-solid fa-rocket"></i> Astronomia Explorer</h3>
-            <p>Uma jornada educativa pelos mistérios do universo.</p>
+    <section id="planets" class="reveal">
+      <div class="section-header">
+        <div class="section-badge">
+          <i class="fa-solid fa-globe"></i> Exploração Planetária
+        </div>
+        <h2 class="section-title">O Nosso Sistema Solar</h2>
+        <p class="section-subtitle">
+          Descobre os mundos fascinantes que orbitam a nossa estrela.
+        </p>
+      </div>
+
+      <div class="planets-grid">
+        <div class="planet-card" style="--glow-color: rgba(255, 183, 77, 0.3)">
+          <div class="planet-visual p-sol">
+            <div class="planet-shine"></div>
           </div>
-          <div class="footer-links">
-            <h4>Navegação</h4>
-            <a href="/dashboard.html">Início</a>
-            <a href="/visualizacao.html">Tripulação</a>
-            <a href="/astronomia.html">Base de Dados</a>
-            <a href="/perfil.html">Perfil</a>
-          </div>
-          <div class="footer-links">
-            <h4>Recursos</h4>
-            <a href="#">NASA</a>
-            <a href="#">ESA</a>
+          <h3>Sol</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-temperature-high"></i>
+              <div class="stat-info">
+                <div class="stat-value">5.500°C</div>
+                <div class="stat-label">Superfície</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy 2026 Astronomia Explorer. Todos os direitos reservados.</p>
+
+        <div class="planet-card" style="--glow-color: rgba(150, 150, 150, 0.2)">
+          <div class="planet-visual p-mercurio">
+            <div class="planet-shine"></div>
+          </div>
+          <h3>Mercúrio</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-clock"></i>
+              <div class="stat-info">
+                <div class="stat-value">88 dias</div>
+                <div class="stat-label">Ano</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(230, 190, 120, 0.2)">
+          <div class="planet-visual p-venus">
+            <div class="planet-shine"></div>
+          </div>
+          <h3>Vénus</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-temperature-high"></i>
+              <div class="stat-info">
+                <div class="stat-value">465°C</div>
+                <div class="stat-label">Temp.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(75, 112, 221, 0.25)">
+          <div class="planet-visual p-terra">
+            <div class="planet-shine"></div>
+          </div>
+          <h3>Terra</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-users"></i>
+              <div class="stat-info">
+                <div class="stat-value">8B+</div>
+                <div class="stat-label">Habitantes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(193, 68, 14, 0.25)">
+          <div class="planet-visual p-marte">
+            <div class="planet-shine"></div>
+          </div>
+          <h3>Marte</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-robot"></i>
+              <div class="stat-info">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Rovers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(212, 165, 116, 0.2)">
+          <div class="planet-visual p-jupiter">
+            <div class="planet-shine"></div>
+            <div class="jupiter-bands"></div>
+          </div>
+          <h3>Júpiter</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-moon"></i>
+              <div class="stat-info">
+                <div class="stat-value">95</div>
+                <div class="stat-label">Luas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(201, 168, 108, 0.2)">
+          <div class="planet-visual p-saturno">
+            <div class="planet-shine"></div>
+            <div class="saturn-ring"></div>
+          </div>
+          <h3>Saturno</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-ring"></i>
+              <div class="stat-info">
+                <div class="stat-value">Anéis</div>
+                <div class="stat-label">Espetaculares</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(125, 216, 216, 0.25)">
+          <div class="planet-visual p-urano">
+            <div class="planet-shine"></div>
+          </div>
+          <h3>Úrano</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-rotate"></i>
+              <div class="stat-info">
+                <div class="stat-value">98°</div>
+                <div class="stat-label">Inclinação</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="planet-card" style="--glow-color: rgba(58, 95, 217, 0.25)">
+          <div class="planet-visual p-neptuno">
+            <div class="planet-shine"></div>
+          </div>
+          <h3>Neptuno</h3>
+          <div class="planet-stats">
+            <div class="stat">
+              <i class="fa-solid fa-wind"></i>
+              <div class="stat-info">
+                <div class="stat-value">2.1k km/h</div>
+                <div class="stat-label">Ventos</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </footer>
+    </section>
 
-    <script src="js/utils.js"></script>
-    <script src="js/ui-core.js"></script>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon"><i class="fa-solid fa-hurricane"></i></div>
+      <div class="divider-line"></div>
+    </div>
 
-    <script>
-      // 1. Navbar Scroll Effect (Local)
-      window.addEventListener("scroll", () => {
-        const navbar = document.getElementById("main-navbar");
+    <section id="galaxies" class="reveal">
+      <div class="section-header">
+        <div class="section-badge">
+          <i class="fa-solid fa-spinner"></i> Arquitetura Cósmica
+        </div>
+        <h2 class="section-title">Tipos de Galáxias</h2>
+      </div>
+      <div class="galaxy-grid">
+        <div class="galaxy-card">
+          <div class="galaxy-img">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/M101_hires_STScI-PRC2006-10a.jpg/640px-M101_hires_STScI-PRC2006-10a.jpg"
+              alt="Galáxia Espiral" />
+            <div class="galaxy-overlay">
+              <i class="fa-solid fa-hurricane"></i>
+            </div>
+          </div>
+          <div class="galaxy-content">
+            <h4>Galáxias Espirais</h4>
+            <p>
+              Como a nossa Via Láctea e Andrómeda. Possuem braços majestosos
+              cheios de estrelas jovens.
+            </p>
+          </div>
+        </div>
+        <div class="galaxy-card">
+          <div class="galaxy-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ngc1316_hst.jpg/960px-Ngc1316_hst.jpg"
+              alt="Galáxia Elíptica" />
+            <div class="galaxy-overlay">
+              <i class="fa-solid fa-circle"></i>
+            </div>
+          </div>
+          <div class="galaxy-content">
+            <h4>Galáxias Elípticas</h4>
+            <p>
+              As maiores galáxias conhecidas. Têm a forma de ovos cósmicos
+              gigantes com estrelas velhas.
+            </p>
+          </div>
+        </div>
+        <div class="galaxy-card">
+          <div class="galaxy-img">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Irregular_galaxy_NGC_1427A_%28captured_by_the_Hubble_Space_Telescope%29.jpg/960px-Irregular_galaxy_NGC_1427A_%28captured_by_the_Hubble_Space_Telescope%29.jpg"
+              alt="Galáxia Irregular" />
+            <div class="galaxy-overlay">
+              <i class="fa-solid fa-shapes"></i>
+            </div>
+          </div>
+          <div class="galaxy-content">
+            <h4>Galáxias Irregulares</h4>
+            <p>
+              Caóticas e sem forma definida, muitas vezes resultado de
+              colisões galácticas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="phenomena" class="reveal">
+      <div class="phenomena-container">
+        <div class="phenomena-text">
+          <div class="danger-badge">
+            <i class="fa-solid fa-triangle-exclamation"></i> Zona de Perigo
+            Cósmico
+          </div>
+          <h3>Fenómenos Extremos</h3>
+          <p>
+            O universo é violento e poderoso. Descobre os monstros cósmicos.
+          </p>
+          <div class="phenomena-list">
+            <div class="p-item">
+              <div class="p-icon">
+                <i class="fa-solid fa-circle-notch"></i>
+              </div>
+              <div class="p-info">
+                <strong>Buracos Negros</strong><span>Gravidade extrema onde nem a luz escapa.</span>
+              </div>
+            </div>
+            <div class="p-item">
+              <div class="p-icon"><i class="fa-solid fa-bolt"></i></div>
+              <div class="p-info">
+                <strong>Quasares</strong><span>Os objetos mais brilhantes do universo.</span>
+              </div>
+            </div>
+            <div class="p-item">
+              <div class="p-icon"><i class="fa-solid fa-explosion"></i></div>
+              <div class="p-info">
+                <strong>Raios Gama (GRBs)</strong><span>As maiores explosões desde o Big Bang.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phenomena-visual">
+          <div class="black-hole-container">
+            <b></b>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="facts" class="reveal">
+      <div class="section-header">
+        <h2 class="section-title">Curiosidades Rápidas</h2>
+      </div>
+      <div class="quick-facts-grid">
+        <div class="quick-fact-card">
+          <div class="quick-fact-icon">
+            <i class="fa-solid fa-diamond"></i>
+          </div>
+          <h4>Chuva de Diamantes</h4>
+          <p>
+            Em Neptuno e Úrano, chove literalmente diamantes devido à pressão.
+          </p>
+        </div>
+        <div class="quick-fact-card">
+          <div class="quick-fact-icon">
+            <i class="fa-solid fa-volume-xmark"></i>
+          </div>
+          <h4>Silêncio Total</h4>
+          <p>No espaço não há ar para propagar o som.</p>
+        </div>
+        <div class="quick-fact-card">
+          <div class="quick-fact-icon">
+            <i class="fa-solid fa-shoe-prints"></i>
+          </div>
+          <h4>Pegadas Eternas</h4>
+          <p>As pegadas na Lua vão durar milhões de anos.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3><i class="fa-solid fa-rocket"></i> Astronomia Explorer</h3>
+          <p>Uma jornada educativa pelos mistérios do universo.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Navegação</h4>
+          <a href="/dashboard.html">Início</a>
+          <a href="/visualizacao.html">Tripulação</a>
+          <a href="/astronomia.html">Base de Dados</a>
+          <a href="/perfil.html">Perfil</a>
+        </div>
+        <div class="footer-links">
+          <h4>Recursos</h4>
+          <a href="#">NASA</a>
+          <a href="#">ESA</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy 2026 Astronomia Explorer. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/ui-core.js"></script>
+
+  <script>
+    // 1. Navbar Scroll Effect (Local)
+    window.addEventListener("scroll", () => {
+      const navbar = document.getElementById("main-navbar");
+      if (navbar) { // Verificação de segurança adicionada
         if (window.scrollY > 50) {
           navbar.classList.add("scrolled");
         } else {
           navbar.classList.remove("scrolled");
         }
+      }
+    });
+
+    // 2. Mobile Menu Toggle
+    const mobileBtn = document.getElementById("mobileMenuBtn");
+    const navLinks = document.getElementById("navLinks");
+    if (mobileBtn && navLinks) {
+      mobileBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
       });
+    }
 
-      // 2. Mobile Menu Toggle
-      const mobileBtn = document.getElementById("mobileMenuBtn");
-      const navLinks = document.getElementById("navLinks");
-      if (mobileBtn && navLinks) {
-        mobileBtn.addEventListener("click", () => {
-          navLinks.classList.toggle("active");
-        });
-      }
-
-      // 3. Fact Box Toggle
-      const toggleFactBtn = document.getElementById("toggle-fact");
-      if (toggleFactBtn) {
-        toggleFactBtn.addEventListener("click", function () {
-          const factBox = document.getElementById("fact-box");
-          factBox.classList.toggle("show");
-          this.classList.toggle("active");
-          this.querySelector("span").textContent = factBox.classList.contains(
-            "show"
-          )
-            ? "Ocultar Análise"
-            : "Ler Análise Completa";
-        });
-      }
-
-      // 4. Scroll Reveal Animations
-      function reveal() {
-        const reveals = document.querySelectorAll(".reveal");
-        reveals.forEach((element) => {
-          const windowHeight = window.innerHeight;
-          const elementTop = element.getBoundingClientRect().top;
-          const elementVisible = 150;
-          if (elementTop < windowHeight - elementVisible) {
-            element.classList.add("active");
-          }
-        });
-      }
-      window.addEventListener("scroll", reveal);
-      reveal(); // Trigger on load
-
-      // 5. Animated Counters
-      function animateCounters() {
-        const counters = document.querySelectorAll(".stat-number");
-        counters.forEach((counter) => {
-          const target = parseInt(counter.getAttribute("data-count"));
-          const duration = 2000;
-          const step = target / (duration / 16);
-          let current = 0;
-
-          const updateCounter = () => {
-            current += step;
-            if (current < target) {
-              counter.textContent = Math.floor(current);
-              requestAnimationFrame(updateCounter);
-            } else {
-              counter.textContent = target;
-            }
-          };
-
-          const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-              updateCounter();
-              observer.disconnect();
-            }
-          });
-          observer.observe(counter);
-        });
-      }
-      document.addEventListener("DOMContentLoaded", animateCounters);
-
-      // 6. Smooth Scroll para links internos (#)
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        });
+    // 3. Fact Box Toggle
+    const toggleFactBtn = document.getElementById("toggle-fact");
+    if (toggleFactBtn) {
+      toggleFactBtn.addEventListener("click", function () {
+        const factBox = document.getElementById("fact-box");
+        factBox.classList.toggle("show");
+        this.classList.toggle("active");
+        this.querySelector("span").textContent = factBox.classList.contains(
+          "show"
+        )
+          ? "Ocultar Análise"
+          : "Ler Análise Completa";
       });
+    }
 
-      // 7. Fallback Estrelas (Caso ui-core.js falhe ou não carregue)
-      document.addEventListener("DOMContentLoaded", () => {
-        const container = document.getElementById("star-container");
-        // Só cria se estiver vazio (evita duplicar se ui-core já criou)
-        if (container && container.innerHTML.trim() === "") {
-          for (let i = 0; i < 150; i++) {
-            const star = document.createElement("div");
-            star.className = "star";
-            star.style.left = Math.random() * 100 + "%";
-            star.style.top = Math.random() * 100 + "%";
-            const size = Math.random() * 3 + 1;
-            star.style.width = size + "px";
-            star.style.height = size + "px";
-            star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
-            container.appendChild(star);
-          }
+    // 4. Scroll Reveal Animations
+    function reveal() {
+      const reveals = document.querySelectorAll(".reveal");
+      reveals.forEach((element) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add("active");
         }
       });
-    </script>
-  </body>
+    }
+    window.addEventListener("scroll", reveal);
+    reveal(); // Trigger on load
+
+    // 5. Animated Counters
+    function animateCounters() {
+      const counters = document.querySelectorAll(".stat-number");
+      counters.forEach((counter) => {
+        const target = parseInt(counter.getAttribute("data-count"));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+
+        const updateCounter = () => {
+          current += step;
+          if (current < target) {
+            counter.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target;
+          }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            updateCounter();
+            observer.disconnect();
+          }
+        });
+        observer.observe(counter);
+      });
+    }
+    document.addEventListener("DOMContentLoaded", animateCounters);
+
+    // 6. Smooth Scroll para links internos (#)
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 7. Fallback Estrelas (Caso ui-core.js falhe ou não carregue)
+    // OTIMIZADO: Usa DocumentFragment para melhor performance
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("star-container");
+      // Só cria se estiver vazio (evita duplicar se ui-core já criou)
+      if (container && container.innerHTML.trim() === "") {
+        const fragment = document.createDocumentFragment(); // Otimização de Performance
+        for (let i = 0; i < 150; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+          star.style.left = Math.random() * 100 + "%";
+          star.style.top = Math.random() * 100 + "%";
+          const size = Math.random() * 3 + 1;
+          star.style.width = size + "px";
+          star.style.height = size + "px";
+          star.style.setProperty("--duration", Math.random() * 3 + 2 + "s");
+          fragment.appendChild(star);
+        }
+        container.appendChild(fragment);
+      }
+    });
+  </script>
+</body>
+
 </html>
