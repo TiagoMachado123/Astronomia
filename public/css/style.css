@@ -423,6 +423,11 @@ nav.scrolled {
   text-decoration: none;
 }
 
+.profile-dropdown a::after {
+  content: none;
+  display: none;
+}
+
 .profile-dropdown a:hover {
   background: rgba(255, 255, 255, 0.05);
   color: #fff;

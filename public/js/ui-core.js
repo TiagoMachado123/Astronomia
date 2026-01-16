@@ -90,7 +90,7 @@ function setupDynamicNav(path) {
       
       <div class="user-menu-container">
           <div class="user-avatar-btn" id="profile-trigger">
-               <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User">
+               <i class="fa-solid fa-user-astronaut"></i>
           </div>
           
           <div class="profile-dropdown" id="profile-dropdown">
